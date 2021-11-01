@@ -10,56 +10,15 @@
     <version>0.1</version>
 
     <organization>
-        <name>Technische Universität Berlin</name>
-        <url>https://tu-berlin.com/</url>
+        <name>Technical University of Berlin</name>
+        <url>https://tu.berlin</url>
     </organization>
 
     <name>agile-planning-platform</name>
-    <description>This is the de.tu-berlin.amos.gr2:agile-planning-platform plugin for Atlassian JIRA.</description>
-    
-    <repositories>
-    <repository>
-      <id>Maven Central</id>
-      <name>Maven Central</name>
-      <url>https://repo1.maven.org/maven2/</url>
-    </repository>
-   	<repository>
-        <releases>
-            <enabled>true</enabled>
-            <checksumPolicy>warn</checksumPolicy>
-        </releases>
-        <snapshots>
-            <enabled>true</enabled>
-            <updatePolicy>never</updatePolicy>
-            <checksumPolicy>warn</checksumPolicy>
-        </snapshots>
-        <id>atlassian-public</id>
-        <url>https://maven.atlassian.com/repository/public</url>
-    </repository>
-</repositories>
-
-<pluginRepositories>
-    <pluginRepository>
-        <releases>
-            <enabled>true</enabled>
-            <checksumPolicy>warn</checksumPolicy>
-        </releases>
-        <snapshots>
-            <updatePolicy>never</updatePolicy>
-            <checksumPolicy>warn</checksumPolicy>
-        </snapshots>
-        <id>atlassian-public</id>
-        <url>https://maven.atlassian.com/repository/public</url>
-    </pluginRepository>
-    </pluginRepositories>
+    <description>This is the de.tuberlin.amos.gr2:agile-planning-platform plugin for Atlassian JIRA.</description>
+    <packaging>atlassian-plugin</packaging>
 
     <dependencies>
-    <dependency>
-    <groupId>jta</groupId>
-    <artifactId>jta</artifactId>
-    <version>1.0.1b</version>
-    <scope>provided</scope>
-</dependency> 
         <dependency>
             <groupId>com.atlassian.jira</groupId>
             <artifactId>jira-api</artifactId>
@@ -84,27 +43,15 @@
         </dependency>
 
         <dependency>
-            <groupId>com.atlassian.plugins</groupId>
-            <artifactId>atlassian-plugins-osgi-javaconfig</artifactId>
-            <version>${osgi.javaconfig.version}</version>
-        </dependency>
-        <!-- OSGi Java Config dependencies -->
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.framework</artifactId>
-            <version>4.0.0</version>
+            <groupId>com.atlassian.plugin</groupId>
+            <artifactId>atlassian-spring-scanner-annotation</artifactId>
+            <version>${atlassian.spring.scanner.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${spring.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
             <scope>provided</scope>
         </dependency>
 
@@ -126,13 +73,6 @@
             <artifactId>gson</artifactId>
             <version>2.2.2-atlassian-1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.atlassian.maven.plugins/jira-maven-plugin -->
-		<dependency>
-    		<groupId>com.atlassian.maven.plugins</groupId>
-    		<artifactId>jira-maven-plugin</artifactId>
-    		<version>8.1.2</version>
-		</dependency>
-        
 
         <!-- Uncomment to use TestKit in your project. Details at https://bitbucket.org/atlassian/jira-testkit -->
         <!-- You can read more about TestKit at https://developer.atlassian.com/display/JIRADEV/Plugin+Tutorial+-+Smarter+integration+testing+with+TestKit -->
@@ -175,7 +115,7 @@
 
                         <!-- Add package to export here -->
                         <Export-Package>
-                            de.tu-berlin.amos.gr2.api,
+                            de.tuberlin.amos.gr2.api,
                         </Export-Package>
 
                         <!-- Add package import here -->
@@ -190,15 +130,30 @@
                     </instructions>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.atlassian.plugin</groupId>
+                <artifactId>atlassian-spring-scanner-maven-plugin</artifactId>
+                <version>${atlassian.spring.scanner.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>atlassian-spring-scanner</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <verbose>false</verbose>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <properties>
-        <jira.version>7.13.0</jira.version>
+        <jira.version>8.13.0</jira.version>
         <amps.version>8.1.2</amps.version>
         <plugin.testrunner.version>2.0.2</plugin.testrunner.version>
-        <osgi.javaconfig.version>0.2.0</osgi.javaconfig.version>
-        <spring.version>4.2.5.RELEASE</spring.version>
+        <atlassian.spring.scanner.version>2.1.7</atlassian.spring.scanner.version>
         <!-- This property ensures consistency between the key in atlassian-plugin.xml and the OSGi bundle's key. -->
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
         <!-- TestKit version 6.x for JIRA 6.x -->

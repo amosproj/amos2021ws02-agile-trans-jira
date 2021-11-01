@@ -1,4 +1,4 @@
-/*package it.de.tuberlin.amos.gr2;
+package it.de.tuberlin.amos.gr2;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,4 +25,4 @@ public class MyComponentWiredTest
     {
         assertEquals("names do not match!", "myComponent:" + applicationProperties.getDisplayName(),myPluginComponent.getName());
     }
-}*/
+}

@@ -27,6 +27,8 @@ dist/
 # IDEA / IntelliJ
 .idea/
 out/
+*.iml
+*.versionsBackup
 
 # Eclipse IDE
 .project
