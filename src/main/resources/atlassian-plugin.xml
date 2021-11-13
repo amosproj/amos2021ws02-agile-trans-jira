@@ -20,5 +20,15 @@
 
         <context>agile-planning-platform</context>
     </web-resource>
+
+    <web-section name="Agile Planning Platform Home" i18n-name-key="app-main-section.name" key="app_section"
+                 location="app_link" weight="10"/>
+
+    <web-item key="app_home" name="Link on Agile Planning Platform Home" section="system.top.navigation.bar" weight="47">
+        <description key="item.app.home.desc">Agile planning platform</description>
+        <label>APP</label>
+        <!--> for now this button leads to default create issue page <-->
+        <link linkId="app_home">/secure/CreateIssue!default.jspa</link>
+    </web-item>
     
 </atlassian-plugin>
