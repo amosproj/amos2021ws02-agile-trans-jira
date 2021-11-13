@@ -21,14 +21,25 @@
         <context>agile-planning-platform</context>
     </web-resource>
 
-    <web-section name="Agile Planning Platform Home" i18n-name-key="app-main-section.name" key="app_section"
-                 location="app_link" weight="10"/>
+    <web-section name="Agile Planner Nav Bar Top" i18n-name-key="agile-planner-nav-bar-top.name" key="agile-planner-nav-bar-top" location="agile-planner-nav-bar-top-item-link"
+                 weight="1000">
+        <description key="agile-planner-nav-bar-top.description">The mySection Plugin</description>
+    </web-section>
 
-    <web-item key="app_home" name="Link on Agile Planning Platform Home" section="system.top.navigation.bar" weight="47">
-        <description key="item.app.home.desc">Agile planning platform</description>
-        <label>APP</label>
-        <!--> for now this button leads to default create issue page <-->
-        <link linkId="app_home">/secure/CreateIssue!default.jspa</link>
+    <web-item name="Agile Planner Nav Bar Top Item" i18n-name-key="agile-planner-nav-bar-top-item.name" key="agile-planner-nav-bar-top-item" section="system.top.navigation.bar"
+              weight="1000">
+        <description key="agile-planner-nav-bar-top-item.description">The myItem Plugin</description>
+        <label>Agile Planning</label>
+        <link linkId="agile-planner-nav-bar-top-item-link"></link>
     </web-item>
+
+    <web-item name="Agile Planner" i18n-name-key="agile-planner.name" key="agile-planner" section="agile-planner-nav-bar-top-item-link/agile-planner-nav-bar-top"
+              weight="1000">
+        <description key="agile-planner-nav-bar-top-item.description">The myItem Plugin</description>
+        <label>My Planner</label>
+        <link>https://google.com</link>
+    </web-item>
+
+
     
 </atlassian-plugin>
