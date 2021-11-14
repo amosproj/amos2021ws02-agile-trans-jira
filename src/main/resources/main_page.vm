@@ -1,0 +1,98 @@
+$webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-button")
+
+<html>
+<head>
+    <title>Agile Planning Platform</title>
+    <!-- atl.general for general jira page -->
+    <meta name="decorator" content="atl.general">
+</head>
+<body>
+<div id="page">
+
+    <div class="aui-page-header">
+        <div class="aui-page-header-inner">
+            <div class="aui-page-header-image">
+                <span class="aui-avatar aui-avatar-project aui-avatar-large">
+                    <span class="aui-avatar-inner">
+                        <img src="/images/pluginLogo.png" alt="" role="presentation" />
+                    </span>
+                </span>
+
+            </div>
+            <div class="aui-page-header-main">
+                <h1>
+                    Agile Planning Platform
+                </h1>
+                <ol class="aui-nav aui-nav-breadcrumbs">
+                </ol>
+            </div>
+        </div>
+    </div>
+    <main class="aui-page-panel" id="main" role="main">
+        <div style="width: 100%;overflow:auto;" class="aui-page-panel-inner">
+            <nav style="float:left; width: 20%" class="aui-page-panel-nav">
+                <div class="aui-nav-heading" title="Members">
+                    <strong>Members</strong>
+                </div>
+                <ul class="aui-nav" title="Members actions">
+                    <li>
+                        <a class="aui-nav-item" href="#">
+                            <span class="aui-icon aui-icon-small aui-iconfont-people-group"></span>
+                            <span class="aui-nav-item-label">Manage Teams</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="aui-nav-item" href="#">
+                            <span class="aui-icon aui-icon-small aui-iconfont-invite-team"></span>
+                            <span class="aui-nav-item-label">Add Team Members</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="aui-nav-heading" title="Requests">
+                    <strong>Requests</strong>
+                </div>
+                <ul class="aui-nav" title="Requests actions">
+                    <li>
+                        <a class="aui-nav-item" href="#">
+                            <span class="aui-icon aui-icon-small aui-iconfont-list-add"></span>
+                            <span class="aui-nav-item-label">Create Request</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="aui-nav-item" href="#">
+                            <span class="aui-icon aui-icon-small aui-iconfont-list"></span>
+                            <span class="aui-nav-item-label">Request Overview</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div style="float:left;" class="aui-page-panel-content">
+                <nav class="aui-navgroup aui-navgroup-horizontal">
+                    <div class="aui-navgroup-inner">
+                        <div class="aui-navgroup-primary">
+                            <ul class="aui-nav">
+                                <li><a href="#">Personal Calendar</a></li>
+                                <li><a href="#">Teams Calendar</a></li>
+                                <li><a href="#">Requests</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+
+
+        </main>
+    </div>
+
+    <footer id="footer" role="contentinfo">
+        <section class="footer-body">
+            <div id="footer-logo"><a href="https://www.atlassian.com/" target="_blank">Atlassian</a></div>
+        </section>
+    </footer>
+
+</body>
+</html>
