@@ -18,7 +18,8 @@ In order to start developing, please make sure you have the following prerequisi
 Now do the following steps:
 
 1. Clone this repository or refresh it (Use your username and the Github developer Token as a password)
-2. You are done!!!
+2. Run ```npm install @atlassian/aui``` to add the AUI library to the project
+3. You are done!!!
 
 In order to execute the current state of the plugin run
 
