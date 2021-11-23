@@ -1,6 +1,7 @@
 $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-button")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
 
 <html>
 <head>
@@ -10,6 +11,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
 </head>
 <body>
 <div id="page">
+    <div id="content">
 
     <div class="aui-page-header">
         <div class="aui-page-header-inner">
@@ -143,6 +145,93 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
                                     <aui-label for="JQL-switch">Use JQL</aui-label>
                                     <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
                                 </div>
+                        <div class="aui-nav-heading" title="Requests">
+                            <strong>Requests</strong>
+                        </div>
+                        <ul class="aui-nav" title="Requests actions">
+                            <li>
+                                <a class="aui-nav-item" href="#">
+                                    <span class="aui-icon aui-icon-small aui-iconfont-list-add"></span>
+                                    <span class="aui-nav-item-label">Create Request</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="aui-nav-item" href="#">
+                                    <span class="aui-icon aui-icon-small aui-iconfont-list"></span>
+                                    <span class="aui-nav-item-label">Request Overview</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <main id="main" role="main" class="aui-page-panel-content">
+                    <nav class="aui-navgroup aui-navgroup-horizontal">
+                        <div class="aui-tabs horizontal-tabs">
+                            <ul class="tabs-menu">
+                                <li class="menu-item active-tab">
+                                    <a href="#personal-calendar">Personal Calendar</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#teams-calendar">Teams Calendar</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#request-overview">Request Overview</a>
+                                </li>
+                            </ul>
+                            <div class="tabs-pane active-pane" id="personal-calendar">
+                                <h2>This is tab 1</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                            <div class="tabs-pane" id="teams-calendar">
+                                <h2>This is tab 2</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                            <!--Content of the Request Overview tab-->
+                            <div class="tabs-pane" id="request-overview">
+                                <div class="aui-group">
+                                    <div class="aui-item">
+                                        <h2 style="float: left">Request Overview</h2>
+                                    </div>
+                                    <div class="aui-item">
+                                        <div style="float: right" class="aui-buttons">
+                                            <button class="aui-button aui-dropdown2-trigger"
+                                                    aria-controls="example-dropdown">Export Requests
+                                            </button>
+                                            <button class="aui-button">Go To Advanced Search</button>
+                                            <button class="aui-button">
+                                                <span class="aui-icon aui-icon-small aui-iconfont-list "></span>List View
+                                            </button>
+                                            <button class="aui-button">
+                                                <span class="aui-icon aui-icon-small aui-iconfont-detail-view"></span>Detail
+                                                View
+                                            </button>
+                                            <button aria-controls="compact-button-dropdown"
+                                                    class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger-arrowless">
+                                                <span class="aui-icon aui-icon-small aui-iconfont-more">More</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="aui-group">
+                                    <form style="float: left" class="aui">
+                                        <input id="search-issues" placeholder="Search Issues" type="text" class="text">
+                                    </form>
+                                    <div class="aui-buttons">
+                                        <button class="aui-button aui-button-primary aui-dropdown2-trigger"
+                                                aria-controls="example-dropdown">Project: Agile Planing Platform
+                                        </button>
+                                        <button class="aui-button aui-dropdown2-trigger"
+                                                aria-controls="example-dropdown">Type
+                                        </button>
+                                        <button class="aui-button aui-dropdown2-trigger"
+                                                aria-controls="example-dropdown">Assignee
+                                        </button>
+                                        <button class="aui-button">More
+                                            <span class="aui-icon aui-icon-small aui-iconfont-add"></span></button>
+                                    </div>
+                                    <div style="float: right">
+                                        <aui-label for="JQL-switch">Use JQL</aui-label>
+                                        <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
+                                    </div>
 
                             </div>
                             <table class="aui aui-table-sortable">
@@ -168,11 +257,6 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
     </main>
 </div>
 
-<footer id="footer" role="contentinfo">
-    <section class="footer-body">
-        <div id="footer-logo"><a href="https://www.atlassian.com/" target="_blank">Atlassian</a></div>
-    </section>
-</footer>
 
 ## dropdown popup activated when clicking status
 <aui-dropdown-menu id="status-dropdown">
