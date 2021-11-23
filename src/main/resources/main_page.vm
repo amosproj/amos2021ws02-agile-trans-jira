@@ -125,13 +125,17 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
                                             aria-controls="example-dropdown">Project: Agile Planing Platform
                                     </button>
                                     <button class="aui-button aui-dropdown2-trigger"
-                                            aria-controls="example-dropdown">Type
+                                            aria-controls="status-dropdown">Type
                                     </button>
                                     <button class="aui-button aui-dropdown2-trigger"
-                                            aria-controls="example-dropdown">Assignee
+                                            aria-controls="assignee-dropdown">Assignee
                                     </button>
-                                    <button class="aui-button">More
-                                        <span class="aui-icon aui-icon-small aui-iconfont-add"></span></button>
+                                    <button class="aui-button aui-dropdown2-trigger" aria-controls="more-dropdown">More
+                                        <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
+                                    </button>
+                                    <button class="aui-button aui-button-primary search-button" type="button" original-title="Search for issues" resolved="">Search</button>
+
+
                                 </div>
                                 <div style="float: right">
                                     <aui-label for="JQL-switch">Use JQL</aui-label>
@@ -167,6 +171,69 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
         <div id="footer-logo"><a href="https://www.atlassian.com/" target="_blank">Atlassian</a></div>
     </section>
 </footer>
+
+<aui-dropdown-menu id="status-dropdown">
+    <aui-section label="Request Status">
+        <aui-item-checkbox interactive checked>Open</aui-item-checkbox>
+        <aui-item-checkbox interactive>Closed</aui-item-checkbox>
+        <aui-item-checkbox interactive>Canceled</aui-item-checkbox>
+    </aui-section>
+
+</aui-dropdown-menu>
+
+
+<aui-dropdown-menu id="assignee-dropdown">
+    <aui-section label="Search">
+        ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
+        <form style="float: left" class="aui">
+            <input id="search-issues" placeholder="Find Assignee.." aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" type="text" class="text">
+        </form>
+    </aui-section>
+    <aui-section label="Assignees">
+        <aui-item-checkbox interactive checked>Current User</aui-item-checkbox>
+        <aui-item-checkbox interactive>Unassigned</aui-item-checkbox>
+    </aui-section>
+    <aui-section label="Suggested Users">
+        <aui-item-checkbox interactive checked>admin</aui-item-checkbox>
+    </aui-section>
+
+</aui-dropdown-menu>
+
+<aui-dropdown-menu id="more-dropdown">
+    <aui-section label="Search">
+        <form style="float: left" class="aui">
+            <input id="search-issues" placeholder="Find Criteria.." aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" type="text" class="text">
+        </form>    </aui-section>
+    <aui-section label="All criteria">
+        <aui-item-checkbox interactive checked>Criteria 1</aui-item-checkbox>
+        <aui-item-checkbox interactive>Criteria 2</aui-item-checkbox>
+        <aui-item-checkbox interactive>Criteria 3</aui-item-checkbox>
+        <aui-item-checkbox interactive>Criteria 4</aui-item-checkbox>
+        <aui-item-checkbox interactive>Criteria 5</aui-item-checkbox>
+        <aui-item-checkbox interactive>Criteria 6</aui-item-checkbox>
+        <aui-item-checkbox interactive>Criteria 7</aui-item-checkbox>
+        <aui-item-checkbox interactive>Criteria 8</aui-item-checkbox>
+
+
+</aui-dropdown-menu>
+
+<script>mendeleyWebImporter = {
+    downloadPdfs(t,e) { return this._call('downloadPdfs', [t,e]); },
+    open() { return this._call('open', []); },
+    setLoginToken(t) { return this._call('setLoginToken', [t]); },
+    _call(methodName, methodArgs) {
+        const id = Math.random();
+        window.postMessage({ id, token: '0.47825054662387356', methodName, methodArgs }, 'http://localhost:2990');
+        return new Promise(resolve => {
+            const listener = window.addEventListener('message', event => {
+                const data = event.data;
+                if (typeof data !== 'object' || !('result' in data) || data.id !== id) return;
+                window.removeEventListener('message', listener);
+                resolve(data.result);
+            });
+        });
+    }
+};</script>
 
 </body>
 </html>
