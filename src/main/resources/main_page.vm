@@ -62,7 +62,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
                         </a>
                     </li>
                     <li>
-                        <a class="aui-nav-item" href="#">
+                        <a class="aui-nav-item" href="/jira/issues/?jql=">
                             <span class="aui-icon aui-icon-small aui-iconfont-list"></span>
                             <span class="aui-nav-item-label">Request Overview</span>
                         </a>
@@ -116,6 +116,8 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
                                     </div>
                                 </div>
                             </div>
+
+                            ## second filter bar buttons
                             <div class="aui-group">
                                 <form style="float: left" class="aui">
                                     <input id="search-issues" placeholder="Search Issues" type="text" class="text">
@@ -172,6 +174,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
     </section>
 </footer>
 
+## dropdown popup activated when clicking status
 <aui-dropdown-menu id="status-dropdown">
     <aui-section label="Request Status">
         <aui-item-checkbox interactive checked>Open</aui-item-checkbox>
@@ -181,7 +184,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
 
 </aui-dropdown-menu>
 
-
+## dropdown popup activated when clicking assignee
 <aui-dropdown-menu id="assignee-dropdown">
     <aui-section label="Search">
         ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
@@ -199,6 +202,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
 
 </aui-dropdown-menu>
 
+## dropdown popup activated when clicking more
 <aui-dropdown-menu id="more-dropdown">
     <aui-section label="Search">
         <form style="float: left" class="aui">
@@ -217,23 +221,23 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
 
 </aui-dropdown-menu>
 
-<script>mendeleyWebImporter = {
-    downloadPdfs(t,e) { return this._call('downloadPdfs', [t,e]); },
-    open() { return this._call('open', []); },
-    setLoginToken(t) { return this._call('setLoginToken', [t]); },
-    _call(methodName, methodArgs) {
-        const id = Math.random();
-        window.postMessage({ id, token: '0.47825054662387356', methodName, methodArgs }, 'http://localhost:2990');
-        return new Promise(resolve => {
-            const listener = window.addEventListener('message', event => {
-                const data = event.data;
-                if (typeof data !== 'object' || !('result' in data) || data.id !== id) return;
-                window.removeEventListener('message', listener);
-                resolve(data.result);
-            });
-        });
-    }
-};</script>
+##<script>mendeleyWebImporter = {
+##    downloadPdfs(t,e) { return this._call('downloadPdfs', [t,e]); },
+##    open() { return this._call('open', []); },
+##    setLoginToken(t) { return this._call('setLoginToken', [t]); },
+##    _call(methodName, methodArgs) {
+##        const id = Math.random();
+##        window.postMessage({ id, token: '0.47825054662387356', methodName, methodArgs }, 'http://localhost:2990');
+##        return new Promise(resolve => {
+##            const listener = window.addEventListener('message', event => {
+##                const data = event.data;
+##                if (typeof data !== 'object' || !('result' in data) || data.id !== id) return;
+##                window.removeEventListener('message', listener);
+##                resolve(data.result);
+##            });
+##        });
+##    }
+##};</script>
 
 </body>
 </html>
