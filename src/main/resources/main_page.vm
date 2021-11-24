@@ -125,167 +125,177 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
                                 </div>
 
                                 ## second filter bar buttons
-                                <div class="aui-group" id="second-filter" style="display:inline-block">
-                                    <form style="float: left" class="aui">
-                                        <input id="search-issues" placeholder="Search Issues" type="text" class="text">
-                                    </form>
-                                    <div class="aui-buttons">
-                                        <button class="aui-button aui-button-primary aui-dropdown2-trigger"
-                                                aria-controls="example-dropdown">Project: Agile Planing Platform
-                                        </button>
-                                        <button class="aui-button aui-dropdown2-trigger"
-                                                aria-controls="status-dropdown">Type
-                                        </button>
-                                        <button class="aui-button aui-dropdown2-trigger"
-                                                aria-controls="assignee-dropdown">Assignee
-                                        </button>
-                                        <button class="aui-button aui-dropdown2-trigger" aria-controls="more-dropdown">
-                                            More
-                                            <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
-                                        </button>
-                                        ## search button
-                                        <button style="float: left;" class="aui-button aui-button-primary search-button"
-                                                type="button" original-title="Search for issues" resolved="">Search
-                                        </button>
+                                <div class="aui-group">
+                                    <div class="aui-item" id="second-filter" style="display:inline-block">
+                                        <form style="float: left" class="aui">
+                                            <input id="search-issues" placeholder="Search Issues" type="text"
+                                                   class="text">
+                                        </form>
+                                        <div class="aui-buttons">
+                                            <button class="aui-button aui-button-primary aui-dropdown2-trigger"
+                                                    aria-controls="example-dropdown">Project: Agile Planing Platform
+                                            </button>
+                                            <button class="aui-button aui-dropdown2-trigger"
+                                                    aria-controls="status-dropdown">Type
+                                            </button>
+                                            <button class="aui-button aui-dropdown2-trigger"
+                                                    aria-controls="assignee-dropdown">Assignee
+                                            </button>
+                                            <button class="aui-button aui-dropdown2-trigger"
+                                                    aria-controls="more-dropdown">
+                                                More
+                                                <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
+                                            </button>
+                                            ## search button
+                                            <button style="float: left;"
+                                                    class="aui-button aui-button-primary search-button"
+                                                    type="button" original-title="Search for issues" resolved="">Search
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
 
-                                ## second filter bar advanced search
-                                <div class="aui-group" id="jql-search" style="display:none">
+                                    ## second filter bar advanced search
+                                    <div class="aui-item" id="jql-search" style="display:none">
                                         <form style="float: left" class="aui">
                                             <input style="min-width: 50rem" id="search-issues"
                                                    placeholder="Type JQL Query.." type="text" class="text">
                                         </form>
-                                    ## search button
-                                    <button style="float: left;" class="aui-button aui-button-primary search-button"
-                                            type="button" original-title="Search for issues" resolved="">Search
-                                    </button>
-                                </div>
-
-                                <div style="display:inline-block; width:100%">
-                                    <div style="float: right">
-                                        <aui-label for="JQL-switch">Use JQL</aui-label>
-                                        <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
+                                        ## search button
+                                        <button style="float: left;"
+                                                class="aui-button aui-button-primary search-button"
+                                                type="button" original-title="Search for issues" resolved="">Search
+                                        </button>
                                     </div>
+                                    <div style="display:inline-block; float: right">
+                                    <aui-label for="JQL-switch">Use JQL</aui-label>
+                                    <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
                                 </div>
-
-                                ## result table
-                                <table class="aui aui-table-sortable">
-                                    <thead>
-                                    <tr>
-                                        <th>Type</th>
-                                        <th class="aui-table-column-issue-key">Issue key</th>
-                                        <th class="aui-table-column-unsortable">Summary</th>
-                                        <th>Assignee</th>
-                                        <th>Reporter</th>
-                                        <th>P</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </thead>
-                                </table>
-
                             </div>
-                            ## dropdown popup activated when clicking status
-                            <aui-dropdown-menu id="status-dropdown">
-                                <aui-section label="Request Status">
-                                    <aui-item-checkbox interactive checked>Open</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Closed</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Canceled</aui-item-checkbox>
-                                </aui-section>
 
-                            </aui-dropdown-menu>
+                            ## result table
+                            <table class="aui aui-table-sortable">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th class="aui-table-column-issue-key">Issue key</th>
+                                    <th class="aui-table-column-unsortable">Summary</th>
+                                    <th>Assignee</th>
+                                    <th>Reporter</th>
+                                    <th>P</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                            </table>
 
-                            ## dropdown popup activated when clicking assignee
-                            <aui-dropdown-menu id="assignee-dropdown">
-                                <aui-section label="Search">
-                                    ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
-                                    <form style="float: left" class="aui">
-                                        <input id="search-issues" placeholder="Find Assignee.." aria-autocomplete="list"
-                                               aria-haspopup="true" aria-expanded="true" type="text" class="text">
-                                    </form>
-                                </aui-section>
-                                <aui-section label="Assignees">
-                                    <aui-item-checkbox interactive checked>Current User</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Unassigned</aui-item-checkbox>
-                                </aui-section>
-                                <aui-section label="Suggested Users">
-                                    <aui-item-checkbox interactive checked>admin</aui-item-checkbox>
-                                </aui-section>
-
-                            </aui-dropdown-menu>
-
-                            ## dropdown popup activated when clicking more
-                            <aui-dropdown-menu id="more-dropdown">
-                                <aui-section>
-                                    <form style="float: left" class="aui">
-                                        <input id="search-issues" placeholder="Find Assignee.." aria-autocomplete="list"
-                                               aria-haspopup="true" aria-expanded="true" type="text" class="text">
-                                    </form>
-                                </aui-section>
-                                <aui-section label="All Criteria">
-                                    <aui-item-checkbox interactive checked>Criteria 1</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Criteria 2</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Criteria 3</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Criteria 4</aui-item-checkbox>
-
-                                </aui-section>
-
-
-                            </aui-dropdown-menu>
-
-                            ## dropdown popup activated when clicking export
-                            <aui-dropdown-menu id="export-dropdown">
-                                <aui-section label="Search">
-                                    <form style="float: left" class="aui">
-                                        <input id="search-issues" placeholder="Find Criteria.." aria-autocomplete="list"
-                                               aria-haspopup="true" aria-expanded="true" type="text" class="text">
-                                    </form>
-                                </aui-section>
-                                <aui-section>
-                                    <aui-item-link href="http://amazon.com">Printable</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">Full Content</aui-item-link>
-                                </aui-section>
-                                <aui-section>
-                                    <aui-item-link href="http://amazon.com">RSS (Issues)</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">RSS (Comments)</aui-item-link>
-                                </aui-section>
-                                <aui-section>
-                                    <aui-item-link href="http://amazon.com">CSV (All fields)</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">CSV (Current fields)</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">HTML (All fields)</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">HTML (Current fields)</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">XML</aui-item-link>
-                                </aui-section>
-                                <aui-section>
-                                    <aui-item-link href="http://amazon.com">Word</aui-item-link>
-                                </aui-section>
-                                <aui-section>
-                                    <aui-item-link href="http://amazon.com">Dashboard charts</aui-item-link>
-                                </aui-section>
-
-
-                            </aui-dropdown-menu>
-
-                            <script>
-                                var toggle = document.getElementById('JQL-switch');
-                                toggle.addEventListener('change', function (e) {
-                                    var isChecked = toggle.checked;     // new value of the toggle
-
-                                    var x = document.getElementById("second-filter");
-                                    var y = document.getElementById("jql-search");
-
-                                    if (isChecked) {
-                                        x.style.display = "none";
-                                        y.style.display = "inline-block";
-                                    } else {
-                                        x.style.display = "inline-block";
-                                        y.style.display = "none";
-                                    }
-
-                                });
-
-                            </script>
                         </div>
+                        ## dropdown popup activated when clicking status
+                        <aui-dropdown-menu id="status-dropdown">
+                            <aui-section label="Request Status">
+                                <aui-item-checkbox interactive checked>Open</aui-item-checkbox>
+                                <aui-item-checkbox interactive>Closed</aui-item-checkbox>
+                                <aui-item-checkbox interactive>Canceled</aui-item-checkbox>
+                            </aui-section>
+
+                        </aui-dropdown-menu>
+
+                        ## dropdown popup activated when clicking assignee
+                        <aui-dropdown-menu id="assignee-dropdown">
+                            <aui-section label="Search">
+                                ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
+                                <form style="float: left" class="aui">
+                                    <input id="search-issues" placeholder="Find Assignee.."
+                                           aria-autocomplete="list"
+                                           aria-haspopup="true" aria-expanded="true" type="text"
+                                           class="text">
+                                </form>
+                            </aui-section>
+                            <aui-section label="Assignees">
+                                <aui-item-checkbox interactive checked>Current User</aui-item-checkbox>
+                                <aui-item-checkbox interactive>Unassigned</aui-item-checkbox>
+                            </aui-section>
+                            <aui-section label="Suggested Users">
+                                <aui-item-checkbox interactive checked>admin</aui-item-checkbox>
+                            </aui-section>
+
+                        </aui-dropdown-menu>
+
+                        ## dropdown popup activated when clicking more
+                        <aui-dropdown-menu id="more-dropdown">
+                            <aui-section>
+                                <form style="float: left" class="aui">
+                                    <input id="search-issues" placeholder="Find Assignee.."
+                                           aria-autocomplete="list"
+                                           aria-haspopup="true" aria-expanded="true" type="text"
+                                           class="text">
+                                </form>
+                            </aui-section>
+                            <aui-section label="All Criteria">
+                                <aui-item-checkbox interactive checked>Criteria 1</aui-item-checkbox>
+                                <aui-item-checkbox interactive>Criteria 2</aui-item-checkbox>
+                                <aui-item-checkbox interactive>Criteria 3</aui-item-checkbox>
+                                <aui-item-checkbox interactive>Criteria 4</aui-item-checkbox>
+
+                            </aui-section>
+
+
+                        </aui-dropdown-menu>
+
+                        ## dropdown popup activated when clicking export
+                        <aui-dropdown-menu id="export-dropdown">
+                            <aui-section label="Search">
+                                <form style="float: left" class="aui">
+                                    <input id="search-issues" placeholder="Find Criteria.."
+                                           aria-autocomplete="list"
+                                           aria-haspopup="true" aria-expanded="true" type="text"
+                                           class="text">
+                                </form>
+                            </aui-section>
+                            <aui-section>
+                                <aui-item-link href="http://amazon.com">Printable</aui-item-link>
+                                <aui-item-link href="http://amazon.com">Full Content</aui-item-link>
+                            </aui-section>
+                            <aui-section>
+                                <aui-item-link href="http://amazon.com">RSS (Issues)</aui-item-link>
+                                <aui-item-link href="http://amazon.com">RSS (Comments)</aui-item-link>
+                            </aui-section>
+                            <aui-section>
+                                <aui-item-link href="http://amazon.com">CSV (All fields)</aui-item-link>
+                                <aui-item-link href="http://amazon.com">CSV (Current fields)</aui-item-link>
+                                <aui-item-link href="http://amazon.com">HTML (All fields)</aui-item-link>
+                                <aui-item-link href="http://amazon.com">HTML (Current fields)
+                                </aui-item-link>
+                                <aui-item-link href="http://amazon.com">XML</aui-item-link>
+                            </aui-section>
+                            <aui-section>
+                                <aui-item-link href="http://amazon.com">Word</aui-item-link>
+                            </aui-section>
+                            <aui-section>
+                                <aui-item-link href="http://amazon.com">Dashboard charts</aui-item-link>
+                            </aui-section>
+
+
+                        </aui-dropdown-menu>
+
+                        <script>
+                            var toggle = document.getElementById('JQL-switch');
+                            toggle.addEventListener('change', function (e) {
+                                var isChecked = toggle.checked;     // new value of the toggle
+
+                                var x = document.getElementById("second-filter");
+                                var y = document.getElementById("jql-search");
+
+                                if (isChecked) {
+                                    x.style.display = "none";
+                                    y.style.display = "inline-block";
+                                } else {
+                                    x.style.display = "inline-block";
+                                    y.style.display = "none";
+                                }
+
+                            });
+
+                        </script>
+            </div>
             </nav>
         </main>
     </div>
