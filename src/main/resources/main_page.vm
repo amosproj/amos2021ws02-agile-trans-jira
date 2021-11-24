@@ -13,138 +13,45 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
 <div id="page">
     <div id="content">
 
-    <div class="aui-page-header">
-        <div class="aui-page-header-inner">
-            <div class="aui-page-header-image">
+        <div class="aui-page-header">
+            <div class="aui-page-header-inner">
+                <div class="aui-page-header-image">
                 <span class="aui-avatar aui-avatar-project aui-avatar-large">
                     <span class="aui-avatar-inner">
-                        <img src="/images/pluginLogo.png" alt="" role="presentation"/>
+                        <img src="/images/pluginLogo.png" alt="" role="presentation" />
                     </span>
                 </span>
 
-            </div>
-            <div class="aui-page-header-main">
-                <h1>
-                    Agile Planning Platform
-                </h1>
-                <ol class="aui-nav aui-nav-breadcrumbs">
-                </ol>
+                </div>
+                <div class="aui-page-header-main">
+                    <h1>
+                        Agile Planning Platform
+                    </h1>
+                </div>
             </div>
         </div>
-    </div>
-    <main class="aui-page-panel" id="main" role="main">
-        <div style="width: 100%;overflow:auto;" class="aui-page-panel-inner">
-            <nav style="float:left; width: 20%" class="aui-page-panel-nav">
-                <div class="aui-nav-heading" title="Members">
-                    <strong>Members</strong>
-                </div>
-                <ul class="aui-nav" title="Members actions">
-                    <li>
-                        <a class="aui-nav-item" href="#">
-                            <span class="aui-icon aui-icon-small aui-iconfont-people-group"></span>
-                            <span class="aui-nav-item-label">Manage Teams</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="aui-nav-item" href="#">
-                            <span class="aui-icon aui-icon-small aui-iconfont-invite-team"></span>
-                            <span class="aui-nav-item-label">Add Team Members</span>
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="aui-nav-heading" title="Requests">
-                    <strong>Requests</strong>
-                </div>
-                <ul class="aui-nav" title="Requests actions">
-                    <li>
-                        <a class="aui-nav-item" href="#">
-                            <span class="aui-icon aui-icon-small aui-iconfont-list-add"></span>
-                            <span class="aui-nav-item-label">Create Request</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="aui-nav-item" href="/jira/issues/?jql=">
-                            <span class="aui-icon aui-icon-small aui-iconfont-list"></span>
-                            <span class="aui-nav-item-label">Request Overview</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div style="float:left;width: 80%" class="aui-page-panel-content">
-                <nav class="aui-navgroup aui-navgroup-horizontal">
-                    <div class="aui-tabs horizontal-tabs">
-                        <ul class="tabs-menu">
-                            <li class="menu-item active-tab">
-                                <a href="#personal-calendar">Personal Calendar</a>
+        <main class="aui-page-panel" id="main" role="main">
+            <div class="aui-page-panel-inner">
+                <div class="aui-page-panel-nav">
+                    <nav class="aui-navgroup aui-navgroup-vertical" aria-label="page">
+                        <div class="aui-nav-heading" title="Members">
+                            <strong>Members</strong>
+                        </div>
+                        <ul class="aui-nav" title="Members actions">
+                            <li>
+                                <a class="aui-nav-item" href="#">
+                                    <span class="aui-icon aui-icon-small aui-iconfont-people-group"></span>
+                                    <span class="aui-nav-item-label">Manage Teams</span>
+                                </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="#teams-calendar">Teams Calendar</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#request-overview">Request Overview</a>
+                            <li>
+                                <a class="aui-nav-item" href="#">
+                                    <span class="aui-icon aui-icon-small aui-iconfont-invite-team"></span>
+                                    <span class="aui-nav-item-label">Add Team Members</span>
+                                </a>
                             </li>
                         </ul>
-                        <div class="tabs-pane active-pane" id="personal-calendar">
-                            <h2>This is tab 1</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <div class="tabs-pane" id="teams-calendar">
-                            <h2>This is tab 2</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <!--Content of the Request Overview tab-->
-                        <div class="tabs-pane" id="request-overview">
-                            <div class="aui-group">
-                                <div class="aui-item">
-                                    <h2 style="float: left">Request Overview</h2>
-                                </div>
-                                <div class="aui-item">
-                                    <div style="float: right" class="aui-buttons">
-                                        <button class="aui-button aui-dropdown2-trigger"
-                                                aria-controls="example-dropdown">Export Requests
-                                        </button>
-                                        <button class="aui-button">Go To Advanced Search</button>
-                                        <button class="aui-button">
-                                            <span class="aui-icon aui-icon-small aui-iconfont-list "></span>List View
-                                        </button>
-                                        <button class="aui-button">
-                                            <span class="aui-icon aui-icon-small aui-iconfont-detail-view"></span>Detail
-                                            View
-                                        </button>
-                                        <button aria-controls="compact-button-dropdown"
-                                                class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger-arrowless">
-                                            <span class="aui-icon aui-icon-small aui-iconfont-more">More</span></button>
-                                    </div>
-                                </div>
-                            </div>
 
-                            ## second filter bar buttons
-                            <div class="aui-group">
-                                <form style="float: left" class="aui">
-                                    <input id="search-issues" placeholder="Search Issues" type="text" class="text">
-                                </form>
-                                <div class="aui-buttons">
-                                    <button class="aui-button aui-button-primary aui-dropdown2-trigger"
-                                            aria-controls="example-dropdown">Project: Agile Planing Platform
-                                    </button>
-                                    <button class="aui-button aui-dropdown2-trigger"
-                                            aria-controls="status-dropdown">Type
-                                    </button>
-                                    <button class="aui-button aui-dropdown2-trigger"
-                                            aria-controls="assignee-dropdown">Assignee
-                                    </button>
-                                    <button class="aui-button aui-dropdown2-trigger" aria-controls="more-dropdown">More
-                                        <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
-                                    </button>
-                                    <button class="aui-button aui-button-primary search-button" type="button" original-title="Search for issues" resolved="">Search</button>
-
-
-                                </div>
-                                <div style="float: right">
-                                    <aui-label for="JQL-switch">Use JQL</aui-label>
-                                    <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
-                                </div>
                         <div class="aui-nav-heading" title="Requests">
                             <strong>Requests</strong>
                         </div>
@@ -156,7 +63,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
                                 </a>
                             </li>
                             <li>
-                                <a class="aui-nav-item" href="#">
+                                <a class="aui-nav-item" href="/jira/issues/?jql=type%20%3D%20request%20AND%20(status%20%3D%20Open%20OR%20status%20%3D%20Done%20)%20AND%20assignee%20%3D%20currentUser()">
                                     <span class="aui-icon aui-icon-small aui-iconfont-list"></span>
                                     <span class="aui-nav-item-label">Request Overview</span>
                                 </a>
@@ -187,141 +94,145 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
                             <!--Content of the Request Overview tab-->
-                            <div class="tabs-pane" id="request-overview">
-                                <div class="aui-group">
-                                    <div class="aui-item">
-                                        <h2 style="float: left">Request Overview</h2>
-                                    </div>
-                                    <div class="aui-item">
-                                        <div style="float: right" class="aui-buttons">
-                                            <button class="aui-button aui-dropdown2-trigger"
-                                                    aria-controls="example-dropdown">Export Requests
-                                            </button>
-                                            <button class="aui-button">Go To Advanced Search</button>
-                                            <button class="aui-button">
-                                                <span class="aui-icon aui-icon-small aui-iconfont-list "></span>List View
-                                            </button>
-                                            <button class="aui-button">
-                                                <span class="aui-icon aui-icon-small aui-iconfont-detail-view"></span>Detail
-                                                View
-                                            </button>
-                                            <button aria-controls="compact-button-dropdown"
-                                                    class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger-arrowless">
-                                                <span class="aui-icon aui-icon-small aui-iconfont-more">More</span></button>
+                           <div class="tabs-pane" id="request-overview">
+                                    <div class="aui-group">
+                                        <div class="aui-item">
+                                            <h2 style="float: left">Request Overview</h2>
                                         </div>
+                                        <div class="aui-item">
+                                            <div style="float: right" class="aui-buttons">
+                                                <button class="aui-button aui-dropdown2-trigger"
+                                                        aria-controls="example-dropdown">Export Requests
+                                                </button>
+                                                <button class="aui-button">Go To Advanced Search</button>
+                                                <button class="aui-button">
+                                                    <span class="aui-icon aui-icon-small aui-iconfont-list "></span>List View
+                                                </button>
+                                                <button class="aui-button">
+                                                    <span class="aui-icon aui-icon-small aui-iconfont-detail-view"></span>Detail
+                                                    View
+                                                </button>
+                                                <button aria-controls="compact-button-dropdown"
+                                                        class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger-arrowless">
+                                                    <span class="aui-icon aui-icon-small aui-iconfont-more">More</span></button>
+                                            </div>
                                     </div>
                                 </div>
-                                <div class="aui-group">
-                                    <form style="float: left" class="aui">
-                                        <input id="search-issues" placeholder="Search Issues" type="text" class="text">
-                                    </form>
-                                    <div class="aui-buttons">
-                                        <button class="aui-button aui-button-primary aui-dropdown2-trigger"
-                                                aria-controls="example-dropdown">Project: Agile Planing Platform
-                                        </button>
-                                        <button class="aui-button aui-dropdown2-trigger"
-                                                aria-controls="example-dropdown">Type
-                                        </button>
-                                        <button class="aui-button aui-dropdown2-trigger"
-                                                aria-controls="example-dropdown">Assignee
-                                        </button>
-                                        <button class="aui-button">More
-                                            <span class="aui-icon aui-icon-small aui-iconfont-add"></span></button>
-                                    </div>
+                                    ## second filter bar buttons
+                                    <div class="aui-group">
+                                        <form style="float: left" class="aui">
+                                            <input id="search-issues" placeholder="Search Issues" type="text" class="text">
+                                        </form>
+                                        <div class="aui-buttons">
+                                            <button class="aui-button aui-button-primary aui-dropdown2-trigger"
+                                                    aria-controls="example-dropdown">Project: Agile Planing Platform
+                                            </button>
+                                            <button class="aui-button aui-dropdown2-trigger"
+                                                    aria-controls="status-dropdown">Type
+                                            </button>
+                                            <button class="aui-button aui-dropdown2-trigger"
+                                                    aria-controls="assignee-dropdown">Assignee
+                                            </button>
+                                            <button class="aui-button aui-dropdown2-trigger" aria-controls="more-dropdown">More
+                                                <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
+                                            </button>
+                                            <button class="aui-button aui-button-primary search-button" type="button" original-title="Search for issues" resolved="">Search</button>
+
+
+                                        </div>
                                     <div style="float: right">
                                         <aui-label for="JQL-switch">Use JQL</aui-label>
                                         <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
                                     </div>
 
+                                </div>
+                                <table class="aui aui-table-sortable">
+                                    <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th class="aui-table-column-issue-key">Issue key</th>
+                                        <th class="aui-table-column-unsortable">Summary</th>
+                                        <th>Assignee</th>
+                                        <th>Reporter</th>
+                                        <th>P</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                                    ## dropdown popup activated when clicking status
+                                    <aui-dropdown-menu id="status-dropdown">
+                                        <aui-section label="Request Status">
+                                            <aui-item-checkbox interactive checked>Open</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Closed</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Canceled</aui-item-checkbox>
+                                        </aui-section>
+
+                                    </aui-dropdown-menu>
+
+                                    ## dropdown popup activated when clicking assignee
+                                    <aui-dropdown-menu id="assignee-dropdown">
+                                        <aui-section label="Search">
+                                            ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
+                                            <form style="float: left" class="aui">
+                                                <input id="search-issues" placeholder="Find Assignee.." aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" type="text" class="text">
+                                            </form>
+                                        </aui-section>
+                                        <aui-section label="Assignees">
+                                            <aui-item-checkbox interactive checked>Current User</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Unassigned</aui-item-checkbox>
+                                        </aui-section>
+                                        <aui-section label="Suggested Users">
+                                            <aui-item-checkbox interactive checked>admin</aui-item-checkbox>
+                                        </aui-section>
+
+                                    </aui-dropdown-menu>
+
+                                    ## dropdown popup activated when clicking more
+                                    <aui-dropdown-menu id="more-dropdown">
+                                        <aui-section label="Search">
+                                            <form style="float: left" class="aui">
+                                                <input id="search-issues" placeholder="Find Criteria.." aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" type="text" class="text">
+                                            </form>    </aui-section>
+                                        <aui-section label="All criteria">
+                                            <aui-item-checkbox interactive checked>Criteria 1</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Criteria 2</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Criteria 3</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Criteria 4</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Criteria 5</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Criteria 6</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Criteria 7</aui-item-checkbox>
+                                            <aui-item-checkbox interactive>Criteria 8</aui-item-checkbox>
+                                        </aui-section>
+
+                                    </aui-dropdown-menu>
+
+                                    ##<script>mendeleyWebImporter = {
+                                    ##    downloadPdfs(t,e) { return this._call('downloadPdfs', [t,e]); },
+                                    ##    open() { return this._call('open', []); },
+                                    ##    setLoginToken(t) { return this._call('setLoginToken', [t]); },
+                                    ##    _call(methodName, methodArgs) {
+                                    ##        const id = Math.random();
+                                    ##        window.postMessage({ id, token: '0.47825054662387356', methodName, methodArgs }, 'http://localhost:2990');
+                                    ##        return new Promise(resolve => {
+                                    ##            const listener = window.addEventListener('message', event => {
+                                    ##                const data = event.data;
+                                    ##                if (typeof data !== 'object' || !('result' in data) || data.id !== id) return;
+                                    ##                window.removeEventListener('message', listener);
+                                    ##                resolve(data.result);
+                                    ##            });
+                                    ##        });
+                                    ##    }
+                                    ##};</script>
                             </div>
-                            <table class="aui aui-table-sortable">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th class="aui-table-column-issue-key">Issue key</th>
-                                    <th class="aui-table-column-unsortable">Summary</th>
-                                    <th>Assignee</th>
-                                    <th>Reporter</th>
-                                    <th>P</th>
-                                    <th>Status</th>
-                                </tr>
-                                </thead>
-                            </table>
                         </div>
-                    </div>
-                </nav>
+                    </nav>
+                </main>
             </div>
-        </div>
 
 
-    </main>
+        </main>
+    </div>
 </div>
-
-
-## dropdown popup activated when clicking status
-<aui-dropdown-menu id="status-dropdown">
-    <aui-section label="Request Status">
-        <aui-item-checkbox interactive checked>Open</aui-item-checkbox>
-        <aui-item-checkbox interactive>Closed</aui-item-checkbox>
-        <aui-item-checkbox interactive>Canceled</aui-item-checkbox>
-    </aui-section>
-
-</aui-dropdown-menu>
-
-## dropdown popup activated when clicking assignee
-<aui-dropdown-menu id="assignee-dropdown">
-    <aui-section label="Search">
-        ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
-        <form style="float: left" class="aui">
-            <input id="search-issues" placeholder="Find Assignee.." aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" type="text" class="text">
-        </form>
-    </aui-section>
-    <aui-section label="Assignees">
-        <aui-item-checkbox interactive checked>Current User</aui-item-checkbox>
-        <aui-item-checkbox interactive>Unassigned</aui-item-checkbox>
-    </aui-section>
-    <aui-section label="Suggested Users">
-        <aui-item-checkbox interactive checked>admin</aui-item-checkbox>
-    </aui-section>
-
-</aui-dropdown-menu>
-
-## dropdown popup activated when clicking more
-<aui-dropdown-menu id="more-dropdown">
-    <aui-section label="Search">
-        <form style="float: left" class="aui">
-            <input id="search-issues" placeholder="Find Criteria.." aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" type="text" class="text">
-        </form>    </aui-section>
-    <aui-section label="All criteria">
-        <aui-item-checkbox interactive checked>Criteria 1</aui-item-checkbox>
-        <aui-item-checkbox interactive>Criteria 2</aui-item-checkbox>
-        <aui-item-checkbox interactive>Criteria 3</aui-item-checkbox>
-        <aui-item-checkbox interactive>Criteria 4</aui-item-checkbox>
-        <aui-item-checkbox interactive>Criteria 5</aui-item-checkbox>
-        <aui-item-checkbox interactive>Criteria 6</aui-item-checkbox>
-        <aui-item-checkbox interactive>Criteria 7</aui-item-checkbox>
-        <aui-item-checkbox interactive>Criteria 8</aui-item-checkbox>
-
-
-</aui-dropdown-menu>
-
-##<script>mendeleyWebImporter = {
-##    downloadPdfs(t,e) { return this._call('downloadPdfs', [t,e]); },
-##    open() { return this._call('open', []); },
-##    setLoginToken(t) { return this._call('setLoginToken', [t]); },
-##    _call(methodName, methodArgs) {
-##        const id = Math.random();
-##        window.postMessage({ id, token: '0.47825054662387356', methodName, methodArgs }, 'http://localhost:2990');
-##        return new Promise(resolve => {
-##            const listener = window.addEventListener('message', event => {
-##                const data = event.data;
-##                if (typeof data !== 'object' || !('result' in data) || data.id !== id) return;
-##                window.removeEventListener('message', listener);
-##                resolve(data.result);
-##            });
-##        });
-##    }
-##};</script>
 
 </body>
 </html>
