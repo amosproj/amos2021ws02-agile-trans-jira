@@ -2,12 +2,14 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-button")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
+$webResourceManager.requireResource("de.tuberlin.amos.gr2.agile-planning-platform:agile-planning-platform-resources")
 
 <html>
 <head>
     <title>Agile Planning Platform</title>
     <!-- atl.general for general jira page -->
     <meta name="decorator" content="atl.general">
+    <script src="bundled.dynamictable.js"></script>
 </head>
 <body>
 <div id="page">
@@ -88,12 +90,16 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
                             </ul>
                             <div class="tabs-pane active-pane" id="personal-calendar">
                                 <h2>This is tab 1</h2>
+                                    <div id="maincontainer">
+                                        <div id="container"></div>
+                                    </div>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
                             <div class="tabs-pane" id="teams-calendar">
                                 <h2>This is tab 2</h2>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
+
                             <!--Content of the Request Overview tab-->
                             <div class="tabs-pane" id="request-overview">
                                 <div class="aui-group">
