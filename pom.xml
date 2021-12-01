@@ -53,6 +53,12 @@
             <version>4.1.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.atlassian.activeobjects</groupId>
+            <artifactId>activeobjects-plugin</artifactId>
+            <version>${ao.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- WIRED TEST RUNNER DEPENDENCIES -->
         <dependency>
@@ -160,6 +166,7 @@
         </plugins>
     </build>
     <properties>
+        <ao.version>3.6.1</ao.version>
         <jira.version>8.13.0</jira.version>
         <amps.version>8.1.2</amps.version>
         <plugin.testrunner.version>2.0.2</plugin.testrunner.version>
