@@ -10,13 +10,10 @@
   </plugin-info>  
   <!-- add our i18n resource -->  
   <resource type="i18n" name="i18n" location="agile-planning-platform"/>  
-  <!-- add our web resources -->  
+  <!-- add our web resources -->
+
   <web-resource key="agile-planning-platform-resources" name="agile-planning-platform Web Resources"> 
     <dependency>com.atlassian.auiplugin:ajs</dependency>
-
-    <resource type="soy" name="soyui" location="/templates/servlets.soy"/>
-
-    <resource type="download" name="bundled.dynamictable.js" location="/frontend/bundled.dynamictable.js"/>
 
     <resource type="download" name="agile-planning-platform.css" location="/css/agile-planning-platform.css"/>  
     <resource type="download" name="agile-planning-platform.js" location="/js/agile-planning-platform.js"/>  
@@ -28,16 +25,19 @@
   <web-section name="Agile Planner Nav Bar Top" i18n-name-key="agile-planner-nav-bar-top.name" key="agile-planner-nav-bar-top" location="agile-planner-nav-bar-top-item-link" weight="1000"> 
     <description key="agile-planner-nav-bar-top.description">The mySection Plugin</description> 
   </web-section>
-  <web-item name="Agile Planner Nav Bar Top Item" i18n-name-key="agile-planner-nav-bar-top-item.name" key="agile-planner-nav-bar-top-item" section="system.top.navigation.bar" weight="1000"> 
+
+  <web-item name="Agile Planner Nav Bar Top Item" i18n-name-key="agile-planner-nav-bar-top-item.name" key="agile-planner-nav-bar-top-item" section="system.top.navigation.bar" weight="1000">
     <description key="agile-planner-nav-bar-top-item.description">Agile Planning</description>
     <label>Agile Planning</label>  
     <link linkId="agile-planner-nav-bar-top-item-link"/>
   </web-item>
+
   <web-item name="Agile Planner" i18n-name-key="agile-planner.name" key="agile-planner" section="agile-planner-nav-bar-top-item-link/agile-planner-nav-bar-top" weight="900">
     <description key="agile-planner-nav-bar-top-item.description">My Planner</description>
     <label>My Planner</label>
     <link>/plugins/servlet/agile-planning/planner</link>
   </web-item>
+
   <web-item name="Agile Planner Project Settings" i18n-name-key="agile-planner-project-settings.name" key="agile-planner-project-settings" section="agile-planner-nav-bar-top-item-link/agile-planner-nav-bar-top" weight="1000">
     <description key="agile-planner-nav-bar-top-item.description">Project Settings</description>
     <label>Project Settings</label>
@@ -56,4 +56,5 @@
     <description key="ProjectSettingsServlet.description">Project Settings servlet</description>
     <url-pattern>/agile-planning/planner/settings/project</url-pattern>
   </servlet>
+
 </atlassian-plugin>
