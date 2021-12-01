@@ -8,6 +8,18 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
     <title>Agile Planning Platform</title>
     <!-- atl.general for general jira page -->
     <meta name="decorator" content="atl.general">
+    <script>
+        ## pretty dirty solution to get request issue type id
+        ## sends an extra request to get header and retrive Request.ID from it and set it to the href from Create Request button
+        var req = new XMLHttpRequest();
+        req.open('GET', document.location, false);
+        req.send(null);
+        var header = req.getResponseHeader("Request.ID");
+        console.log(header);
+        $(document).ready(function(){
+            $('a[id*="create_request"]').attr('href', '/jira/secure/CreateIssue!default.jspa?issuetype=' + header);
+        });
+    </script>
 </head>
 <body>
 <div id="page">
@@ -57,7 +69,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
                         </div>
                         <ul class="aui-nav" title="Requests actions">
                             <li>
-                                <a class="aui-nav-item" href="#">
+                                <a class="aui-nav-item" id="create_request">
                                     <span class="aui-icon aui-icon-small aui-iconfont-list-add"></span>
                                     <span class="aui-nav-item-label">Create Request</span>
                                 </a>
