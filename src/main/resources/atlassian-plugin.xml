@@ -38,6 +38,11 @@
     <label>Project Settings</label>
     <link>/plugins/servlet/agile-planning/planner/settings/project</link>
   </web-item>
+  <web-item name="Agile Planner Team Manager" i18n-name-key="planner-team-management.name" key="agile-planner-team-management" section="agile-planner-nav-bar-top-item-link/agile-planner-nav-bar-top" weight="1000">
+    <description key="agile-planner-nav-bar-top-item.description">Team Management</description>
+    <label>Team Management</label>
+    <link>/plugins/servlet/agile-planning/planner/settings/team-management</link>
+  </web-item>
 
   <!-- Servlets for pages -->
   <servlet name="planner Main" i18n-name-key="planner-main.name" key="planner-main" class="de.tuberlin.amos.gr2.planner.main.MainPageServlet">
@@ -47,5 +52,9 @@
   <servlet name="planner Project Settings" i18n-name-key="planner-project-settings.name" key="planner-project-settings" class="de.tuberlin.amos.gr2.planner.settings.project.ProjectSettingsServlet">
     <description key="ProjectSettingsServlet.description">Project Settings servlet</description>
     <url-pattern>/agile-planning/planner/settings/project</url-pattern>
+  </servlet>
+  <servlet name="planner Team Management" i18n-name-key="planner-team-management.name" key="planner-team-management" class="de.tuberlin.amos.gr2.planner.settings.project.TeamManagementServlet">
+    <description key="TeamManagementServlet.description">Team Management servlet</description>
+    <url-pattern>/agile-planning/planner/settings/team-management</url-pattern>
   </servlet>
 </atlassian-plugin>
