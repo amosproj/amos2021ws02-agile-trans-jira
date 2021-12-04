@@ -9,15 +9,9 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
     <!-- atl.general for general jira page -->
     <meta name="decorator" content="atl.general">
     <script>
-        ## pretty dirty solution to get request issue type id
-        ## sends an extra request to get header and retrive Request.ID from it and set it to the href from Create Request button
-        var req = new XMLHttpRequest();
-        req.open('GET', document.location, false);
-        req.send(null);
-        var header = req.getResponseHeader("Request.ID");
-        console.log(header);
+        ## gets request_id param from context from MainPageServlet
         $(document).ready(function(){
-            $('a[id*="create_request"]').attr('href', '/jira/secure/CreateIssue!default.jspa?issuetype=' + header);
+            $('a[id*="create_request"]').attr('href', '/jira/secure/CreateIssue!default.jspa?issuetype=' + $request_id);
         });
     </script>
 </head>

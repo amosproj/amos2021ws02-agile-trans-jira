@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Servlet for the main page
@@ -46,13 +48,14 @@ public class MainPageServlet extends HttpServlet {
     {
         log.debug("MainPageServlet loaded");
         Collection<IssueType> issueTypes = issueTypeSchemeManager.getIssueTypesForDefaultScheme();
+        Map<String, Object> params = new HashMap<>();
         for(IssueType type: issueTypes) {
             if (type.getName().equals("Request")) {
-                response.setHeader("Request.ID", type.getId());
+                params.put("request_id", type.getId());
             }
         }
         response.setContentType("text/html;charset=utf-8");
-        renderer.render("main_page.vm", response.getWriter());
+        renderer.render("main_page.vm", params, response.getWriter());
     }
 
 }
