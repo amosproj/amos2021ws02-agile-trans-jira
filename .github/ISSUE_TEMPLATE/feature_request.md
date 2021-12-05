@@ -14,5 +14,10 @@ about: Suggest new feature (using user story)
 * ...
 
 ## Definition of done
-* Added only after week 5
-* The same for all features
+* Can be demoed
+* Fully tested with the unit test
+* Code well structured and formatted (hold to code conventions)
+* Clear explaination of code
+* No syntax/runtime errors
+* Codes are peerly reviewed
+* Communicate issues by leaving comments on github
