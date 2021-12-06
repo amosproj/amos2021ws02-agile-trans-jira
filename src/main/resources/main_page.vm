@@ -10,8 +10,8 @@ $webResourceManager.requireResources("de.tuberlin.amos.gr2:agile-planning-platfo
     <!-- atl.general for general jira page -->
     <meta name="decorator" content="atl.general">
     <script>
-        ## gets request_id param from context from MainPageServlet
-        $(document).ready(function(){
+            ## gets request_id param from context from MainPageServlet
+        $(document).ready(function () {
             $('a[id*="create_request"]').attr('href', '/jira/secure/CreateIssue!default.jspa?issuetype=' + $request_id);
         });
     </script>
@@ -46,13 +46,15 @@ $webResourceManager.requireResources("de.tuberlin.amos.gr2:agile-planning-platfo
                         </div>
                         <ul class="aui-nav" title="Members actions">
                             <li>
-                                <a class="aui-nav-item" href="/jira/plugins/servlet/agile-planning/planner/settings/team-management">
+                                <a class="aui-nav-item"
+                                   href="/jira/plugins/servlet/agile-planning/planner/settings/team-management">
                                     <span class="aui-icon aui-icon-small aui-iconfont-people-group"></span>
                                     <span class="aui-nav-item-label">Manage Teams</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="aui-nav-item" href="/jira/plugins/servlet/agile-planning/planner/settings/team-management">
+                                <a class="aui-nav-item"
+                                   href="/jira/plugins/servlet/agile-planning/planner/settings/team-management">
                                     <span class="aui-icon aui-icon-small aui-iconfont-invite-team"></span>
                                     <span class="aui-nav-item-label">Add Team Members</span>
                                 </a>
@@ -94,12 +96,802 @@ $webResourceManager.requireResources("de.tuberlin.amos.gr2:agile-planning-platfo
                                 </li>
                             </ul>
                             <div class="tabs-pane active-pane" id="personal-calendar">
-                                <h2>This is tab 1</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <span>
+                                    <style>
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #f5f7fa;
+    padding: 40px 0;
+    box-sizing: border-box;
+    color: #51565d;
+}
+
+.calendar {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(7, minmax(120px, 1fr));
+    grid-template-rows: 50px;
+    grid-auto-rows: 120px;
+    overflow: auto;
+}
+
+.calendar-container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: #fff;
+    max-width: 1200px;
+}
+
+.calendar-header {
+    text-align: center;
+    padding: 20px 0;
+    background: linear-gradient(to bottom, #fafbfd 0%, rgba(255, 255, 255, 0) 100%);
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+}
+
+.calendar-header h1 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.calendar-header p {
+    margin: 5px 0 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(81, 86, 93, 0.4);
+}
+
+.calendar-header button {
+    background: 0;
+    border: 0;
+    padding: 0;
+    color: rgba(81, 86, 93, 0.7);
+    cursor: pointer;
+    outline: 0;
+}
+
+.day {
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+    border-right: 1px solid rgba(166, 168, 179, 0.12);
+    text-align: center;
+    padding: 50px;
+    letter-spacing: 1px;
+    font-size: 12px;
+    box-sizing: border-box;
+    /*color: #98a0a6;*/
+    position: relative;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.day:nth-of-type(7n + 7) {
+    border-right: 0;
+}
+
+.day:nth-of-type(n + 1):nth-of-type(-n + 7) {
+    grid-row: 2;
+}
+
+.day:nth-of-type(n + 8):nth-of-type(-n + 14) {
+    grid-row: 3;
+}
+
+.day:nth-of-type(n + 15):nth-of-type(-n + 21) {
+    grid-row: 4;
+}
+
+.day:nth-of-type(n + 22):nth-of-type(-n + 28) {
+    grid-row: 5;
+}
+
+.day:nth-of-type(n + 29):nth-of-type(-n + 35) {
+    grid-row: 6;
+}
+
+.day:nth-of-type(7n + 1) {
+    grid-column: 1/1;
+}
+
+.day:nth-of-type(7n + 2) {
+    grid-column: 2/2;
+}
+
+.day:nth-of-type(7n + 3) {
+    grid-column: 3/3;
+}
+
+.day:nth-of-type(7n + 4) {
+    grid-column: 4/4;
+}
+
+.day:nth-of-type(7n + 5) {
+    grid-column: 5/5;
+}
+
+.day:nth-of-type(7n + 6) {
+    grid-column: 6/6;
+}
+
+.day:nth-of-type(7n + 7) {
+    grid-column: 7/7;
+}
+
+.day-name {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #99a1a7;
+    text-align: center;
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+    line-height: 50px;
+    font-weight: 500;
+}
+
+.day--disabled {
+    color: rgba(152, 160, 166, 0.6);
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f9f9fa' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    cursor: not-allowed;
+}
+
+.task {
+    border-left-width: 3px;
+    padding: 8px 12px;
+    margin: 10px;
+    border-left-style: solid;
+    font-size: 14px;
+    position: relative;
+}
+
+.task--warning {
+    border-left-color: #fdb44d;
+    grid-column: 4/span 3;
+    grid-row: 2;
+    background: #fef0db;
+    align-self: center;
+    color: #fc9b10;
+    margin-top: -5px;
+}
+
+.task--danger {
+    border-left-color: #fa607e;
+    grid-column: 2/span 3;
+    grid-row: 2;
+    margin-top: 15px;
+    background: rgba(253, 197, 208, 0.7);
+    align-self: end;
+    color: #f8254e;
+}
+
+.task--info {
+    border-left-color: #4786ff;
+    grid-column: 6/span 2;
+    grid-row: 3;
+    margin-top: 15px;
+    background: rgba(218, 231, 255, 0.7);
+    align-self: end;
+    color: #0a5eff;
+}
+
+.task--primary {
+    background: #4786ff;
+    border: 0;
+    border-radius: 4px;
+    grid-column: 3/span 3;
+    grid-row: 4;
+    align-self: end;
+    color: #fff;
+    box-shadow: 0 10px 14px rgba(71, 134, 255, 0.4);
+}
+
+.task__detail {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 10px);
+    background: #fff;
+    border: 1px solid rgba(166, 168, 179, 0.2);
+    color: #000;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    z-index: 2;
+}
+
+.task__detail:after, .task__detail:before {
+    bottom: 100%;
+    left: 30%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.task__detail:before {
+    border-bottom-color: rgba(166, 168, 179, 0.2);
+    border-width: 8px;
+    margin-left: -8px;
+}
+
+.task__detail:after {
+    border-bottom-color: #fff;
+    border-width: 6px;
+    margin-left: -6px;
+}
+
+.task__detail h2 {
+    font-size: 15px;
+    margin: 0;
+    color: #51565d;
+}
+
+.task__detail p {
+    margin-top: 4px;
+    font-size: 12px;
+    margin-bottom: 0;
+    font-weight: 500;
+    color: rgba(81, 86, 93, 0.7);
+}
+
+                                    </style>
+                                    <div class="calendar-container">
+<div class="calendar-container">
+  <div class="calendar"><span class="day-name">Team</span><span class="day-name">Jan</span><span
+          class="day-name">Feb</span><span class="day-name">Mar</span><span class="day-name">Apr</span><span
+          class="day-name">May</span><span class="day-name">Jun</span><span class="day-name"></span>
+    <div class="day">TEAM PARIS</div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day">TEAM PAWNEE</div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day">TEAM LONDON</div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <section class="task task--warning">TEST-1 Test Request</section>
+    <section class="task task--danger">TEST-2 Test Request</section>
+    <section class="task task--primary">TEST-3 Test Request</section>
+    <section class="task task--info">TEST-4 Test Request</section>
+  </div>
+</div>
+</div>
+                                </span>
+                                </br>
+                                <table class="aui aui-table-sortable">
+                                    <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th class="aui-table-column-issue-key">Issue key</th>
+                                        <th class="aui-table-column-unsortable">Summary</th>
+                                        <th>Assignee</th>
+                                        <th>Reporter</th>
+                                        <th>P</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-1</th>
+                                        <th class="aui-table-column-unsortable">Test request 1</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-2</th>
+                                        <th class="aui-table-column-unsortable">Test request 2</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-3</th>
+                                        <th class="aui-table-column-unsortable">Test request 3</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-4</th>
+                                        <th class="aui-table-column-unsortable">Test request 4</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="tabs-pane" id="teams-calendar">
-                                <h2>This is tab 2</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <span>
+                                    <style>
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #f5f7fa;
+    padding: 40px 0;
+    box-sizing: border-box;
+    color: #51565d;
+}
+
+.calendar {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(7, minmax(120px, 1fr));
+    grid-template-rows: 50px;
+    grid-auto-rows: 120px;
+    overflow: auto;
+}
+
+.calendar-container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: #fff;
+    max-width: 1200px;
+}
+
+.calendar-header {
+    text-align: center;
+    padding: 20px 0;
+    background: linear-gradient(to bottom, #fafbfd 0%, rgba(255, 255, 255, 0) 100%);
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+}
+
+.calendar-header h1 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.calendar-header p {
+    margin: 5px 0 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(81, 86, 93, 0.4);
+}
+
+.calendar-header button {
+    background: 0;
+    border: 0;
+    padding: 0;
+    color: rgba(81, 86, 93, 0.7);
+    cursor: pointer;
+    outline: 0;
+}
+
+.day {
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+    border-right: 1px solid rgba(166, 168, 179, 0.12);
+    text-align: center;
+    padding: 50px;
+    letter-spacing: 1px;
+    font-size: 12px;
+    box-sizing: border-box;
+    /*color: #98a0a6;*/
+    position: relative;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.day:nth-of-type(7n + 7) {
+    border-right: 0;
+}
+
+.day:nth-of-type(n + 1):nth-of-type(-n + 7) {
+    grid-row: 2;
+}
+
+.day:nth-of-type(n + 8):nth-of-type(-n + 14) {
+    grid-row: 3;
+}
+
+.day:nth-of-type(n + 15):nth-of-type(-n + 21) {
+    grid-row: 4;
+}
+
+.day:nth-of-type(n + 22):nth-of-type(-n + 28) {
+    grid-row: 5;
+}
+
+.day:nth-of-type(n + 29):nth-of-type(-n + 35) {
+    grid-row: 6;
+}
+
+.day:nth-of-type(7n + 1) {
+    grid-column: 1/1;
+}
+
+.day:nth-of-type(7n + 2) {
+    grid-column: 2/2;
+}
+
+.day:nth-of-type(7n + 3) {
+    grid-column: 3/3;
+}
+
+.day:nth-of-type(7n + 4) {
+    grid-column: 4/4;
+}
+
+.day:nth-of-type(7n + 5) {
+    grid-column: 5/5;
+}
+
+.day:nth-of-type(7n + 6) {
+    grid-column: 6/6;
+}
+
+.day:nth-of-type(7n + 7) {
+    grid-column: 7/7;
+}
+
+.day-name {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #99a1a7;
+    text-align: center;
+    border-bottom: 1px solid rgba(166, 168, 179, 0.12);
+    line-height: 50px;
+    font-weight: 500;
+}
+
+.day--disabled {
+    color: rgba(152, 160, 166, 0.6);
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f9f9fa' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    cursor: not-allowed;
+}
+
+.task {
+    border-left-width: 3px;
+    padding: 8px 12px;
+    margin: 10px;
+    border-left-style: solid;
+    font-size: 14px;
+    position: relative;
+}
+
+.task--warning {
+    border-left-color: #fdb44d;
+    grid-column: 4/span 3;
+    grid-row: 2;
+    background: #fef0db;
+    align-self: center;
+    color: #fc9b10;
+    margin-top: -5px;
+}
+
+.task--danger {
+    border-left-color: #fa607e;
+    grid-column: 2/span 3;
+    grid-row: 2;
+    margin-top: 15px;
+    background: rgba(253, 197, 208, 0.7);
+    align-self: end;
+    color: #f8254e;
+}
+
+.task--info {
+    border-left-color: #4786ff;
+    grid-column: 6/span 2;
+    grid-row: 3;
+    margin-top: 15px;
+    background: rgba(218, 231, 255, 0.7);
+    align-self: end;
+    color: #0a5eff;
+}
+
+.task--primary {
+    background: #4786ff;
+    border: 0;
+    border-radius: 4px;
+    grid-column: 3/span 3;
+    grid-row: 4;
+    align-self: end;
+    color: #fff;
+    box-shadow: 0 10px 14px rgba(71, 134, 255, 0.4);
+}
+
+.task__detail {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 10px);
+    background: #fff;
+    border: 1px solid rgba(166, 168, 179, 0.2);
+    color: #000;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    z-index: 2;
+}
+
+.task__detail:after, .task__detail:before {
+    bottom: 100%;
+    left: 30%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.task__detail:before {
+    border-bottom-color: rgba(166, 168, 179, 0.2);
+    border-width: 8px;
+    margin-left: -8px;
+}
+
+.task__detail:after {
+    border-bottom-color: #fff;
+    border-width: 6px;
+    margin-left: -6px;
+}
+
+.task__detail h2 {
+    font-size: 15px;
+    margin: 0;
+    color: #51565d;
+}
+
+.task__detail p {
+    margin-top: 4px;
+    font-size: 12px;
+    margin-bottom: 0;
+    font-weight: 500;
+    color: rgba(81, 86, 93, 0.7);
+}
+
+                                    </style>
+                                    <div class="calendar-container">
+<div class="calendar-container">
+  <div class="calendar"><span class="day-name">Team-Member</span><span class="day-name">Jan</span><span
+          class="day-name">Feb</span><span class="day-name">Mar</span><span class="day-name">Apr</span><span
+          class="day-name">May</span><span class="day-name">Jun</span><span class="day-name"></span>
+    <div class="day">Jane Doe</div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day">Gandalf Ring</div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day">Jeanette Raclettegit </div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <section class="task task--warning">TEST-5 Test Request</section>
+    <section class="task task--danger">TEST-12 Test Request</section>
+    <section class="task task--primary">TEST-3 Test Request</section>
+    <section class="task task--info">TEST-4 Test Request</section>
+  </div>
+</div>
+</div>
+                                </span>
+                                </br>
+                                <table class="aui aui-table-sortable">
+                                    <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th class="aui-table-column-issue-key">Issue key</th>
+                                        <th class="aui-table-column-unsortable">Summary</th>
+                                        <th>Assignee</th>
+                                        <th>Reporter</th>
+                                        <th>P</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-5</th>
+                                        <th class="aui-table-column-unsortable">Test request 5</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-12</th>
+                                        <th class="aui-table-column-unsortable">Test request 12</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-13</th>
+                                        <th class="aui-table-column-unsortable">Test request 13</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Gandalf Ring
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-14</th>
+                                        <th class="aui-table-column-unsortable">Test request 14</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Janette Raclette
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             <!--Content of the Request Overview tab-->
                             <div class="tabs-pane" id="request-overview">
@@ -174,462 +966,490 @@ $webResourceManager.requireResources("de.tuberlin.amos.gr2:agile-planning-platfo
                                         </button>
                                     </div>
                                     <div style="display:inline-block; float: right">
-                                    <aui-label for="JQL-switch">Use JQL</aui-label>
-                                    <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
+                                        <aui-label for="JQL-switch">Use JQL</aui-label>
+                                        <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
+                                    </div>
                                 </div>
+
+                                ## result table
+                                <table class="aui aui-table-sortable">
+                                    <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th class="aui-table-column-issue-key">Issue key</th>
+                                        <th class="aui-table-column-unsortable">Summary</th>
+                                        <th>Assignee</th>
+                                        <th>Reporter</th>
+                                        <th>P</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-1</th>
+                                        <th class="aui-table-column-unsortable">Test request 1</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-2</th>
+                                        <th class="aui-table-column-unsortable">Test request 2</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-3</th>
+                                        <th class="aui-table-column-unsortable">Test request 3</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-4</th>
+                                        <th class="aui-table-column-unsortable">Test request 4</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-5</th>
+                                        <th class="aui-table-column-unsortable">Test request 5</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-6</th>
+                                        <th class="aui-table-column-unsortable">Test request 6</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-7</th>
+                                        <th class="aui-table-column-unsortable">Test request 7</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-8</th>
+                                        <th class="aui-table-column-unsortable">Test request 8</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-9</th>
+                                        <th class="aui-table-column-unsortable">Test request 9</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-10</th>
+                                        <th class="aui-table-column-unsortable">Test request 10</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-11</th>
+                                        <th class="aui-table-column-unsortable">Test request 11</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Jane Doe
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-12</th>
+                                        <th class="aui-table-column-unsortable">Test request 12</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            John Snow
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-13</th>
+                                        <th class="aui-table-column-unsortable">Test request 13</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Gandalf Ring
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Open</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Request</th>
+                                        <th class="aui-table-column-issue-key">TEST-14</th>
+                                        <th class="aui-table-column-unsortable">Test request 14</th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                    </span>
+                                            Janette Raclette
+                                        </th>
+                                        <th>
+                                        <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
+                                                 alt="Person McRealface"/>
+                                        </span>
+                                        </span>
+                                            Robert Johnson
+                                        </th>
+                                        <th>P</th>
+                                        <th>Closed</th>
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+
                             </div>
+                            ## dropdown popup activated when clicking status
+                            <aui-dropdown-menu id="status-dropdown">
+                                <aui-section label="Request Status">
+                                    <aui-item-checkbox interactive checked>Open</aui-item-checkbox>
+                                    <aui-item-checkbox interactive>Closed</aui-item-checkbox>
+                                    <aui-item-checkbox interactive>Canceled</aui-item-checkbox>
+                                </aui-section>
 
-                            ## result table
-                            <table class="aui aui-table-sortable">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th class="aui-table-column-issue-key">Issue key</th>
-                                    <th class="aui-table-column-unsortable">Summary</th>
-                                    <th>Assignee</th>
-                                    <th>Reporter</th>
-                                    <th>P</th>
-                                    <th>Status</th>
-                                </tr>
-                                </thead>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-1</th>
-                                    <th class="aui-table-column-unsortable">Test request 1</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>
-                                    <th>P</th>
-                                    <th>Open</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-2</th>
-                                    <th class="aui-table-column-unsortable">Test request 2</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Closed</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-3</th>
-                                    <th class="aui-table-column-unsortable">Test request 3</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Closed</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-4</th>
-                                    <th class="aui-table-column-unsortable">Test request 4</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Open</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-5</th>
-                                    <th class="aui-table-column-unsortable">Test request 5</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Closed</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-6</th>
-                                    <th class="aui-table-column-unsortable">Test request 6</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Open</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-7</th>
-                                    <th class="aui-table-column-unsortable">Test request 7</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Open</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-8</th>
-                                    <th class="aui-table-column-unsortable">Test request 8</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Open</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-9</th>
-                                    <th class="aui-table-column-unsortable">Test request 9</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Closed</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-10</th>
-                                    <th class="aui-table-column-unsortable">Test request 10</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Open</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-11</th>
-                                    <th class="aui-table-column-unsortable">Test request 11</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Open</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-12</th>
-                                    <th class="aui-table-column-unsortable">Test request 12</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Closed</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-13</th>
-                                    <th class="aui-table-column-unsortable">Test request 13</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Open</th>
-                                </tr>
-                                <tr>
-                                    <th>Request</th>
-                                    <th class="aui-table-column-issue-key">TEST-14</th>
-                                    <th class="aui-table-column-unsortable">Test request 14</th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                            ##                                            <aui-spinner size="medium"></aui-spinner>
-                                        </span>
-                                    </span>
-                                        Jane Doe
-                                    </th>
-                                    <th>
-                                        <span class="aui-avatar aui-avatar-large">
-                                        <span class="aui-avatar-inner">
-                                            <img src="https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png" alt="Person McRealface" />
-                                        </span>
-                                        </span>
-                                        Robert Johnson
-                                    </th>                                    <th>P</th>
-                                    <th>Closed</th>
-                                </tr>
-                                </tbody>
+                            </aui-dropdown-menu>
 
-                            </table>
+                            ## dropdown popup activated when clicking assignee
+                            <aui-dropdown-menu id="assignee-dropdown">
+                                <aui-section label="Search">
+                                    ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
+                                    <form style="float: left" class="aui">
+                                        <input id="search-issues" placeholder="Find Assignee.."
+                                               aria-autocomplete="list"
+                                               aria-haspopup="true" aria-expanded="true" type="text"
+                                               class="text">
+                                    </form>
+                                </aui-section>
+                                <aui-section label="Assignees">
+                                    <aui-item-checkbox interactive checked>Current User</aui-item-checkbox>
+                                    <aui-item-checkbox interactive>Unassigned</aui-item-checkbox>
+                                </aui-section>
+                                <aui-section label="Suggested Users">
+                                    <aui-item-checkbox interactive checked>admin</aui-item-checkbox>
+                                </aui-section>
 
+                            </aui-dropdown-menu>
+
+                            ## dropdown popup activated when clicking more
+                            <aui-dropdown-menu id="more-dropdown">
+                                <aui-section>
+                                    <form style="float: left" class="aui">
+                                        <input id="search-issues" placeholder="Find Assignee.."
+                                               aria-autocomplete="list"
+                                               aria-haspopup="true" aria-expanded="true" type="text"
+                                               class="text">
+                                    </form>
+                                </aui-section>
+                                <aui-section label="All Criteria">
+                                    <aui-item-checkbox interactive checked>Criteria 1</aui-item-checkbox>
+                                    <aui-item-checkbox interactive>Criteria 2</aui-item-checkbox>
+                                    <aui-item-checkbox interactive>Criteria 3</aui-item-checkbox>
+                                    <aui-item-checkbox interactive>Criteria 4</aui-item-checkbox>
+                                </aui-section>
+
+
+                            </aui-dropdown-menu>
+                            ## dropdown popup activated when clicking export
+                            <aui-dropdown-menu id="export-dropdown">
+                                <aui-section label="Search">
+                                    <form style="float: left" class="aui">
+                                        <input id="search-issues" placeholder="Find Criteria.."
+                                               aria-autocomplete="list"
+                                               aria-haspopup="true" aria-expanded="true" type="text"
+                                               class="text">
+                                    </form>
+                                </aui-section>
+                                <aui-section>
+                                    <aui-item-link href="http://amazon.com">Printable</aui-item-link>
+                                    <aui-item-link href="http://amazon.com">Full Content</aui-item-link>
+                                </aui-section>
+                                <aui-section>
+                                    <aui-item-link href="http://amazon.com">RSS (Issues)</aui-item-link>
+                                    <aui-item-link href="http://amazon.com">RSS (Comments)</aui-item-link>
+                                </aui-section>
+                                <aui-section>
+                                    <aui-item-link href="http://amazon.com">CSV (All fields)</aui-item-link>
+                                    <aui-item-link href="http://amazon.com">CSV (Current fields)</aui-item-link>
+                                    <aui-item-link href="http://amazon.com">HTML (All fields)</aui-item-link>
+                                    <aui-item-link href="http://amazon.com">HTML (Current fields)
+                                    </aui-item-link>
+                                    <aui-item-link href="http://amazon.com">XML</aui-item-link>
+                                </aui-section>
+                                <aui-section>
+                                    <aui-item-link href="http://amazon.com">Word</aui-item-link>
+                                </aui-section>
+                                <aui-section>
+                                    <aui-item-link href="http://amazon.com">Dashboard charts</aui-item-link>
+                                </aui-section>
+                            </aui-dropdown-menu>
+
+                            <script>
+                                var toggle = document.getElementById('JQL-switch');
+                                toggle.addEventListener('change', function (e) {
+                                    var isChecked = toggle.checked;     // new value of the toggle
+
+                                    var x = document.getElementById("second-filter");
+                                    var y = document.getElementById("jql-search");
+
+                                    if (isChecked) {
+                                        x.style.display = "none";
+                                        y.style.display = "inline-block";
+                                    } else {
+                                        x.style.display = "inline-block";
+                                        y.style.display = "none";
+                                    }
+
+                                });
+
+                            </script>
                         </div>
-                        ## dropdown popup activated when clicking status
-                        <aui-dropdown-menu id="status-dropdown">
-                            <aui-section label="Request Status">
-                                <aui-item-checkbox interactive checked>Open</aui-item-checkbox>
-                                <aui-item-checkbox interactive>Closed</aui-item-checkbox>
-                                <aui-item-checkbox interactive>Canceled</aui-item-checkbox>
-                            </aui-section>
-
-                        </aui-dropdown-menu>
-
-                        ## dropdown popup activated when clicking assignee
-                        <aui-dropdown-menu id="assignee-dropdown">
-                            <aui-section label="Search">
-                                ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
-                                <form style="float: left" class="aui">
-                                    <input id="search-issues" placeholder="Find Assignee.."
-                                           aria-autocomplete="list"
-                                           aria-haspopup="true" aria-expanded="true" type="text"
-                                           class="text">
-                                </form>
-                            </aui-section>
-                            <aui-section label="Assignees">
-                                <aui-item-checkbox interactive checked>Current User</aui-item-checkbox>
-                                <aui-item-checkbox interactive>Unassigned</aui-item-checkbox>
-                            </aui-section>
-                            <aui-section label="Suggested Users">
-                                <aui-item-checkbox interactive checked>admin</aui-item-checkbox>
-                            </aui-section>
-
-                        </aui-dropdown-menu>
-
-                        ## dropdown popup activated when clicking more
-                        <aui-dropdown-menu id="more-dropdown">
-                            <aui-section>
-                                <form style="float: left" class="aui">
-                                    <input id="search-issues" placeholder="Find Assignee.."
-                                           aria-autocomplete="list"
-                                           aria-haspopup="true" aria-expanded="true" type="text"
-                                           class="text">
-                                </form>
-                            </aui-section>
-                            <aui-section label="All Criteria">
-                                <aui-item-checkbox interactive checked>Criteria 1</aui-item-checkbox>
-                                <aui-item-checkbox interactive>Criteria 2</aui-item-checkbox>
-                                <aui-item-checkbox interactive>Criteria 3</aui-item-checkbox>
-                                <aui-item-checkbox interactive>Criteria 4</aui-item-checkbox>
-                            </aui-section>
-
-
-                        </aui-dropdown-menu>
-                        ## dropdown popup activated when clicking export
-                        <aui-dropdown-menu id="export-dropdown">
-                            <aui-section label="Search">
-                                <form style="float: left" class="aui">
-                                    <input id="search-issues" placeholder="Find Criteria.."
-                                           aria-autocomplete="list"
-                                           aria-haspopup="true" aria-expanded="true" type="text"
-                                           class="text">
-                                </form>
-                            </aui-section>
-                            <aui-section>
-                                <aui-item-link href="http://amazon.com">Printable</aui-item-link>
-                                <aui-item-link href="http://amazon.com">Full Content</aui-item-link>
-                            </aui-section>
-                            <aui-section>
-                                <aui-item-link href="http://amazon.com">RSS (Issues)</aui-item-link>
-                                <aui-item-link href="http://amazon.com">RSS (Comments)</aui-item-link>
-                            </aui-section>
-                            <aui-section>
-                                <aui-item-link href="http://amazon.com">CSV (All fields)</aui-item-link>
-                                <aui-item-link href="http://amazon.com">CSV (Current fields)</aui-item-link>
-                                <aui-item-link href="http://amazon.com">HTML (All fields)</aui-item-link>
-                                <aui-item-link href="http://amazon.com">HTML (Current fields)
-                                </aui-item-link>
-                                <aui-item-link href="http://amazon.com">XML</aui-item-link>
-                            </aui-section>
-                            <aui-section>
-                                <aui-item-link href="http://amazon.com">Word</aui-item-link>
-                            </aui-section>
-                            <aui-section>
-                                <aui-item-link href="http://amazon.com">Dashboard charts</aui-item-link>
-                            </aui-section>
-                        </aui-dropdown-menu>
-
-                        <script>
-                            var toggle = document.getElementById('JQL-switch');
-                            toggle.addEventListener('change', function (e) {
-                                var isChecked = toggle.checked;     // new value of the toggle
-
-                                var x = document.getElementById("second-filter");
-                                var y = document.getElementById("jql-search");
-
-                                if (isChecked) {
-                                    x.style.display = "none";
-                                    y.style.display = "inline-block";
-                                } else {
-                                    x.style.display = "inline-block";
-                                    y.style.display = "none";
-                                }
-
-                            });
-
-                        </script>
+                    </nav>
+                </main>
             </div>
-            </nav>
+
+
         </main>
     </div>
-
-
-    </main>
-</div>
 </div>
 
 </body>
