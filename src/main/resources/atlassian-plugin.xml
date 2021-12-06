@@ -15,7 +15,7 @@
     <dependency>com.atlassian.auiplugin:ajs</dependency>  
     <resource type="download" name="agile-planning-platform.css" location="/css/agile-planning-platform.css"/>  
     <resource type="download" name="agile-planning-platform.js" location="/js/agile-planning-platform.js"/>  
-    <resource type="download" name="images/" location="/images"/>  
+    <resource type="download" name="images/" location="/images"/>
     <context>agile-planning-platform</context> 
   </web-resource>
 
