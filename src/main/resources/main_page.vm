@@ -45,13 +45,13 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
                         </div>
                         <ul class="aui-nav" title="Members actions">
                             <li>
-                                <a class="aui-nav-item" href="#">
+                                <a class="aui-nav-item" href="/jira/plugins/servlet/agile-planning/planner/settings/team-management">
                                     <span class="aui-icon aui-icon-small aui-iconfont-people-group"></span>
                                     <span class="aui-nav-item-label">Manage Teams</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="aui-nav-item" href="#">
+                                <a class="aui-nav-item" href="/jira/plugins/servlet/agile-planning/planner/settings/team-management">
                                     <span class="aui-icon aui-icon-small aui-iconfont-invite-team"></span>
                                     <span class="aui-nav-item-label">Add Team Members</span>
                                 </a>

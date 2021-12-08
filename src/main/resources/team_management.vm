@@ -1,0 +1,145 @@
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-button")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-table")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-avatar")
+
+<html lang="en">
+<head>
+    <title>Team Management</title>
+    <meta name="decorator" content="atl.general">
+</head>
+<body class="aui-page-focused">
+
+<div id="page">
+
+    <div id="content">
+        <section>
+            <div class="aui-page-header">
+                <div class="aui-page-header-inner">
+                    <div class="aui-page-header-main">
+                        <h1>Team Management</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aui-page-panel">
+                <div class="aui-page-panel-inner">
+                    <main id="main" role="main" class="aui-page-panel-content">
+                        <table class="aui">
+                            <thead>
+                            <tr>
+                                <th id="name">
+                                    <form style="float: left" class="aui">
+                                    <input id="search-issues" placeholder="Search Issues" type="text"
+                                           class="text">
+                                    </form>
+                                    <button style="float: left;"
+                                               class="aui-button aui-button-primary search-button"
+                                               type="button" original-title="Search for issues" resolved=""
+                                               id="searchbutton">Search
+                                    </button>
+                                </th>
+                                <th id="check"></th>
+                                <th id="toggle"></th>
+                                <th id="status">
+                                    <button class="aui-button aui-button-primary">Add Team</button>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th id="name">Team Name</th>
+                                <th id="check">Team Lead</th>
+                                <th id="toggle">Associated Group</th>
+                                <th id="status">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="name">
+                                    Digital Products and Technology </td>
+                                <td id="check">
+                                    <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+##                                            <img src="images/avatar-person.svg" alt="Person McRealface" />
+                                            <aui-spinner size="medium"></aui-spinner>
+                                        </span>
+                                    </span>
+                                    Ron Swansson
+                                </td>
+                                <td id="toggle"> Team Paris</td>
+                                <td id="status">
+                                    <button class="aui-button" >Edit</button>
+                                    <button class="aui-button" >Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="name">
+                                    Marketing</td>
+                                <td id="check">
+                                    <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+##                                            <img src="images/avatar-person.svg" alt="Person McRealface" />
+                                            <aui-spinner size="medium"></aui-spinner>
+                                        </span>
+                                    </span>
+                                    Leslie Knopes
+                                </td>
+                                <td id="toggle"> Team Pawnee</td>
+                                <td id="status">
+                                    <button class="aui-button" >Edit</button>
+                                    <button class="aui-button" >Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="name">
+                                    Accounting</td>
+                                <td id="check">
+                                    <span class="aui-avatar aui-avatar-large">
+                                        <span class="aui-avatar-inner">
+##                                            <img src="images/avatar-person.svg" alt="Person McRealface" />
+                                            <aui-spinner size="medium"></aui-spinner>
+                                        </span>
+                                    </span>
+                                    Wes Anderson
+                                </td>
+                                <td id="toggle"> Team London</td>
+                                <td id="status">
+                                    <button class="aui-button" >Edit</button>
+                                    <button class="aui-button" >Delete</button>
+                                </td>
+                            </tr>
+
+                                ## Popup for Team Management Screen
+                            <section
+                                    id="demo-dialog"
+                                    class="aui-dialog2 aui-dialog2-small aui-layer"
+                                    role="dialog"
+                                    tabindex="-1"
+                                    aria-labelledby="dialog-show-button--heading"
+                                    hidden
+                            >
+                                <header class="aui-dialog2-header">
+                                    <h1 class="aui-dialog2-header-main" id="dialog-show-button--heading">Captain...</h1>
+                                    <button class="aui-close-button" type="button" aria-label="close"></button>
+                                </header>
+                                <div class="aui-dialog2-content">
+                                    <p>We've detected debris of some sort in a loose orbit.</p>
+                                    <p>I suggest we beam a section aboard for analysis...</p>
+                                </div>
+                                <footer class="aui-dialog2-footer">
+                                    <div class="aui-dialog2-footer-actions">
+                                        <button id="dialog-submit-button" class="aui-button aui-button-primary">Make it so</button>
+                                    </div>
+                                </footer>
+                            </section>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </main>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>
