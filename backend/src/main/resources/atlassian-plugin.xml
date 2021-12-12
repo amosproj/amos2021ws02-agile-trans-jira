@@ -10,11 +10,9 @@
   </plugin-info>  
   <!-- add our i18n resource -->  
   <resource type="i18n" name="i18n" location="agile-planning-platform"/>  
-  <!-- add our web resources -->
-
+  <!-- add our web resources -->  
   <web-resource key="agile-planning-platform-resources" name="agile-planning-platform Web Resources"> 
-    <dependency>com.atlassian.auiplugin:ajs</dependency>
-
+    <dependency>com.atlassian.auiplugin:ajs</dependency>  
     <resource type="download" name="agile-planning-platform.css" location="/css/agile-planning-platform.css"/>  
     <resource type="download" name="agile-planning-platform.js" location="/js/agile-planning-platform.js"/>  
     <resource type="download" name="images/" location="/images"/>  
@@ -25,23 +23,42 @@
   <web-section name="Agile Planner Nav Bar Top" i18n-name-key="agile-planner-nav-bar-top.name" key="agile-planner-nav-bar-top" location="agile-planner-nav-bar-top-item-link" weight="1000"> 
     <description key="agile-planner-nav-bar-top.description">The mySection Plugin</description> 
   </web-section>
-
-  <web-item name="Agile Planner Nav Bar Top Item" i18n-name-key="agile-planner-nav-bar-top-item.name" key="agile-planner-nav-bar-top-item" section="system.top.navigation.bar" weight="1000">
+  <web-item name="Agile Planner Nav Bar Top Item" i18n-name-key="agile-planner-nav-bar-top-item.name" key="agile-planner-nav-bar-top-item" section="system.top.navigation.bar" weight="1000"> 
     <description key="agile-planner-nav-bar-top-item.description">Agile Planning</description>
     <label>Agile Planning</label>  
     <link linkId="agile-planner-nav-bar-top-item-link"/>
   </web-item>
-
   <web-item name="Agile Planner" i18n-name-key="agile-planner.name" key="agile-planner" section="agile-planner-nav-bar-top-item-link/agile-planner-nav-bar-top" weight="900">
     <description key="agile-planner-nav-bar-top-item.description">My Planner</description>
     <label>My Planner</label>
     <link>/plugins/servlet/agile-planning/planner</link>
   </web-item>
 
-  <web-item name="Agile Planner Project Settings" i18n-name-key="agile-planner-project-settings.name" key="agile-planner-project-settings" section="agile-planner-nav-bar-top-item-link/agile-planner-nav-bar-top" weight="1000">
-    <description key="agile-planner-nav-bar-top-item.description">Project Settings</description>
-    <label>Project Settings</label>
+
+  <!-- for project settings -->
+  <web-section name="Agile Planner Project Settings Section" i18n-name-key="agile-planner-project-settings.name" key="agile-planner-project-settings" location="atl.jira.proj.config" weight="1000">
+    <description key="agile-planner-project-settings.description">Agile Planning Project Settings Section</description>
+  </web-section>
+
+  <web-item name="Agile Planner Project Settings" i18n-name-key="item_in_agile-planner-project-settings.name" key="item_in_agile-planner-project-settings" section="atl.jira.proj.config/agile-planner-project-settings">
+    <description key="item_in_agile-planner-project-settings.description">Agile Planner Project Settings</description>
+    <label>Agile Planner</label>
     <link>/plugins/servlet/agile-planning/planner/settings/project</link>
+  </web-item>
+  <web-item name="Agile Planner Team Manager" i18n-name-key="planner-team-management.name" key="agile-planner-team-management" section="agile-planner-nav-bar-top-item-link/agile-planner-nav-bar-top" weight="1000">
+    <description key="agile-planner-nav-bar-top-item.description">Team Management</description>
+    <label>Team Management</label>
+    <link>/plugins/servlet/agile-planning/planner/settings/team-management</link>
+  </web-item>
+
+  <!-- for general settings -->
+  <web-section key="agile_planner_general_settings_section" location="admin_plugins_menu" >
+    <label key="Agile Planning Platform">Agile Planning Platform</label>
+  </web-section>
+  <web-item name="Agile Planner General Settings" i18n-name-key="item_in_agile-planner-general-settings.name" key="item_in_agile-planner-general-settings" section="admin_plugins_menu/agile_planner_general_settings_section">
+    <description key="item_in_agile-planner-general-settings.description">General Settings</description>
+    <label>General Settings</label>
+    <link>/plugins/servlet/agile-planning-general-settings</link>
   </web-item>
 
 
@@ -55,6 +72,16 @@
   <servlet name="planner Project Settings" i18n-name-key="planner-project-settings.name" key="planner-project-settings" class="de.tuberlin.amos.gr2.planner.settings.project.ProjectSettingsServlet">
     <description key="ProjectSettingsServlet.description">Project Settings servlet</description>
     <url-pattern>/agile-planning/planner/settings/project</url-pattern>
+  </servlet>
+
+  <servlet name="planner General Settings" i18n-name-key="planner-general-settings.name" key="planner-general-settings" class="de.tuberlin.amos.gr2.planner.settings.general.GeneralSettingsServlet">
+    <description key="GeneralSettingsServlet.description">General Settings servlet</description>
+    <url-pattern>/agile-planning-general-settings</url-pattern>
+ </servlet>
+  <servlet name="planner Team Management" i18n-name-key="planner-team-management.name" key="planner-team-management" class="de.tuberlin.amos.gr2.planner.settings.project.TeamManagementServlet">
+    <description key="TeamManagementServlet.description">Team Management servlet</description>
+    <url-pattern>/agile-planning/planner/settings/team-management</url-pattern>
+
   </servlet>
 
 </atlassian-plugin>

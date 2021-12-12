@@ -9,6 +9,12 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
     <title>Agile Planning Platform</title>
     <!-- atl.general for general jira page -->
     <meta name="decorator" content="atl.general">
+    <script>
+        ## gets request_id param from context from MainPageServlet
+        $(document).ready(function(){
+            $('a[id*="create_request"]').attr('href', '/jira/secure/CreateIssue!default.jspa?issuetype=' + $request_id);
+        });
+    </script>
 </head>
 <body>
 <div id="page">
@@ -39,13 +45,13 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                         </div>
                         <ul class="aui-nav" title="Members actions">
                             <li>
-                                <a class="aui-nav-item" href="#">
+                                <a class="aui-nav-item" href="/jira/plugins/servlet/agile-planning/planner/settings/team-management">
                                     <span class="aui-icon aui-icon-small aui-iconfont-people-group"></span>
                                     <span class="aui-nav-item-label">Manage Teams</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="aui-nav-item" href="#">
+                                <a class="aui-nav-item" href="/jira/plugins/servlet/agile-planning/planner/settings/team-management">
                                     <span class="aui-icon aui-icon-small aui-iconfont-invite-team"></span>
                                     <span class="aui-nav-item-label">Add Team Members</span>
                                 </a>
@@ -57,7 +63,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                         </div>
                         <ul class="aui-nav" title="Requests actions">
                             <li>
-                                <a class="aui-nav-item" href="#">
+                                <a class="aui-nav-item" id="create_request">
                                     <span class="aui-icon aui-icon-small aui-iconfont-list-add"></span>
                                     <span class="aui-nav-item-label">Create Request</span>
                                 </a>

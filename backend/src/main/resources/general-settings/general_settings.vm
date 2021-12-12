@@ -1,0 +1,322 @@
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-button")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-table")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-lozenge")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-select")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-forms")
+
+<html lang="en">
+<head>
+    <meta name="decorator" content="atl.admin"/>
+    <meta name="admin.active.tab" content="item_in_agile-planner-general-settings"/>
+    <meta name="admin.active.section" content="admin_plugins_menu/agile_planner_general_settings_section"/>
+</head>
+<body>
+
+<div id="page">
+
+    <div id="content">
+        <section>
+            <h2>Statuses</h2>
+
+            <div class="aui-page-panel">
+                <div class="aui-page-panel-inner">
+                    <main id="main-1" role="main" class="aui-page-panel-content">
+                        <h3>Add new status</h3>
+                        <table class="aui" style="width:70%;">
+                            <thead>
+                                <tr>
+                                    <th id="name">Status name</th>
+                                    <th id="preview">Preview</th>
+                                    <th id="color">Color</th>
+                                    <th id="actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td headers="name">
+                                        <form class="aui">
+                                            <input class="text" type="text" id="d-fname" name="d-fname" title="status name" placeholder="Enter status name">
+                                        </form>
+                                    </td>
+                                    <td headers="preview">
+                                        <span id="status-preview" class="aui-lozenge aui-lozenge-success">Status</span>
+                                    </td>
+                                    <td headers="color">
+                                        <form class="aui">
+                                            <aui-select
+                                                    id="color-single-select"
+                                                    name="color"
+                                                    placeholder="Select a color"
+                                            >
+                                                <aui-option><span class="aui-lozenge">Gray</span></aui-option>
+                                                <aui-option selected><span class="aui-lozenge aui-lozenge-success">Green</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-removed">Red</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-inprogress">Blue</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-new">Violet</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-moved">Yellow</span></aui-option>
+                                            </aui-select>
+                                        </form>
+                                    </td>
+                                    <td headers="actions">
+                                        <button class="aui-button" disabled>
+                                            <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
+                                            Add
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <script>
+                            console.log("check");
+                            var toggle = document.getElementById('color-single-select');
+                            console.log(toggle.value);
+                            toggle.addEventListener('change', function (e) {
+                                switch (toggle.value) {
+                                    case 'Gray':
+                                        document.getElementById('status-preview').className = "aui-lozenge";
+                                        break;
+                                    case 'Green':
+                                        document.getElementById('status-preview').className = "aui-lozenge aui-lozenge-success";
+                                        break;
+                                    case 'Red':
+                                        document.getElementById('status-preview').className = "aui-lozenge aui-lozenge-removed";
+                                        break;
+                                    case 'Blue':
+                                        document.getElementById('status-preview').className = "aui-lozenge aui-lozenge-inprogress";
+                                        break;
+                                    case 'Violet':
+                                        document.getElementById('status-preview').className = "aui-lozenge aui-lozenge-new";
+                                        break;
+                                    case 'Yellow':
+                                        document.getElementById('status-preview').className = "aui-lozenge aui-lozenge-moved";
+                                        break;
+                                    default:
+                                        console.log(`Wrong value: ${toggle.value}.`);
+
+                                }
+                            });
+                        </script>
+
+                        <h3>Existing statuses</h3>
+                        <table class="aui" style="width:70%;">
+                            <thead>
+                                <tr>
+                                    <th id="name">Status name</th>
+                                    <th id="preview">Preview</th>
+                                    <th id="color">Color</th>
+                                    <th id="actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td headers="name">
+                                        accepted
+                                    </td>
+                                    <td headers="preview">
+                                        <span class="aui-lozenge aui-lozenge-inprogress">Accepted</span>
+                                    </td>
+                                    <td headers="color">
+                                        <form class="aui">
+                                            <aui-select
+                                                    id="color-single-select"
+                                                    name="color"
+                                                    placeholder="Select a color"
+                                            >
+                                                <aui-option><span class="aui-lozenge">Gray</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-success">Green</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-removed">Red</span></aui-option>
+                                                <aui-option selected><span class="aui-lozenge aui-lozenge-inprogress">Blue</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-new">Violet</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-moved">Yellow</span></aui-option>
+                                            </aui-select>
+                                        </form>
+                                    </td>
+                                    <td headers="actions">
+                                        <button class="aui-button">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-edit-filled"></span>
+                                        </button>
+                                        <button class="aui-button">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-delete"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td headers="name">
+                                        declined
+                                    </td>
+                                    <td headers="preview">
+                                        <span class="aui-lozenge aui-lozenge-removed">Declined</span>
+                                    </td>
+                                    <td headers="color">
+                                        <form class="aui">
+                                            <aui-select
+                                                    id="color-single-select"
+                                                    name="color"
+                                                    placeholder="Select a color"
+                                            >
+                                                <aui-option><span class="aui-lozenge">Gray</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-success">Green</span></aui-option>
+                                                <aui-option selected><span class="aui-lozenge aui-lozenge-removed">Red</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-inprogress">Blue</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-new">Violet</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-moved">Yellow</span></aui-option>
+                                            </aui-select>
+                                        </form>
+                                    </td>
+                                    <td headers="actions">
+                                        <button class="aui-button">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-edit-filled"></span>
+                                        </button>
+                                        <button class="aui-button">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-delete"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td headers="name">
+                                        cancelled
+                                    </td>
+                                    <td headers="preview">
+                                        <span class="aui-lozenge aui-lozenge-moved">Cancelled</span>
+                                    </td>
+                                    <td headers="color">
+                                        <form class="aui">
+                                            <aui-select
+                                                    id="color-single-select"
+                                                    name="color"
+                                                    placeholder="Select a color"
+                                            >
+                                                <aui-option><span class="aui-lozenge">Gray</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-success">Green</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-removed">Red</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-inprogress">Blue</span></aui-option>
+                                                <aui-option><span class="aui-lozenge aui-lozenge-new">Violet</span></aui-option>
+                                                <aui-option selected><span class="aui-lozenge aui-lozenge-moved">Yellow</span></aui-option>
+                                            </aui-select>
+                                        </form>
+                                    </td>
+                                    <td headers="actions">
+                                        <button class="aui-button">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-edit-filled"></span>
+                                        </button>
+                                        <button class="aui-button">
+                                            <span class="aui-icon aui-icon-small aui-iconfont-delete"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+            </div>
+            <h2>Workflow Request Management</h2>
+
+            <div class="aui-page-panel">
+                <div class="aui-page-panel-inner">
+                    <main id="main-2" role="main" class="aui-page-panel-content">
+                        <table class="aui" style="width:70%;">
+                            <thead>
+                            <tr>
+                                <th id="wf-name">Workflow name</th>
+                                <th id="wf-description">Workflow description</th>
+                                <th id="wf-save"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td headers="wf-name">
+                                    <form class="aui">
+                                        <input class="text" type="text" id="wf-d-fname" name="d-fname" title="status name" placeholder="Enter workflow name">
+                                    </form>
+                                </td>
+                                <td headers="wf-description">
+                                    <form class="aui">
+                                        <input class="text" type="text" id="wf-d-fname" name="d-fname" title="status name" placeholder="Enter workflow description">
+                                    </form>
+                                </td>
+                                <td headers="wf-save">
+                                    <button class="aui-button" disabled>
+                                        <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
+                                        Add
+                                    </button>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+            </div>
+            <h2>Issue Type Request Management</h2>
+
+            <div class="aui-page-panel">
+                <div class="aui-page-panel-inner">
+                    <main id="main-3" role="main" class="aui-page-panel-content">
+                        <form class="aui">
+                            <div class="checkbox">
+                                <input class="checkbox" type="checkbox" name="checkBoxOne" id="checkBoxOne">
+                                <label for="checkBoxOne">Epic</label>
+                            </div>
+                            <div class="checkbox">
+                                <input class="checkbox" type="checkbox" name="checkBoxTwo" id="checkBoxTwo">
+                                <label for="checkBoxTwo">Story</label>
+                            </div>
+
+                            <div class="checkbox">
+                                <input class="checkbox" type="checkbox" name="checkBoxThree" id="checkBoxThree">
+                                <label for="checkBoxThree">Request</label>
+                            </div>
+                        </form>
+                        <p>
+                            <button class="aui-button aui-button-primary">
+                                Save
+                            </button>
+                        </p>
+
+                    </main>
+                </div>
+            </div>
+            <h2>Create Request Screen</h2>
+
+            <div class="aui-page-panel">
+                <div class="aui-page-panel-inner">
+                    <main id="main-4" role="main" class="aui-page-panel-content">
+                        <table class="aui" style="width:70%;">
+                            <thead>
+                            <tr>
+                                <th id="fl-name">Field name</th>
+                                <th id="fl-description">Field description</th>
+                                <th id="fl-save"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td headers="fl-name">
+                                    <form class="aui">
+                                        <input class="text" type="text" id="fl-d-fname" name="d-fname" title="field name" placeholder="Enter field name">
+                                    </form>
+                                </td>
+                                <td headers="fl-description">
+                                    <form class="aui">
+                                        <input class="text" type="text" id="fl-d-fname" name="d-fname" title="field name" placeholder="Enter field description">
+                                    </form>
+                                </td>
+                                <td headers="fl-save">
+                                    <button class="aui-button" disabled>
+                                        <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
+                                        Add
+                                    </button>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

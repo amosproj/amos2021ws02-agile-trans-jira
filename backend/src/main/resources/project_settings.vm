@@ -4,8 +4,9 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table")
 
 <html lang="en">
 <head>
-    <title>Project Settings</title>
-    <meta name="decorator" content="atl.general">
+    <meta name="decorator" content="atl.general"/>
+    <meta name="admin.active.tab" content="item_in_agile-planner-project-settings"/>
+    <meta name="admin.active.section" content="atl.jira.proj.config"/>
 </head>
 <body class="aui-page-focused">
 
@@ -16,7 +17,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table")
             <div class="aui-page-header">
                 <div class="aui-page-header-inner">
                     <div class="aui-page-header-main">
-                        <h1>Project Settings</h1>
+                        <h1>Agile Planner Project Settings</h1>
                     </div>
                 </div>
             </div>
