@@ -24,11 +24,6 @@ Now do the following steps:
 In order to execute the current state of the plugin run
 
 ```bash
-cd frontend
-atlas-mvn package
-
-//In a second shell
-cd backend
 atlas-run //Run the current configuration
 
 atlas-help //Shows other commands from the Atlassian 
