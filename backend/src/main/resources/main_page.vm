@@ -9,12 +9,6 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
     <title>Agile Planning Platform</title>
     <!-- atl.general for general jira page -->
     <meta name="decorator" content="atl.general">
-    <script>
-        ## gets request_id param from context from MainPageServlet
-        $(document).ready(function(){
-            $('a[id*="create_request"]').attr('href', '/jira/secure/CreateIssue!default.jspa?issuetype=' + $request_id);
-        });
-    </script>
 </head>
 <body>
 <div id="page">
@@ -63,7 +57,8 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                         </div>
                         <ul class="aui-nav" title="Requests actions">
                             <li>
-                                <a class="aui-nav-item" id="create_request">
+                                #set( $create_request_href = "/jira/secure/CreateIssue!default.jspa?issuetype=" + $request_id )
+                                <a class="aui-nav-item" id="create_request" href=$create_request_href>
                                     <span class="aui-icon aui-icon-small aui-iconfont-list-add"></span>
                                     <span class="aui-nav-item-label">Create Request</span>
                                 </a>
