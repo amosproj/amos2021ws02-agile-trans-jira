@@ -54,6 +54,9 @@ public class MainPageServlet extends HttpServlet {
                 params.put("request_id", type.getId());
             }
         }
+        if (!params.containsKey("request_id")) {
+            params.put("request_id", "00000");
+        }
         response.setContentType("text/html;charset=utf-8");
         renderer.render("main_page.vm", params, response.getWriter());
     }
