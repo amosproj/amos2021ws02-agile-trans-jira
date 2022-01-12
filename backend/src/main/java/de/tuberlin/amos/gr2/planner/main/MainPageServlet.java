@@ -36,6 +36,10 @@ public class MainPageServlet extends HttpServlet {
         this.renderer = renderer;
     }
 
+    public MainPageServlet() {
+        renderer = null;
+    }
+
     /**
      * Loads velocity template for the main page
      * @param req
@@ -44,21 +48,17 @@ public class MainPageServlet extends HttpServlet {
      * @throws IOException
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException
+    public void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException
     {
         log.debug("MainPageServlet loaded");
-        Collection<IssueType> issueTypes = issueTypeSchemeManager.getIssueTypesForDefaultScheme();
-        Map<String, Object> params = new HashMap<>();
-        for(IssueType type: issueTypes) {
-            if (type.getName().equals("Request")) {
-                params.put("request_id", type.getId());
-            }
-        }
-        if (!params.containsKey("request_id")) {
-            params.put("request_id", "00000");
-        }
+
+        String name = req.getParameter("name");
+        System.out.println(name);
+
         response.setContentType("text/html;charset=utf-8");
-        renderer.render("main_page.vm", params, response.getWriter());
+        if(renderer!=null){
+            renderer.render("main_page.vm", response.getWriter());
+        }
     }
 
 }

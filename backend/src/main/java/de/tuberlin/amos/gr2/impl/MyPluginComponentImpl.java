@@ -2,7 +2,7 @@ package de.tuberlin.amos.gr2.impl;
 
 import com.atlassian.plugin.spring.scanner.annotation.export.ExportAsService;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
-import com.atlassian.sal.api.ApplicationProperties;
+import com.atlassian.sal.api .ApplicationProperties;
 import de.tuberlin.amos.gr2.api.MyPluginComponent;
 
 import javax.inject.Inject;
