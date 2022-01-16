@@ -230,35 +230,40 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                     return response.json()
                                                 })
                                                 .then(function (data) {
-                                                    let content = '';
-                                                    for (let obj in Array.from(data.issues)) {
-                                                        console.log(obj);
-                                                        console.log(data.issues[obj]);
+                                                    if(!data.errorMessages) {
+                                                        let content = '';
+                                                        for (let obj in Array.from(data.issues)) {
+                                                            console.log(obj);
+                                                            console.log(data.issues[obj]);
 
-                                                        let issuetype_name = data.issues[obj].fields.issuetype.name
-                                                        let issuetype_icon = data.issues[obj].fields.issuetype.iconUrl
-                                                        let key = data.issues[obj].key
-                                                        let summary = data.issues[obj].fields.summary
-                                                        let assignee_avatar = !data.issues[obj].fields.assignee ? 'https://www.gravatar.com/avatar/724bf1b5d1cdedc2a0349cc9a9ebf47d?d=mm&s=24' : data.issues[obj].fields.assignee.avatarUrls['24x24']
-                                                        let assignee_name = !data.issues[obj].fields.assignee ? 'unassigned' : data.issues[obj].fields.assignee.name
-                                                        let reporter_avatar = !data.issues[obj].fields.reporter ? 'https://www.gravatar.com/avatar/724bf1b5d1cdedc2a0349cc9a9ebf47d?d=mm&s=24' : data.issues[obj].fields.reporter.avatarUrls['24x24']
-                                                        let reporter_name = !data.issues[obj].fields.reporter ? 'unassigned' : data.issues[obj].fields.reporter.name
-                                                        let priority_name = data.issues[obj].fields.priority.name
-                                                        let priority_icon = data.issues[obj].fields.priority.iconUrl
-                                                        let status_name = data.issues[obj].fields.status.name
-                                                        let status_icon = data.issues[obj].fields.status.iconUrl
+                                                            let issuetype_name = data.issues[obj].fields.issuetype.name
+                                                            let issuetype_icon = data.issues[obj].fields.issuetype.iconUrl
+                                                            let key = data.issues[obj].key
+                                                            let summary = data.issues[obj].fields.summary
+                                                            let assignee_avatar = !data.issues[obj].fields.assignee ? 'https://www.gravatar.com/avatar/724bf1b5d1cdedc2a0349cc9a9ebf47d?d=mm&s=24' : data.issues[obj].fields.assignee.avatarUrls['24x24']
+                                                            let assignee_name = !data.issues[obj].fields.assignee ? 'unassigned' : data.issues[obj].fields.assignee.name
+                                                            let reporter_avatar = !data.issues[obj].fields.reporter ? 'https://www.gravatar.com/avatar/724bf1b5d1cdedc2a0349cc9a9ebf47d?d=mm&s=24' : data.issues[obj].fields.reporter.avatarUrls['24x24']
+                                                            let reporter_name = !data.issues[obj].fields.reporter ? 'unassigned' : data.issues[obj].fields.reporter.name
+                                                            let priority_name = data.issues[obj].fields.priority.name
+                                                            let priority_icon = data.issues[obj].fields.priority.iconUrl
+                                                            let status_name = data.issues[obj].fields.status.name
+                                                            let status_icon = data.issues[obj].fields.status.iconUrl
 
-                                                        content += '<tr>' +
-                                                                '<td> <span class=\"aui-icon aui-icon-small\"><img src=\"' + issuetype_icon + '\" alt=\"Icon\" /></span> ' + issuetype_name + '</td>' +
-                                                                '<td class=\"aui-table-column-issue-key\">' + key + '</td>' +
-                                                                '<td class=\"aui-table-column-unsortable\">' + summary + '</td>' +
-                                                                '<td> <span class=\"aui-avatar aui-avatar-small\"> <span class=\"aui-avatar-inner\"><img src=\"' + assignee_avatar + '\" alt=\"Avatar\" /></span></span> ' + assignee_name + '</td>' +
-                                                                '<td> <span class=\"aui-avatar aui-avatar-small\"> <span class=\"aui-avatar-inner\"><img src=\"' + reporter_avatar + '\" alt=\"Avatar\" /></span></span> ' + reporter_name + '</td>' +
-                                                                '<td> <span class=\"aui-icon aui-icon-small\"><img src=\"' + priority_icon + '\" alt=\"Icon\" /></span> ' + priority_name + '</td>' +
-                                                                '<td> <span class=\"aui-icon aui-icon-small\"><img src=\"' + status_icon + '\" alt=\"Icon\" /></span> ' + status_name + '</td>' +
-                                                                '</tr>';
+                                                            content += '<tr>' +
+                                                                    '<td> <span class=\"aui-icon aui-icon-small\"><img src=\"' + issuetype_icon + '\" alt=\"Icon\" /></span> ' + issuetype_name + '</td>' +
+                                                                    '<td class=\"aui-table-column-issue-key\">' + key + '</td>' +
+                                                                    '<td class=\"aui-table-column-unsortable\">' + summary + '</td>' +
+                                                                    '<td> <span class=\"aui-avatar aui-avatar-small\"> <span class=\"aui-avatar-inner\"><img src=\"' + assignee_avatar + '\" alt=\"Avatar\" /></span></span> ' + assignee_name + '</td>' +
+                                                                    '<td> <span class=\"aui-avatar aui-avatar-small\"> <span class=\"aui-avatar-inner\"><img src=\"' + reporter_avatar + '\" alt=\"Avatar\" /></span></span> ' + reporter_name + '</td>' +
+                                                                    '<td> <span class=\"aui-icon aui-icon-small\"><img src=\"' + priority_icon + '\" alt=\"Icon\" /></span> ' + priority_name + '</td>' +
+                                                                    '<td> <span class=\"aui-icon aui-icon-small\"><img src=\"' + status_icon + '\" alt=\"Icon\" /></span> ' + status_name + '</td>' +
+                                                                    '</tr>';
+                                                        }
+                                                        document.getElementById('jql-results').innerHTML = content;
+                                                    }else
+                                                    {
+                                                        document.getElementById('jql-results').innerHTML = '';
                                                     }
-                                                    document.getElementById('jql-results').innerHTML = content;
                                                 });
                                     });
                                 </script>
