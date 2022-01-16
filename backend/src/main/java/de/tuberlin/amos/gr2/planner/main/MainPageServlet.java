@@ -2,7 +2,15 @@ package de.tuberlin.amos.gr2.planner.main;
 
 import com.atlassian.jira.issue.fields.config.manager.IssueTypeSchemeManager;
 import com.atlassian.jira.issue.issuetype.IssueType;
+import com.atlassian.jira.permission.ProjectPermissions;
+import com.atlassian.jira.security.Permissions;
+import com.atlassian.jira.project.Project;
+import com.atlassian.jira.security.PermissionManager;
+import com.atlassian.jira.user.ApplicationUser;
+import com.atlassian.jira.user.UserProjectHistoryManager;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+import static com.atlassian.jira.component.ComponentAccessor.getJiraAuthenticationContext;
+
 import javax.inject.Inject;
 
 import com.atlassian.templaterenderer.TemplateRenderer;
@@ -29,6 +37,14 @@ public class MainPageServlet extends HttpServlet {
 
     @Inject
     @ComponentImport
+    private UserProjectHistoryManager userProjectHistoryManager;
+
+    @Inject
+    @ComponentImport
+    private PermissionManager permissionManager;
+
+    @Inject
+    @ComponentImport
     private IssueTypeSchemeManager issueTypeSchemeManager;
 
     @Inject
@@ -47,11 +63,20 @@ public class MainPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException
     {
         log.debug("MainPageServlet loaded");
-        Collection<IssueType> issueTypes = issueTypeSchemeManager.getIssueTypesForDefaultScheme();
         Map<String, Object> params = new HashMap<>();
+
+        ApplicationUser user = getJiraAuthenticationContext().getLoggedInUser();
+        //using a deprecated class because there is no such method for getCurrentProject with ProjectPermissionKey yet
+        Project currentProject = userProjectHistoryManager.getCurrentProject(Permissions.BROWSE, user);
+        Collection<Project> allProjects = permissionManager.getProjects(ProjectPermissions.BROWSE_PROJECTS, user);
+        params.put("currentProject", currentProject);
+        params.put("allProjects", allProjects);
+
+        Collection<IssueType> issueTypes = issueTypeSchemeManager.getIssueTypesForDefaultScheme();
+
         for(IssueType type: issueTypes) {
             if (type.getName().equals("Request")) {
-                params.put("request_id", type.getId());
+                params.put("request_id", type);
             }
         }
         if (!params.containsKey("request_id")) {
