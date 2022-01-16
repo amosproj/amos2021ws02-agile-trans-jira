@@ -58,6 +58,13 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                         <div class="aui-nav-heading" title="Requests">
                             <strong>Requests</strong>
                         </div>
+                        #set( $create_request_href = "/jira/secure/CreateIssue!default.jspa?issuetype=" + $request_id.id + "&pid=" + $currentProject.id )
+
+                        #if(!$currentProject.issueTypes.contains($request_id))
+                            <div class="aui-message aui-message-warning">
+                                <p>Please enable Request issue type for project $currentProject.name.</p>
+                            </div>
+                        #end
                         <ul class="aui-nav" title="Requests actions">
                             <li>
                                 <a class="aui-nav-item" id="create_request" href=$create_request_href>
