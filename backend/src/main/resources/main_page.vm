@@ -2,6 +2,9 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-button")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-tabs")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-select")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-forms")
+$webResourceManager.requireResource("com.atlassian.auiplugin:message")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-experimental-iconfont")
 $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dynamictable")
 
@@ -58,10 +61,15 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                         <div class="aui-nav-heading" title="Requests">
                             <strong>Requests</strong>
                         </div>
+                        #set( $create_request_href = "/jira/secure/CreateIssue!default.jspa?issuetype=" + $request_id.id + "&pid=" + $currentProject.id )
+
+                        #if(!$currentProject.issueTypes.contains($request_id))
+                            <div class="aui-message aui-message-warning">
+                                <p>Please enable Request issue type for project $currentProject.name.</p>
+                            </div>
+                        #end
                         <ul class="aui-nav" title="Requests actions">
                             <li>
-                                #set( $create_request_href =
-                                    "/jira/secure/CreateIssue!default.jspa?issuetype=" + $request_id )
                                 <a class="aui-nav-item" id="create_request" href=$create_request_href>
                                     <span class="aui-icon aui-icon-small aui-iconfont-list-add"></span>
                                     <span class="aui-nav-item-label">Create Request</span>
@@ -141,9 +149,18 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                    class="text">
                                         </form>
                                         <div class="aui-buttons">
-                                            <button class="aui-button aui-button-primary aui-dropdown2-trigger"
-                                                    aria-controls="example-dropdown">Project: Agile Planing Platform
-                                            </button>
+                                            <form class="aui">
+                                                <aui-select id="allProjects" placeholder="Select project" multiple>
+                                                    <input type="text" class="text" autocomplete="off" role="combobox" id="selector-input" placeholder="Search project">
+                                                    #foreach( $project in $allProjects )
+                                                        <aui-option value="${project.name}"
+                                                            #if($project.name == $currentProject.name)
+                                                                    selected
+                                                            #end
+                                                        >$project.name</aui-option>
+                                                    #end
+                                                </aui-select>
+                                            </form>
                                             <button class="aui-button aui-dropdown2-trigger" aria-controls="type-dropdown" id="btn-type-dropdown">
                                                 Type
                                             </button>
