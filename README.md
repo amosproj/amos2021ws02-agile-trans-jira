@@ -40,15 +40,6 @@ The Atlassian SDK features its own Maven Installation. I highly recommand to use
 2. In the Settings window, select Build, Execution, Deployment->Deployment Tools-> Maven
 3. Set the Maven Home path to your Atlassian Maven installation (Default is C:/Applications/Atlassian/atlassian-plugin-sdk-8.2.7/apache-maven-3.5.4)
 
-Create Request issue type
-------------
-
-1. Go to JIRA Administration/Issues (the Gear button)
-2. Go to Issue types
-3. Create a *Request* issue type
-4. Go to Issue type schemes
-    * Under your project click edit
-    * Add Request type to the scheme and save
 
 Full documentation for the SDK:
 
