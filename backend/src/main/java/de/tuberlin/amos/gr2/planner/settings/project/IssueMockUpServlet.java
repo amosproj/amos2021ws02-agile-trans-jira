@@ -39,7 +39,7 @@ public class IssueMockUpServlet extends HttpServlet {
             List<Issue> issues = issueManager.getIssuesInProject(loggedInUser);
 
             for (Issue issue : issues) {
-                w.println("The Logged In User Got Issue:  " + issue.getKey() +"  Summary:  "+ issue.getSummary()+ " "+ "Assignee: "+ issue.getAssignee()+ "<br>");
+                w.println("The Logged In User Got Issue:  " + issue.getKey() +"  Summary:  "+ issue.getSummary()+ " "+ "Assignee: "+ issue.getAssignee()+"  CreatedDate: "+ issue.getCreated()+  "  DueDate: "+ issue.getDueDate()+ "<br>");
             }
 
         } catch (SearchException e) {
@@ -51,7 +51,7 @@ public class IssueMockUpServlet extends HttpServlet {
         try {
             List<Issue> issueswith_empty_assignee = issueManager.getIssuesInProjectsWithEmptyUsers(loggedInUser);
             for (Issue issue : issueswith_empty_assignee) {
-                w.println("Got Issue:  " + issue.getKey() +"  Summary:  "+ issue.getSummary()+ " "+ "Assignee: "+ issue.getAssignee()+ "<br>");
+                w.println("Got Issue:  " + issue.getKey() +"  Summary:  "+ issue.getSummary()+ " "+ "Assignee: "+ issue.getAssignee()+"  CreatedDate: "+ issue.getCreated()+ "  DueDate: "+ issue.getDueDate()+ "<br>");
             }
 
         } catch (SearchException e) {
