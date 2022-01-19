@@ -1,0 +1,90 @@
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-button")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-table")
+
+<html lang="en">
+<head>
+    <meta name="decorator" content="atl.general"/>
+    <meta name="admin.active.tab" content="item_in_agile-planner-project-settings"/>
+    <meta name="admin.active.section" content="atl.jira.proj.config"/>
+</head>
+<body class="aui-page-focused">
+
+<div id="page">
+
+    <div id="content">
+        <section>
+            <div class="aui-page-header">
+                <div class="aui-page-header-inner">
+                    <div class="aui-page-header-main">
+                        <h1>Agile Planner Project Settings</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aui-page-panel">
+                <div class="aui-page-panel-inner">
+                    <main id="main" role="main" class="aui-page-panel-content">
+                        <table class="aui">
+                            <thead>
+                            <tr>
+                                <th id="name">Name</th>
+                                <th id="check"></th>
+                                <th id="toggle"></th>
+                                <th id="status"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td headers="name">Enable Plugin for Project</td>
+                                <td headers="check">
+                                    <button class="aui-button aui-dropdown2-trigger" aria-controls="project-dropdown">
+                                        Choose Project
+                                    </button>
+
+                                    <aui-dropdown-menu id="project-dropdown">
+                                        <aui-section label="Projects">
+                                            <aui-item-radio interactive>Project 1</aui-item-radio>
+                                            <aui-item-radio interactive>Project 2</aui-item-radio>
+                                            <aui-item-radio interactive>Project 3</aui-item-radio>
+                                        </aui-section>
+                                    </aui-dropdown-menu>
+                                </td>
+                                <td class="toggle" headers="toggle">
+                                    <aui-toggle id="enable-switch" label="Enable"></aui-toggle>
+                                </td>
+                                <td class="status" headers="status">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td headers="name">Check Project Compatibility</td>
+                                <td headers="check">
+                                    <div class="aui-buttons">
+                                        <button type="button" class="aui-button">
+                                            Check requirements
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="toggle" headers="toggle">
+                                    <div class="aui-buttons">
+                                        <button type="button" class="aui-button" disabled>
+                                            Solve issues
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="status" headers="status">
+                                    Status:
+                                    <span class="aui-icon aui-icon-large aui-iconfont-check-circle-filled"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>
