@@ -32,6 +32,7 @@ import java.util.Map;
  */
 public class MainPageServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MainPageServlet.class);
+
     @ComponentImport
     private final TemplateRenderer renderer;
 
