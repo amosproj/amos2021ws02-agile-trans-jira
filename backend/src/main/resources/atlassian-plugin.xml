@@ -84,4 +84,10 @@
 
   </servlet>
 
+  <servlet name="Issue Mockup" i18n-name-key="planner-team-management.name" key="issue mockup" class="de.tuberlin.amos.gr2.planner.settings.project.IssueMockUpServlet" >
+    <description>A mock up servlet to show the issues of user and test the functions in class IssueManager</description>
+    <url-pattern>/issuemockup</url-pattern>
+  </servlet>
+
+
 </atlassian-plugin>
