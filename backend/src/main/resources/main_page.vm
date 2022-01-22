@@ -143,7 +143,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
                                 ## second filter bar buttons
                                 <div class="aui-group">
-                                    <div class="aui-item" id="second-filter" style="display:inline-block">
+                                    <div class="aui-item" id="second-filter" style="display: inline-block">
                                         <form style="float: left" class="aui">
                                             <input id="search-issues" placeholder="Search Issues" type="text"
                                                    class="text">
@@ -184,7 +184,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                     </div>
 
                                     ## second filter bar advanced search
-                                    <div class="aui-item" id="jql-search" style="display:none">
+                                    <div class="aui-item" id="jql-search" style="display: none">
                                         <form style="float: left" class="aui">
                                             <input style="min-width: 50rem" id="search-issues-textfield"
                                                    placeholder="Type JQL Query.." type="text" class="text">
@@ -196,7 +196,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                 id="jql-search-button">Search
                                         </button>
                                     </div>
-                                    <div style="display:inline-block; float: right">
+                                    <div style="display: inline-block; float: right">
                                         <aui-label for="JQL-switch">Use JQL</aui-label>
                                         <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
                                     </div>
@@ -222,7 +222,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
 
                                 <script>
-                                    //JQL-Search
+                                    ## JQL-Search
                                     const jqlSearchButton = document.getElementById("jql-search-button");
                                     jqlSearchButton.addEventListener("click", function (e) {
                                         console.log('Event:Click')
@@ -286,18 +286,29 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
                             ## dropdown popup activated when clicking type
 
+
+
                             <aui-dropdown-menu id="type-dropdown">
-                                <aui-section label="Request Type">
-                                    <aui-item-checkbox interactive>Task Issue</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Sub-Task Issue</aui-item-checkbox>
+                                <aui-section label="Type">
+                                    #foreach( $type in $issueType )
+                                        <aui-item-checkbox interactive>$type.name</aui-item-checkbox>
+                                    #end
                                 </aui-section>
                             </aui-dropdown-menu>
+
+                            ## /rest/api/2/project/{currentProject}/statuses
+                            ## getCurrentProject(com.atlassian.jira.security.Permissions.PROJECT_ADMIN, currentUser())
+                            ## com.atlassian.jira.security.Permissions.PROJECT_ADMIN
+
+                            ## let request_currentProject = new Request(protocol.concat('//', window.location.host, '/jira/rest/api/2/search?jql=', jqlquery));
+                            ## http://localhost:2990/jira/rest/api/2/project/TES/statuses
 
                             ## Dropdown type dynamic query update (checkbox)
                             <script>
                                 var typeQuery = " ";
                                 var typeParams = [];
                                 var typeDropdown = document.getElementById('type-dropdown');
+
                                 typeDropdown.addEventListener('change', function (e) {
                                     var isChecked = e.target.hasAttribute('checked');
                                     if (isChecked) {
@@ -320,6 +331,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                             });
                                         }
                                         console.log(typeParams);
+
                                     }
 
                                     ## Prepare updated query
@@ -345,9 +357,9 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
                             <aui-dropdown-menu id="status-dropdown">
                                 <aui-section label="Request Status">
-                                    <aui-item-checkbox interactive>To Do</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Done</aui-item-checkbox>
-                                    ##<aui-item-checkbox interactive>Canceled</aui-item-checkbox>
+                                #foreach( $status in $statuses )
+                                    <aui-item-checkbox interactive>$status.name</aui-item-checkbox>
+                                #end
                                 </aui-section>
                             </aui-dropdown-menu>
 
