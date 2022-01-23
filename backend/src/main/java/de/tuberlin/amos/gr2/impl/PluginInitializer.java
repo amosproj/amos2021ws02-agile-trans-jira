@@ -58,17 +58,17 @@ public class PluginInitializer implements InitializingBean, DisposableBean {
 
 
     //For conventions, see
-    static final String TEAM_FIELD_NAME = "Associated Team";
+    public static final String TEAM_FIELD_NAME = "Associated Team";
     static final String TEAM_FIELD_TYPE_NAME = "com.atlassian.jira.plugin.system.customfieldtypes:select";
-    static final String TEAM_FIELD_DESC = "Agile Planning Team custom field used by the Agile Platform plugin. Do not edit this field.";
+    public static final String TEAM_FIELD_DESC = "Agile Planning Team custom field used by the Agile Platform plugin. Do not edit this field.";
 
-    static final String FROM_FIELD_NAME = "Start of Work";
+    public static final String FROM_FIELD_NAME = "Start of Work";
     static final String FROM_FIELD_TYPE_NAME = "com.atlassian.jira.plugin.system.customfieldtypes:datepicker";
-    static final String FROM_FIELD_DESC = "Agile Planning Start custom field used by the Agile Platform plugin. Do not edit this field.";
+    public static final String FROM_FIELD_DESC = "Agile Planning Start custom field used by the Agile Platform plugin. Do not edit this field.";
 
-    static final String END_FIELD_NAME = "End of Work";
+    public static final String END_FIELD_NAME = "End of Work";
     static final String END_FIELD_TYPE_NAME = "com.atlassian.jira.plugin.system.customfieldtypes:datepicker";
-    static final String END_FIELD_DESC = "Agile Planning End custom field used by the Agile Platform plugin. Do not edit this field.";
+    public static final String END_FIELD_DESC = "Agile Planning End custom field used by the Agile Platform plugin. Do not edit this field.";
 
 
     @Override
