@@ -1,5 +1,7 @@
 package de.tuberlin.amos.gr2.planner.main;
 
+import com.atlassian.jira.issue.CustomFieldManager;
+import com.atlassian.jira.issue.fields.CustomField;
 import com.atlassian.jira.issue.fields.config.manager.IssueTypeSchemeManager;
 import com.atlassian.jira.issue.issuetype.IssueType;
 import com.atlassian.jira.permission.ProjectPermissions;
@@ -8,6 +10,7 @@ import com.atlassian.jira.project.Project;
 import com.atlassian.jira.security.PermissionManager;
 import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.jira.user.UserProjectHistoryManager;
+import com.atlassian.plugin.PluginException;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import static com.atlassian.jira.component.ComponentAccessor.getJiraAuthenticationContext;
 
@@ -15,6 +18,7 @@ import javax.inject.Inject;
 
 import com.atlassian.templaterenderer.TemplateRenderer;
 
+import de.tuberlin.amos.gr2.impl.PluginInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,9 +53,13 @@ public class MainPageServlet extends HttpServlet {
     @ComponentImport
     private IssueTypeSchemeManager issueTypeSchemeManager;
 
+    @ComponentImport
+    private final CustomFieldManager customFieldManager;
+
     @Inject
-    public MainPageServlet(TemplateRenderer renderer) {
+    public MainPageServlet(TemplateRenderer renderer, CustomFieldManager customFieldManager) {
         this.renderer = renderer;
+        this.customFieldManager = customFieldManager;
     }
 
     /**
@@ -83,8 +92,30 @@ public class MainPageServlet extends HttpServlet {
         if (!params.containsKey("request_id")) {
             params.put("request_id", "00000");
         }
+
+        params.put("team_field", getAPPCustomField(PluginInitializer.TEAM_FIELD_NAME, PluginInitializer.TEAM_FIELD_DESC));
+        params.put("start_field", getAPPCustomField(PluginInitializer.FROM_FIELD_NAME, PluginInitializer.FROM_FIELD_DESC));
+        params.put("end_field", getAPPCustomField(PluginInitializer.END_FIELD_NAME, PluginInitializer.END_FIELD_DESC));
+
         response.setContentType("text/html;charset=utf-8");
         renderer.render("main_page.vm", params, response.getWriter());
+    }
+
+    /**
+     * Returns custom field required for APP if exists
+     * @param name
+     * @param desc
+     * @return
+     */
+    private CustomField getAPPCustomField(String name, String desc){
+        Collection<CustomField> cFields = this.customFieldManager.getCustomFieldObjectsByName(name);
+        for (CustomField field : cFields) {
+            if (field.getDescription().matches(desc)) {
+                return field;
+            }
+        }
+        return null;
+
     }
 
 }
