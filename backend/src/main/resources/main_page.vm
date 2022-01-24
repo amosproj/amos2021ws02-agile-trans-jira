@@ -213,6 +213,10 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                         <th>Reporter</th>
                                         <th>Priority</th>
                                         <th>Status</th>
+                                        <th id="table_start_of_work" style="display: none;">Start of Work</th>
+                                        <th id="table_end_of_work" style="display: none;">End of Work</th>
+                                        <th id="table_associated_team" style="display: none;">Associated Team</th>
+                                        <th id="table_epic_link" style="display: none;">Epic Link</th>
                                     </tr>
                                     </thead>
                                     <tbody id="jql-results">
@@ -250,6 +254,9 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                     return response.json()
                                                 })
                                                 .then(function (data) {
+                                                    //check which items have been checked
+                                                    let checked_criteria = []
+                                                    $('aui-item-checkbox[checked]').each(function() { checked_criteria.push(this.textContent) })
                                                     let content = '';
                                                     for (let obj in Array.from(data.issues)) {
                                                         console.log(obj);
@@ -268,6 +275,68 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                         let status_name = data.issues[obj].fields.status.name
                                                         let status_icon = data.issues[obj].fields.status.iconUrl
 
+                                                        //epic-link hardcoded, am not sure whether it is the same for everybody and not sure how to get it from the system (esp. if in different languages))
+                                                        let epic_link = data.issues[obj].fields.customfield_10004
+                                                        let end_of_work = data.issues[obj].fields.$end_field.getId();
+                                                        let start_of_work = data.issues[obj].fields.$start_field.getId();
+                                                        let assoc_team = data.issues[obj].fields.$team_field.getId();
+
+                                                        let custom_field = ''
+
+                                                        //if some criteria has been checked, respective td is added, if not td is added but will not be shown due to display none
+                                                        if(checked_criteria.includes('Start of Work')) {
+                                                            if(start_of_work != null) {
+                                                                custom_field += '<td id="issue_start_of_work">' + start_of_work + '</td>'
+                                                            } else {
+                                                                custom_field += '<td id="issue_start_of_work">-</td>'
+                                                            }
+                                                        } else {
+                                                            if(start_of_work != null) {
+                                                                custom_field += '<td id="issue_start_of_work" style="display: none;">' + start_of_work + '</td>'
+                                                            } else {
+                                                                custom_field += '<td id="issue_start_of_work" style="display: none;">-</td>'
+                                                            }
+                                                        }
+                                                        if(checked_criteria.includes('End of Work')) {
+                                                            if (end_of_work != null) {
+                                                                custom_field += '<td id ="issue_end_of_work">' + end_of_work + '</td>'
+                                                            } else {
+                                                                custom_field += '<td id ="issue_end_of_work">-</td>'
+                                                            }
+                                                        } else {
+                                                            if (end_of_work != null) {
+                                                                custom_field += '<td id ="issue_end_of_work" style="display: none;">' + end_of_work + '</td>'
+                                                            } else {
+                                                                custom_field += '<td id ="issue_end_of_work" style="display: none;">-</td>'
+                                                            }
+                                                        }
+                                                        if(checked_criteria.includes('Associated Team')) {
+                                                            if(assoc_team != null) {
+                                                                custom_field += '<td id="issue_associated_team">' + assoc_team + '</td>'
+                                                            } else {
+                                                                custom_field += '<td id="issue_associated_team">-</td>'
+                                                            }
+                                                        } else {
+                                                            if (assoc_team != null) {
+                                                                custom_field += '<td id ="issue_associated_team" style="display: none;">' + assoc_team + '</td>'
+                                                            } else {
+                                                                custom_field += '<td id ="issue_associated_team" style="display: none;">-</td>'
+                                                            }
+                                                        }
+                                                        if(checked_criteria.includes('Epic Link')) {
+                                                            if (epic_link != null) {
+                                                                custom_field += '<td id="issue_epic_link">' + epic_link + '</td>'
+                                                            } else {
+                                                                custom_field += '<td id="issue_epic_link">-</td>'
+                                                            }
+                                                        } else {
+                                                            if (epic_link != null) {
+                                                                custom_field += '<td id ="issue_epic_link" style="display: none;">' + epic_link + '</td>'
+                                                            } else {
+                                                                custom_field += '<td id ="issue_epic_link" style="display: none;">-</td>'
+                                                            }
+                                                        }
+
                                                         content += '<tr>' +
                                                                 '<td> <span class=\"aui-icon aui-icon-small\"><img src=\"' + issuetype_icon + '\" alt=\"Icon\" /></span> ' + issuetype_name + '</td>' +
                                                                 '<td class=\"aui-table-column-issue-key\">' + key + '</td>' +
@@ -276,7 +345,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                                 '<td> <span class=\"aui-avatar aui-avatar-small\"> <span class=\"aui-avatar-inner\"><img src=\"' + reporter_avatar + '\" alt=\"Avatar\" /></span></span> ' + reporter_name + '</td>' +
                                                                 '<td> <span class=\"aui-icon aui-icon-small\"><img src=\"' + priority_icon + '\" alt=\"Icon\" /></span> ' + priority_name + '</td>' +
                                                                 '<td> <span class=\"aui-icon aui-icon-small\"><img src=\"' + status_icon + '\" alt=\"Icon\" /></span> ' + status_name + '</td>' +
-                                                                '</tr>';
+                                                                custom_field + '</tr>';
                                                     }
                                                     document.getElementById('jql-results').innerHTML = content;
                                                 });
@@ -482,24 +551,29 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
                             ## dropdown popup activated when clicking more
                             <aui-dropdown-menu id="more-dropdown">
-                                <aui-section>
-                                    <form style="float: left" class="aui">
-                                        <input id="search-issues" placeholder="Find Assignee.."
-                                               aria-autocomplete="list"
-                                               aria-haspopup="true" aria-expanded="true" type="text"
-                                               class="text">
-                                    </form>
-                                </aui-section>
                                 <aui-section label="All Criteria">
-                                    <aui-item-checkbox interactive checked>Criteria 1</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Criteria 2</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Criteria 3</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Criteria 4</aui-item-checkbox>
+                                    <aui-item-checkbox id="start_of_work" interactive>Start of Work</aui-item-checkbox>
+                                    <aui-item-checkbox id="end_of_work" interactive>End of Work</aui-item-checkbox>
+                                    <aui-item-checkbox id="associated_team" interactive>Associated Team</aui-item-checkbox>
+                                    <aui-item-checkbox id="epic_link" interactive>Epic Link</aui-item-checkbox>
 
                                 </aui-section>
 
 
                             </aui-dropdown-menu>
+                            <script>
+                                var more_dropdown = document.getElementById('more-dropdown');
+                                more_dropdown.addEventListener('change', function (e) {
+                                    var isChecked = e.target.hasAttribute('checked');
+                                    if (isChecked) {
+                                        $("th#table_"+e.target.id).css('display', 'table-cell');
+                                        $("td#issue_"+e.target.id).css('display', 'table-cell');
+                                    } else {
+                                        $("th#table_"+e.target.id).css('display', 'none');
+                                        $("td#issue_"+e.target.id).css('display', 'none');
+                                    }
+                                });
+                            </script>
 
                             ## dropdown popup activated when clicking export
                             <aui-dropdown-menu id="export-dropdown">
