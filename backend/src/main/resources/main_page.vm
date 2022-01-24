@@ -175,13 +175,9 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                 More
                                                 <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
                                             </button>
-                                            ## search button
-                                            <button style="float: left;"
-                                                    class="aui-button aui-button-primary search-button"
-                                                    type="button" original-title="Search for issues" resolved id="jql-search-button">Search
-                                            </button>
                                         </div>
                                     </div>
+
 
                                     ## second filter bar advanced search
                                     <div class="aui-item" id="jql-search" style="display: none">
@@ -189,6 +185,10 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                             <input style="min-width: 50rem" id="search-issues-textfield"
                                                    placeholder="Type JQL Query.." type="text" class="text">
                                         </form>
+
+                                    </div>
+
+                                    <div style="display: inline-block">
                                         ## search button
                                         <button style="float: left;"
                                                 class="aui-button aui-button-primary search-button"
@@ -196,6 +196,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                 id="jql-search-button">Search
                                         </button>
                                     </div>
+
                                     <div style="display: inline-block; float: right">
                                         <aui-label for="JQL-switch">Use JQL</aui-label>
                                         <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
