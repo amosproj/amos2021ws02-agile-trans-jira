@@ -288,6 +288,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
 
 
+
                             <aui-dropdown-menu id="type-dropdown">
                                 <aui-section label="Type">
                                     #foreach( $type in $issueType )
@@ -302,6 +303,24 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
                             ## let request_currentProject = new Request(protocol.concat('//', window.location.host, '/jira/rest/api/2/search?jql=', jqlquery));
                             ## http://localhost:2990/jira/rest/api/2/project/TES/statuses
+
+                            ## Function for building the connected final query out of all dropdowns
+                            <script>
+                                function buildQuery(){
+                                    let tempQuery = [];
+                                    let resultQuery = "";
+                                    tempQuery.push(typeQuery);
+                                    tempQuery.push(statusQuery);
+                                    tempQuery.push(assigneeQuery);
+                                    tempQuery.forEach(element => {
+                                        if (element.length >= 2){
+                                            resultQuery += element + " AND "
+                                        }
+                                    })
+                                    resultQuery = resultQuery.slice(0, -5);
+                                    return resultQuery;
+                                }
+                            </script>
 
                             ## Dropdown type dynamic query update (checkbox)
                             <script>
@@ -348,7 +367,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                     console.log(typeQuery);
 
                                     ## Input Query into search issues textfield
-                                    document.getElementById('search-issues-textfield').value = typeQuery;
+                                    document.getElementById('search-issues-textfield').value = buildQuery();
 
                                 });
                             </script>
@@ -417,7 +436,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                 console.log(statusQuery);
 
                                 ## Input Query into search issues textfield
-                                document.getElementById('search-issues-textfield').value = statusQuery;
+                                document.getElementById('search-issues-textfield').value = buildQuery();
 
                                 });
                             </script>
@@ -485,7 +504,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                     console.log(assigneeQuery);
 
                                     ## Input Query into search issues textfield
-                                    document.getElementById('search-issues-textfield').value = assigneeQuery;
+                                    document.getElementById('search-issues-textfield').value = buildQuery();
                                 });
                             </script>
 
