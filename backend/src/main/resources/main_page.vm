@@ -481,7 +481,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                             ## dropdown popup activated when clicking assignee
                             <aui-dropdown-menu id="assignee-dropdown">
                                 <aui-section id="assignee-section" label="Issue Assignee">
-                                    <aui-item-checkbox id="assignableUsers" interactive></aui-item-checkbox>
+
                                 </aui-section>
                             </aui-dropdown-menu>
 
@@ -506,7 +506,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                         replacements.hasOwnProperty(placeholderWithoutDelimiters) ?
                                                                 replacements[placeholderWithoutDelimiters] : placeholderWithDelimiters
                                         );
-                                        document.getElementById('assignee-section').innerHTML = string;
+                                        document.getElementById('assignee-section').innerHTML += string;
                                         stringWithPlaceholders = 'assignee{id}';
                                         replacements = {
                                             id: 0
