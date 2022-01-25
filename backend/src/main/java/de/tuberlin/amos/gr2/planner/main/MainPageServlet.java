@@ -1,6 +1,7 @@
 package de.tuberlin.amos.gr2.planner.main;
 
 import com.atlassian.jira.issue.CustomFieldManager;
+import com.atlassian.jira.issue.customfields.CustomFieldType;
 import com.atlassian.jira.issue.fields.CustomField;
 import com.atlassian.jira.issue.fields.config.manager.IssueTypeSchemeManager;
 import com.atlassian.jira.issue.issuetype.IssueType;
@@ -10,7 +11,6 @@ import com.atlassian.jira.project.Project;
 import com.atlassian.jira.security.PermissionManager;
 import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.jira.user.UserProjectHistoryManager;
-import com.atlassian.plugin.PluginException;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import static com.atlassian.jira.component.ComponentAccessor.getJiraAuthenticationContext;
 
@@ -96,6 +96,7 @@ public class MainPageServlet extends HttpServlet {
         params.put("team_field", getAPPCustomField(PluginInitializer.TEAM_FIELD_NAME, PluginInitializer.TEAM_FIELD_DESC));
         params.put("start_field", getAPPCustomField(PluginInitializer.FROM_FIELD_NAME, PluginInitializer.FROM_FIELD_DESC));
         params.put("end_field", getAPPCustomField(PluginInitializer.END_FIELD_NAME, PluginInitializer.END_FIELD_DESC));
+        params.put("epic_field",getEpicLinkField());
 
         response.setContentType("text/html;charset=utf-8");
         renderer.render("main_page.vm", params, response.getWriter());
@@ -103,8 +104,8 @@ public class MainPageServlet extends HttpServlet {
 
     /**
      * Returns custom field required for APP if exists
-     * @param name
-     * @param desc
+     * @param name name of the desired field
+     * @param desc description of the desired field
      * @return
      */
     private CustomField getAPPCustomField(String name, String desc){
@@ -116,6 +117,38 @@ public class MainPageServlet extends HttpServlet {
         }
         return null;
 
+    }
+
+    /**
+     * Returns custom field for Epic Link with help of the respective custom field type key
+     * @return epic link custom field
+     */
+    private CustomField getEpicLinkField() {
+        //probably needs refinement
+        Collection<CustomField> allcFields = this.customFieldManager.getCustomFieldObjects();
+        String epicLinkTypeKey = getEpicLinkTypeKey();
+        for(CustomField field: allcFields) {
+            if (field.getCustomFieldType().getKey().equals(epicLinkTypeKey)) {
+                return field;
+            }
+        }
+
+        return null;
+
+    }
+
+    /**
+     * Returns the key for the custom field type Epic Link Relationship
+     * @return key for the custom field type Epic Link Relationship
+     */
+    private String getEpicLinkTypeKey() {
+        List<CustomFieldType<?, ?>> cFieldTypes = this.customFieldManager.getCustomFieldTypes();
+        for(CustomFieldType<?, ?> fieldType: cFieldTypes) {
+            if(fieldType.getName().equals("Epic Link Relationship")) {
+                return fieldType.getKey();
+            }
+        }
+        return "";
     }
 
 }
