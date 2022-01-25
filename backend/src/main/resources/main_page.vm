@@ -307,6 +307,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
                             ## Function for building the connected final query out of all dropdowns
                             <script>
+
                                 function buildQuery(){
                                     let tempQuery = [];
                                     let resultQuery = "";
@@ -321,6 +322,40 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                     resultQuery = resultQuery.slice(0, -5);
                                     return resultQuery;
                                 }
+
+                                ## Promise that does the GET Request for Assignable Users and puts their names into Array 'assignableUsers'
+                                function getAssignableUsersPromise(){
+                                    return new Promise(async (resolve, reject) => {
+                                        let options = {
+                                            method: 'GET',
+                                            headers: {
+                                                'Content-Type': 'application/json;charset=utf-8'
+                                            },
+                                            credentials: 'include'
+                                        }
+
+                                        let assignableUsers = []; ## Array for GET request results
+
+                                        ## Do GET reuqest for data and put data into Array 'assignableUsers'
+                                        let user_request = new Request(window.location.protocol.concat('//', window.location.host, '/jira/rest/api/2/user/assignable/search?project=', '$currentProject.getKey()'));
+
+                                        let response = await fetch(user_request, options)
+                                        let data = await response.json();
+
+                                        data.forEach((obj, index) => {
+                                            ## add next name to array
+                                            assignableUsers.push(obj.name);
+                                        });
+                                        if (assignableUsers.length > 0) {
+                                            resolve(assignableUsers);
+                                        } else {
+                                            reject(error);
+                                        }
+
+                                    });
+
+                                }
+
                             </script>
 
                             ## Dropdown type dynamic query update (checkbox)
@@ -445,23 +480,52 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
                             ## dropdown popup activated when clicking assignee
                             <aui-dropdown-menu id="assignee-dropdown">
-                                <aui-section label="Search">
-                                    ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
-                                    <form style="float: left" class="aui">
-                                        <input id="search-issues" placeholder="Find Assignee.."
-                                               aria-autocomplete="list"
-                                               aria-haspopup="true" aria-expanded="true" type="text"
-                                               class="text">
-                                    </form>
+                                <aui-section id="assignee-section" label="Issue Assignee">
+                                    <aui-item-checkbox id="assignableUsers" interactive></aui-item-checkbox>
                                 </aui-section>
-                                <aui-section label="Assignees">
-                                    <aui-item-checkbox interactive>Current User</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Unassigned</aui-item-checkbox>
-                                </aui-section>
-                                ##<aui-section label="Suggested Users">
-                                ##    <aui-item-checkbox interactive checked>admin</aui-item-checkbox>
-                                ##</aui-section>
                             </aui-dropdown-menu>
+
+                            <script>
+                                ## function that waits for the AssignableUsers to get retrieved
+                                ## from Promise and GET Request and then fills in the Dropdown Options
+                                async function fillAssignableUsers() {
+
+                                    let assignableUsers = await getAssignableUsersPromise(); ## awaits Promise from GET Request Function
+
+                                    let replacements = {
+                                        id: 0
+                                    };
+
+                                    ##fill in Dropdown Option for every user in AssignableUsers
+                                    assignableUsers.forEach(user => {
+                                        let stringWithPlaceholders = '<aui-item-checkbox id="assignee{id}" interactive></aui-item-checkbox>';
+
+                                        let string = stringWithPlaceholders.replace(
+                                                /{(\w+)}/g,
+                                                (placeholderWithDelimiters, placeholderWithoutDelimiters) =>
+                                                        replacements.hasOwnProperty(placeholderWithoutDelimiters) ?
+                                                                replacements[placeholderWithoutDelimiters] : placeholderWithDelimiters
+                                        );
+                                        document.getElementById('assignee-section').innerHTML = string;
+                                        stringWithPlaceholders = 'assignee{id}';
+                                        replacements = {
+                                            id: 0
+                                        };
+                                        string = stringWithPlaceholders.replace(
+                                                /{(\w+)}/g,
+                                                (placeholderWithDelimiters, placeholderWithoutDelimiters) =>
+                                                        replacements.hasOwnProperty(placeholderWithoutDelimiters) ?
+                                                                replacements[placeholderWithoutDelimiters] : placeholderWithDelimiters
+                                        );
+                                        document.getElementById(string).innerHTML = user;
+                                        replacements.id++;
+                                    });
+
+                                };
+                                ## execute function
+                                fillAssignableUsers();
+
+                            </script>
 
                             ## Dropdown assignee dynamic query update (checkbox)
                             <script>
