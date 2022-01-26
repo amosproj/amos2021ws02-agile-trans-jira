@@ -287,23 +287,13 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
 
                             ## dropdown popup activated when clicking type
 
-
-
-
                             <aui-dropdown-menu id="type-dropdown">
                                 <aui-section label="Type">
                                     #foreach( $type in $issueType )
-                                        <aui-item-checkbox interactive>$type.name</aui-item-checkbox>
+                                        <aui-item-checkbox interactive><img src="$type.completeIconUrl"/><span>$type.name</span></aui-item-checkbox>
                                     #end
                                 </aui-section>
                             </aui-dropdown-menu>
-
-                            ## /rest/api/2/project/{currentProject}/statuses
-                            ## getCurrentProject(com.atlassian.jira.security.Permissions.PROJECT_ADMIN, currentUser())
-                            ## com.atlassian.jira.security.Permissions.PROJECT_ADMIN
-
-                            ## let request_currentProject = new Request(protocol.concat('//', window.location.host, '/jira/rest/api/2/search?jql=', jqlquery));
-                            ## http://localhost:2990/jira/rest/api/2/project/TES/statuses
 
                             ## Function for building the connected final query out of all dropdowns
                             <script>
@@ -392,15 +382,27 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                     ## Prepare updated query
                                     ## Query depending on available status options, change if necessary
                                     typeQuery = " ";
-                                    typeParams.forEach((element) => {
-                                        typeQuery += 'type = "' + element + '" OR ' ;
-                                    });
-                                    typeQuery = typeQuery.slice(0, -3);
+                                    ##typeParams.forEach((element) => {
+                                    ##  typeQuery += 'type = "' + element + '" OR ' ;
+                                    ##});
+
+                                    ##typeQuery = typeQuery.slice(0, -3);
                                     document.getElementById("btn-type-dropdown").innerHTML = "Type: " + typeParams;
                                     if (typeParams.length == 0) {
                                         document.getElementById("btn-type-dropdown").innerHTML = "Type"; ##deletes ":"
                                     }
                                     console.log(typeQuery);
+
+                                    ## create improved query
+                                    let resultStringType = "";
+                                    typeParams.forEach(element => {
+                                        resultStringType += "'"+element+"',";
+                                    });
+                                    resultStringType = resultStringType.slice(0, -1);
+
+                                    if(typeParams.length>0) {
+                                        typeQuery = "type IN (" + resultStringType + ")";
+                                    }
 
                                     ## Input Query into search issues textfield
                                     document.getElementById('search-issues-textfield').value = buildQuery();
@@ -413,7 +415,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                             <aui-dropdown-menu id="status-dropdown">
                                 <aui-section label="Request Status">
                                 #foreach( $status in $statuses )
-                                    <aui-item-checkbox interactive>$status.name</aui-item-checkbox>
+                                    <aui-item-checkbox interactive><img src="$status.completeIconUrl"/><span>$status.name</span></aui-item-checkbox>
                                 #end
                                 </aui-section>
                             </aui-dropdown-menu>
@@ -461,15 +463,27 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                 ## Prepare updated query
                                 ## Query depending on available status options, change if necessary
                                 statusQuery = " ";
-                                statusParams.forEach((element) => {
-                                    statusQuery += 'status = "' + element + '" OR ' ;
-                                });
-                                statusQuery = statusQuery.slice(0, -3);
+                                ##statusParams.forEach((element) => {
+                                ##    statusQuery += 'status = "' + element + '" OR ' ;
+                                ##});
+                                ##statusQuery = statusQuery.slice(0, -3);
                                 document.getElementById("btn-status-dropdown").innerHTML = "Status: " + statusParams;
                                 if (statusParams.length == 0) {
                                     document.getElementById("btn-status-dropdown").innerHTML = "Status"; ##deletes ":"
                                 }
                                 console.log(statusQuery);
+
+                                ## create improved query
+                                let resultStringStatus = "";
+
+                                statusParams.forEach(element => {
+                                    resultStringStatus += "'"+element+"',";
+                                });
+                                resultStringStatus = resultStringStatus.slice(0, -1);
+
+                                if(statusParams.length>0) {
+                                    statusQuery = "status IN (" + resultStringStatus + ")";
+                                }
 
                                 ## Input Query into search issues textfield
                                 document.getElementById('search-issues-textfield').value = buildQuery();
