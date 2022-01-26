@@ -481,7 +481,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                             ## dropdown popup activated when clicking assignee
                             <aui-dropdown-menu id="assignee-dropdown">
                                 <aui-section id="assignee-section" label="Issue Assignee">
-
+                                    <aui-item-checkbox id="unassigned-option" interactive>unassigned</aui-item-checkbox>
                                 </aui-section>
                             </aui-dropdown-menu>
 
@@ -559,7 +559,11 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                     ## Query depending on available status options, change if necessary
                                     assigneeQuery = " ";
                                     assigneeParams.forEach((element) => {
-                                        assigneeQuery += 'assignee = "' + element + '" OR ';
+                                        if(element === "unassigned"){
+                                            assigneeQuery += 'assignee is Empty' + ' OR ';
+                                        } else {
+                                            assigneeQuery += 'assignee = "' + element + '" OR ';
+                                        }
                                     });
                                     assigneeQuery = assigneeQuery.slice(0, -3);
                                     document.getElementById("btn-assignee-dropdown").innerHTML = "Assignee: " + assigneeParams;
