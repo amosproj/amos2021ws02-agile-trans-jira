@@ -290,7 +290,12 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                             <aui-dropdown-menu id="type-dropdown">
                                 <aui-section label="Type">
                                     #foreach( $type in $issueType )
-                                        <aui-item-checkbox interactive><img src="$type.completeIconUrl"/><span>$type.name</span></aui-item-checkbox>
+                                        <aui-item-checkbox interactive>
+                                            <span class="aui-icon aui-icon-small\">
+                                                <img src="$type.completeIconUrl" alt=\"Icon\" />
+                                            </span>&ensp;
+                                            <span>$type.name</span>
+                                        </aui-item-checkbox>
                                     #end
                                 </aui-section>
                             </aui-dropdown-menu>
@@ -415,7 +420,12 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                             <aui-dropdown-menu id="status-dropdown">
                                 <aui-section label="Request Status">
                                 #foreach( $status in $statuses )
-                                    <aui-item-checkbox interactive><img src="$status.completeIconUrl"/><span>$status.name</span></aui-item-checkbox>
+                                    <aui-item-checkbox interactive>
+                                        <span class="aui-icon aui-icon-small\">
+                                            <img src="$status.completeIconUrl" alt=\"Icon\" />
+                                        </span>&ensp;
+                                        <span>$status.name</span>
+                                    </aui-item-checkbox>
                                 #end
                                 </aui-section>
                             </aui-dropdown-menu>
