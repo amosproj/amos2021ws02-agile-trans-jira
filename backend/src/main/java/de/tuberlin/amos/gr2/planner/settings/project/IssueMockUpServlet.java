@@ -4,7 +4,9 @@ import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.issue.search.SearchException;
 import com.atlassian.jira.user.ApplicationUser;
+import com.google.gson.Gson;
 import main.java.de.tuberlin.amos.gr2.api.IssueManager;
+import main.java.de.tuberlin.amos.gr2.api.JsonFormatTool;
 import main.java.de.tuberlin.amos.gr2.impl.IssueManagerImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class IssueMockUpServlet extends HttpServlet {
 
@@ -26,6 +31,7 @@ public class IssueMockUpServlet extends HttpServlet {
     {
 
         IssueManager issueManager = new IssueManagerImpl();
+        JsonFormatTool jsontool = new JsonFormatTool();
 
         final PrintWriter w = res.getWriter();
         w.write("<h1>Issue Mockup Service - get issue for current user</h1>");
@@ -41,6 +47,16 @@ public class IssueMockUpServlet extends HttpServlet {
             for (Issue issue : issues) {
                 w.println("The Logged In User Got Issue:  " + issue.getKey() +"  Summary:  "+ issue.getSummary()+ " "+ "Assignee: "+ issue.getAssignee()+"  CreatedDate: "+ issue.getCreated()+  "  DueDate: "+ issue.getDueDate()+ "<br>");
             }
+
+            List<Map> IssueInfoList = jsontool.getHashMap(issues);
+            Gson gson = new Gson();
+            String issueJson = gson.toJson(IssueInfoList);
+
+            for(Map item:IssueInfoList){
+                w.println(item.toString()+"<br>");
+            }
+
+            w.println("IssueJson:  "+issueJson+"<br>");
 
         } catch (SearchException e) {
             e.printStackTrace();
