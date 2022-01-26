@@ -7,6 +7,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-forms")
 $webResourceManager.requireResource("com.atlassian.auiplugin:message")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-experimental-iconfont")
 $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dynamictable")
+$webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable")
 
 <html>
 <head>
@@ -203,20 +204,20 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                 </div>
 
                                 ## result table
-                                <table class="aui aui-table-sortable">
+                                <table id="result-table" class="aui aui-table-sortable">
                                     <thead>
                                     <tr>
-                                        <th>Type</th>
+                                        <th class="aui-table-column-issue-type">Type</th>
                                         <th class="aui-table-column-issue-key">Issue key</th>
                                         <th class="aui-table-column-unsortable">Summary</th>
-                                        <th>Assignee</th>
-                                        <th>Reporter</th>
-                                        <th>Priority</th>
-                                        <th>Status</th>
-                                        <th id="table_start_of_work" style="display: none;">Start of Work</th>
-                                        <th id="table_end_of_work" style="display: none;">End of Work</th>
-                                        <th id="table_associated_team" style="display: none;">Associated Team</th>
-                                        <th id="table_epic_link" style="display: none;">Epic Link</th>
+                                        <th class="aui-table-column-assignee">Assignee</th>
+                                        <th class="aui-table-column-reporter">Reporter</th>
+                                        <th class="aui-table-column-priority">Priority</th>
+                                        <th class="aui-table-column-status">Status</th>
+                                        <th id="table_start_of_work" class="aui-table-column-unsortable" style="display: none;">Start of Work</th>
+                                        <th id="table_end_of_work" class="aui-table-column-unsortable" style="display: none;">End of Work</th>
+                                        <th id="table_associated_team" class="aui-table-column-unsortable" style="display: none;">Associated Team</th>
+                                        <th id="table_epic_link" class="aui-table-column-unsortable" style="display: none;">Epic Link</th>
                                     </tr>
                                     </thead>
                                     <tbody id="jql-results">
@@ -275,8 +276,7 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                         let status_name = data.issues[obj].fields.status.name
                                                         let status_icon = data.issues[obj].fields.status.iconUrl
 
-                                                        //epic-link hardcoded, am not sure whether it is the same for everybody and not sure how to get it from the system (esp. if in different languages))
-                                                        let epic_link = data.issues[obj].fields.customfield_10004
+                                                        let epic_link = data.issues[obj].fields.$epic_field.getId();
                                                         let end_of_work = data.issues[obj].fields.$end_field.getId();
                                                         let start_of_work = data.issues[obj].fields.$start_field.getId();
                                                         let assoc_team = data.issues[obj].fields.$team_field.getId();
@@ -348,6 +348,9 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                                 custom_field + '</tr>';
                                                     }
                                                     document.getElementById('jql-results').innerHTML = content;
+                                                    AJS.toInit(function(){
+                                                        AJS.$('#result-table').trigger('update');
+                                                    });
                                                 });
                                     });
                                 </script>
@@ -544,6 +547,8 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                     ## Input Query into search issues textfield
                                     document.getElementById('search-issues-textfield').value = assigneeQuery;
                                 });
+
+                                AJS.$('#result-table').trigger('update');
                             </script>
 
 
