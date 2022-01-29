@@ -23,7 +23,7 @@ export default class DynamicTable extends React.Component {
       mode: ViewMode.Month,
       tasks: startTask,
     }
-
+    //this.handleClick = this.handleClick.bind(this);
   }
 
 
@@ -44,7 +44,8 @@ export default class DynamicTable extends React.Component {
         let name = data.issues[obj].fields.summary
         let start = data.issues[obj].fields.customfield_10102
         let end = data.issues[obj].fields.customfield_10103
-        console.log(key, name, start, end)
+        let url = data.issues[obj].self
+        console.log(key, name, start, end, url)
 
         newTaskArray.push(new Task({
           id: key,
@@ -53,16 +54,20 @@ export default class DynamicTable extends React.Component {
           end: end,
           progress: 0,
           dependencies: "",
+          url: url,
         }))
       }
       resolve(newTaskArray);
     })
   }
 
-
   async updateTasks(){
 
     let newTaskArray = await this.getIssuesPromise();
+    console.log("working")
+    if(newTaskArray == this.state.tasks){
+      return
+    }
 
     console.log("newTaskArray: " + newTaskArray)
     console.log("state.tasks: ")
@@ -70,7 +75,7 @@ export default class DynamicTable extends React.Component {
 
     let nextTasks = this.state.tasks;
 
-    nextTasks = nextTasks.concat(newTaskArray);
+    nextTasks = newTaskArray;
 
     this.setState({
       tasks: nextTasks,
@@ -82,8 +87,15 @@ export default class DynamicTable extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    //this.updateTasks();
+
   }
+
+  //handleClick(task){
+  //  this.updateTasks()
+  //  console.log("clicked issue")
+  //  console.log(task.url)
+  //  window.location = task.url;
+  //}
 
   render() {
     return (
@@ -91,7 +103,10 @@ export default class DynamicTable extends React.Component {
         <FrappeGantt
             tasks={this.state.tasks}
             viewMode={this.state.mode}
-            onClick={task => console.log(task)}
+            onClick={task => {
+              this.updateTasks();
+              window.location = task.url;
+            }}
             onDateChange={(task, start, end) => console.log(task, start, end)}
             onProgressChange={(task, progress) => console.log(task, progress)}
             onTasksChange={tasks => console.log(tasks)}
