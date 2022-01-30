@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import { FrappeGantt, Task, ViewMode } from 'frappe-gantt-react'
+import { FrappeGantt, Task, ViewMode } from 'frappe-gantt-react';
+
 
 
 const startTask = [new Task(
@@ -9,8 +10,8 @@ const startTask = [new Task(
       name: "Redesign website",
       start: undefined,
       end: undefined,
-      progress: 20,
-      dependencies: "",
+      url: "",
+      progress:100,
     },
 )]
 
@@ -44,7 +45,7 @@ export default class DynamicTable extends React.Component {
         let name = data.issues[obj].fields.summary
         let start = data.issues[obj].fields.customfield_10102
         let end = data.issues[obj].fields.customfield_10103
-        let url = data.issues[obj].self
+        //let url = data.issues[obj].self
         console.log(key, name, start, end, url)
 
         newTaskArray.push(new Task({
@@ -52,9 +53,8 @@ export default class DynamicTable extends React.Component {
           name: name,
           start: start,
           end: end,
-          progress: 0,
-          dependencies: "",
-          url: url,
+          url: window.location.protocol+'//' + window.location.host+'/jira/browse/'+key,
+          progress:100,
         }))
       }
       resolve(newTaskArray);
@@ -73,12 +73,10 @@ export default class DynamicTable extends React.Component {
     console.log("state.tasks: ")
     console.log(this.state.tasks)
 
-    let nextTasks = this.state.tasks;
 
-    nextTasks = newTaskArray;
 
     this.setState({
-      tasks: nextTasks,
+      tasks: newTaskArray,
     })
   }
 
@@ -96,17 +94,19 @@ export default class DynamicTable extends React.Component {
   //  console.log(task.url)
   //  window.location = task.url;
   //}
-
   render() {
     return (
-      <div>
+        <div className="App">
+          <h1>Hello CodeSandbox</h1>
+          <h2>Start editing to see some magic happen!</h2>
         <FrappeGantt
             tasks={this.state.tasks}
             viewMode={this.state.mode}
             onClick={task => {
               this.updateTasks();
-              window.location = task.url;
-            }}
+              window.location=task.url;
+            }
+            }
             onDateChange={(task, start, end) => console.log(task, start, end)}
             onProgressChange={(task, progress) => console.log(task, progress)}
             onTasksChange={tasks => console.log(tasks)}

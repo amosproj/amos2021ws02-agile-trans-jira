@@ -5,7 +5,7 @@
     </transformation>
     <resource type="download" name="bundled.dynamictable.js" location="frontend//bundled.dynamictable.js"/>
   </web-resource>
-  <web-resource key="assets-0657dff7-cb1b-4e8a-894e-6d30efbba35c">
+  <web-resource key="assets-bf4290a3-7c0d-47a5-85ab-d0a1f98a4958">
     <resource type="download" name="bundled.dynamictable.js.LICENSE.txt" location="frontend//bundled.dynamictable.js.LICENSE.txt"/>
   </web-resource>
 </bundles>
