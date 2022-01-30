@@ -46,7 +46,7 @@ export default class DynamicTable extends React.Component {
         let start = data.issues[obj].fields.customfield_10102
         let end = data.issues[obj].fields.customfield_10103
         //let url = data.issues[obj].self
-        console.log(key, name, start, end, url)
+        //console.log(key, name, start, end, url)
 
         newTaskArray.push(new Task({
           id: key,
