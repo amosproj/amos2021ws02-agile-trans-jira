@@ -32,7 +32,7 @@ export default class DynamicTable extends React.Component {
   getIssuesPromise() {
     return new Promise(async resolve => {
       let newTaskArray = [];
-      let response = await fetch('http://localhost:2990/jira/rest/api/2/search?jql&assignee=currentUser()', {
+      let response = await fetch('http://localhost:2990/jira/rest/api/2/search?jql=type%20%3D%20Request%20AND%20assignee%20%3D%20currentUser()%20AND%20status%20!%3D%20Done', {
         method: 'GET',
         headers: {
           "Accept": "application/json",
@@ -97,8 +97,8 @@ export default class DynamicTable extends React.Component {
   render() {
     return (
         <div className="App">
-          <h1>Hello CodeSandbox</h1>
-          <h2>Start editing to see some magic happen!</h2>
+          <h1>Hello!</h1>
+          <h2>This is your personal request calendar.</h2>
         <FrappeGantt
             tasks={this.state.tasks}
             viewMode={this.state.mode}

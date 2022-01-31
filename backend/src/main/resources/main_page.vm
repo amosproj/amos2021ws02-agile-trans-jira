@@ -101,15 +101,12 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                                 </li>
                             </ul>
                             <div class="tabs-pane active-pane" id="personal-calendar">
-                                <h2>This is tab 1</h2>
                                 <div id="maincontainer">
                                     <div id="container"></div>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, blabla adipiscing elit.</p>
                             </div>
                             <div class="tabs-pane" id="teams-calendar">
                                 <h2>This is tab 2</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
 
                             <!--Content of the Request Overview tab-->
