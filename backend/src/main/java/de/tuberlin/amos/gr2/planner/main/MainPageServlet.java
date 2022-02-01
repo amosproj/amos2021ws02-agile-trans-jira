@@ -11,6 +11,8 @@ import com.atlassian.jira.project.Project;
 import com.atlassian.jira.security.PermissionManager;
 import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.jira.user.UserProjectHistoryManager;
+import com.atlassian.jira.config.ConstantsManager;
+import com.atlassian.jira.issue.status.Status;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import static com.atlassian.jira.component.ComponentAccessor.getJiraAuthenticationContext;
 
@@ -51,6 +53,10 @@ public class MainPageServlet extends HttpServlet {
 
     @Inject
     @ComponentImport
+    private ConstantsManager constantsManager;
+
+    @Inject
+    @ComponentImport
     private IssueTypeSchemeManager issueTypeSchemeManager;
 
     @ComponentImport
@@ -79,8 +85,12 @@ public class MainPageServlet extends HttpServlet {
         //using a deprecated class because there is no such method for getCurrentProject with ProjectPermissionKey yet
         Project currentProject = userProjectHistoryManager.getCurrentProject(Permissions.BROWSE, user);
         Collection<Project> allProjects = permissionManager.getProjects(ProjectPermissions.BROWSE_PROJECTS, user);
+        Collection<Status> statuses = constantsManager.getStatusObjects();
+        Collection<IssueType> issueType = constantsManager.getAllIssueTypeObjects();
         params.put("currentProject", currentProject);
         params.put("allProjects", allProjects);
+        params.put("statuses", statuses);
+        params.put("issueType", issueType);
 
         Collection<IssueType> issueTypes = issueTypeSchemeManager.getIssueTypesForDefaultScheme();
 

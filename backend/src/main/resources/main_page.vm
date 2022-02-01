@@ -144,7 +144,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
 
                                 ## second filter bar buttons
                                 <div class="aui-group">
-                                    <div class="aui-item" id="second-filter" style="display:inline-block">
+                                    <div class="aui-item" id="second-filter" style="display: inline-block">
                                         <form style="float: left" class="aui">
                                             <input id="search-issues" placeholder="Search Issues" type="text"
                                                    class="text">
@@ -176,20 +176,20 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                                                 More
                                                 <span class="aui-icon aui-icon-small aui-iconfont-add"></span>
                                             </button>
-                                            ## search button
-                                            <button style="float: left;"
-                                                    class="aui-button aui-button-primary search-button"
-                                                    type="button" original-title="Search for issues" resolved id="jql-search-button">Search
-                                            </button>
                                         </div>
                                     </div>
 
+
                                     ## second filter bar advanced search
-                                    <div class="aui-item" id="jql-search" style="display:none">
+                                    <div class="aui-item" id="jql-search" style="display: none">
                                         <form style="float: left" class="aui">
                                             <input style="min-width: 50rem" id="search-issues-textfield"
                                                    placeholder="Type JQL Query.." type="text" class="text">
                                         </form>
+
+                                    </div>
+
+                                    <div style="display: inline-block">
                                         ## search button
                                         <button style="float: left;"
                                                 class="aui-button aui-button-primary search-button"
@@ -197,7 +197,8 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                                                 id="jql-search-button">Search
                                         </button>
                                     </div>
-                                    <div style="display:inline-block; float: right">
+
+                                    <div style="display: inline-block; float: right">
                                         <aui-label for="JQL-switch">Use JQL</aui-label>
                                         <aui-toggle id="JQL-switch" label="use JQL"></aui-toggle>
                                     </div>
@@ -227,7 +228,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
 
 
                                 <script>
-                                    //JQL-Search
+                                    ## JQL-Search
                                     const jqlSearchButton = document.getElementById("jql-search-button");
                                     jqlSearchButton.addEventListener("click", function (e) {
                                         console.log('Event:Click')
@@ -359,17 +360,72 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                             ## dropdown popup activated when clicking type
 
                             <aui-dropdown-menu id="type-dropdown">
-                                <aui-section label="Request Type">
-                                    <aui-item-checkbox interactive>Task Issue</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Sub-Task Issue</aui-item-checkbox>
+                                <aui-section label="Type">
+                                    #foreach( $type in $issueType )
+                                        <aui-item-checkbox interactive><img src="$type.completeIconUrl"/><span>$type.name</span></aui-item-checkbox>
+                                    #end
                                 </aui-section>
                             </aui-dropdown-menu>
+
+                            ## Function for building the connected final query out of all dropdowns
+                            <script>
+
+                                function buildQuery(){
+                                    let tempQuery = [];
+                                    let resultQuery = "";
+                                    tempQuery.push(typeQuery);
+                                    tempQuery.push(statusQuery);
+                                    tempQuery.push(assigneeQuery);
+                                    tempQuery.forEach(element => {
+                                        if (element.length >= 2){
+                                            resultQuery += element + " AND "
+                                        }
+                                    })
+                                    resultQuery = resultQuery.slice(0, -5);
+                                    return resultQuery;
+                                }
+
+                                ## Promise that does the GET Request for Assignable Users and puts their names into Array 'assignableUsers'
+                                function getAssignableUsersPromise(){
+                                    return new Promise(async (resolve, reject) => {
+                                        let options = {
+                                            method: 'GET',
+                                            headers: {
+                                                'Content-Type': 'application/json;charset=utf-8'
+                                            },
+                                            credentials: 'include'
+                                        }
+
+                                        let assignableUsers = []; ## Array for GET request results
+
+                                        ## Do GET reuqest for data and put data into Array 'assignableUsers'
+                                        let user_request = new Request(window.location.protocol.concat('//', window.location.host, '/jira/rest/api/2/user/assignable/search?project=', '$currentProject.getKey()'));
+
+                                        let response = await fetch(user_request, options)
+                                        let data = await response.json();
+
+                                        data.forEach((obj, index) => {
+                                            ## add next name to array
+                                            assignableUsers.push(obj.name);
+                                        });
+                                        if (assignableUsers.length > 0) {
+                                            resolve(assignableUsers);
+                                        } else {
+                                            reject(error);
+                                        }
+
+                                    });
+
+                                }
+
+                            </script>
 
                             ## Dropdown type dynamic query update (checkbox)
                             <script>
                                 var typeQuery = " ";
                                 var typeParams = [];
                                 var typeDropdown = document.getElementById('type-dropdown');
+
                                 typeDropdown.addEventListener('change', function (e) {
                                     var isChecked = e.target.hasAttribute('checked');
                                     if (isChecked) {
@@ -392,23 +448,36 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                                             });
                                         }
                                         console.log(typeParams);
+
                                     }
 
                                     ## Prepare updated query
                                     ## Query depending on available status options, change if necessary
                                     typeQuery = " ";
-                                    typeParams.forEach((element) => {
-                                        typeQuery += 'type = "' + element + '" OR ' ;
-                                    });
-                                    typeQuery = typeQuery.slice(0, -3);
+                                    ##typeParams.forEach((element) => {
+                                    ##  typeQuery += 'type = "' + element + '" OR ' ;
+                                    ##});
+
+                                    ##typeQuery = typeQuery.slice(0, -3);
                                     document.getElementById("btn-type-dropdown").innerHTML = "Type: " + typeParams;
                                     if (typeParams.length == 0) {
                                         document.getElementById("btn-type-dropdown").innerHTML = "Type"; ##deletes ":"
                                     }
                                     console.log(typeQuery);
 
+                                    ## create improved query
+                                    let resultStringType = "";
+                                    typeParams.forEach(element => {
+                                        resultStringType += "'"+element+"',";
+                                    });
+                                    resultStringType = resultStringType.slice(0, -1);
+
+                                    if(typeParams.length>0) {
+                                        typeQuery = "type IN (" + resultStringType + ")";
+                                    }
+
                                     ## Input Query into search issues textfield
-                                    document.getElementById('search-issues-textfield').value = typeQuery;
+                                    document.getElementById('search-issues-textfield').value = buildQuery();
 
                                 });
                             </script>
@@ -417,9 +486,9 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
 
                             <aui-dropdown-menu id="status-dropdown">
                                 <aui-section label="Request Status">
-                                    <aui-item-checkbox interactive>To Do</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Done</aui-item-checkbox>
-                                    ##<aui-item-checkbox interactive>Canceled</aui-item-checkbox>
+                                #foreach( $status in $statuses )
+                                    <aui-item-checkbox interactive><img src="$status.completeIconUrl"/><span>$status.name</span></aui-item-checkbox>
+                                #end
                                 </aui-section>
                             </aui-dropdown-menu>
 
@@ -466,18 +535,30 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                                 ## Prepare updated query
                                 ## Query depending on available status options, change if necessary
                                 statusQuery = " ";
-                                statusParams.forEach((element) => {
-                                    statusQuery += 'status = "' + element + '" OR ' ;
-                                });
-                                statusQuery = statusQuery.slice(0, -3);
+                                ##statusParams.forEach((element) => {
+                                ##    statusQuery += 'status = "' + element + '" OR ' ;
+                                ##});
+                                ##statusQuery = statusQuery.slice(0, -3);
                                 document.getElementById("btn-status-dropdown").innerHTML = "Status: " + statusParams;
                                 if (statusParams.length == 0) {
                                     document.getElementById("btn-status-dropdown").innerHTML = "Status"; ##deletes ":"
                                 }
                                 console.log(statusQuery);
 
+                                ## create improved query
+                                let resultStringStatus = "";
+
+                                statusParams.forEach(element => {
+                                    resultStringStatus += "'"+element+"',";
+                                });
+                                resultStringStatus = resultStringStatus.slice(0, -1);
+
+                                if(statusParams.length>0) {
+                                    statusQuery = "status IN (" + resultStringStatus + ")";
+                                }
+
                                 ## Input Query into search issues textfield
-                                document.getElementById('search-issues-textfield').value = statusQuery;
+                                document.getElementById('search-issues-textfield').value = buildQuery();
 
                                 });
                             </script>
@@ -485,23 +566,52 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
 
                             ## dropdown popup activated when clicking assignee
                             <aui-dropdown-menu id="assignee-dropdown">
-                                <aui-section label="Search">
-                                    ##<input autocomplete="off" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="true" placeholder="Find Assignee.." class="text" id="assignee-input" aria-controls="assignee-suggestions" aria-activedescendant="group:jira-administrators-2">
-                                    <form style="float: left" class="aui">
-                                        <input id="search-issues" placeholder="Find Assignee.."
-                                               aria-autocomplete="list"
-                                               aria-haspopup="true" aria-expanded="true" type="text"
-                                               class="text">
-                                    </form>
+                                <aui-section id="assignee-section" label="Issue Assignee">
+                                    <aui-item-checkbox id="unassigned-option" interactive>unassigned</aui-item-checkbox>
                                 </aui-section>
-                                <aui-section label="Assignees">
-                                    <aui-item-checkbox interactive>Current User</aui-item-checkbox>
-                                    <aui-item-checkbox interactive>Unassigned</aui-item-checkbox>
-                                </aui-section>
-                                ##<aui-section label="Suggested Users">
-                                ##    <aui-item-checkbox interactive checked>admin</aui-item-checkbox>
-                                ##</aui-section>
                             </aui-dropdown-menu>
+
+                            <script>
+                                ## function that waits for the AssignableUsers to get retrieved
+                                ## from Promise and GET Request and then fills in the Dropdown Options
+                                async function fillAssignableUsers() {
+
+                                    let assignableUsers = await getAssignableUsersPromise(); ## awaits Promise from GET Request Function
+
+                                    let replacements = {
+                                        id: 0
+                                    };
+
+                                    ##fill in Dropdown Option for every user in AssignableUsers
+                                    assignableUsers.forEach(user => {
+                                        let stringWithPlaceholders = '<aui-item-checkbox id="assignee{id}" interactive></aui-item-checkbox>';
+
+                                        let string = stringWithPlaceholders.replace(
+                                                /{(\w+)}/g,
+                                                (placeholderWithDelimiters, placeholderWithoutDelimiters) =>
+                                                        replacements.hasOwnProperty(placeholderWithoutDelimiters) ?
+                                                                replacements[placeholderWithoutDelimiters] : placeholderWithDelimiters
+                                        );
+                                        document.getElementById('assignee-section').innerHTML += string;
+                                        stringWithPlaceholders = 'assignee{id}';
+                                        replacements = {
+                                            id: 0
+                                        };
+                                        string = stringWithPlaceholders.replace(
+                                                /{(\w+)}/g,
+                                                (placeholderWithDelimiters, placeholderWithoutDelimiters) =>
+                                                        replacements.hasOwnProperty(placeholderWithoutDelimiters) ?
+                                                                replacements[placeholderWithoutDelimiters] : placeholderWithDelimiters
+                                        );
+                                        document.getElementById(string).innerHTML = user;
+                                        replacements.id++;
+                                    });
+
+                                };
+                                ## execute function
+                                fillAssignableUsers();
+
+                            </script>
 
                             ## Dropdown assignee dynamic query update (checkbox)
                             <script>
@@ -535,7 +645,11 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                                     ## Query depending on available status options, change if necessary
                                     assigneeQuery = " ";
                                     assigneeParams.forEach((element) => {
-                                        assigneeQuery += 'assignee = "' + element + '" OR ';
+                                        if(element === "unassigned"){
+                                            assigneeQuery += 'assignee is Empty' + ' OR ';
+                                        } else {
+                                            assigneeQuery += 'assignee = "' + element + '" OR ';
+                                        }
                                     });
                                     assigneeQuery = assigneeQuery.slice(0, -3);
                                     document.getElementById("btn-assignee-dropdown").innerHTML = "Assignee: " + assigneeParams;
@@ -545,7 +659,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                                     console.log(assigneeQuery);
 
                                     ## Input Query into search issues textfield
-                                    document.getElementById('search-issues-textfield').value = assigneeQuery;
+                                    document.getElementById('search-issues-textfield').value = buildQuery();
                                 });
 
                                 AJS.$('#result-table').trigger('update');
