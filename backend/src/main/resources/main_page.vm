@@ -502,6 +502,14 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                             <script>
                                 ## function that waits for the AssignableUsers to get retrieved
                                 ## from Promise and GET Request and then fills in the Dropdown Options
+
+                                function htmlToElement(html) {
+                                    var template = document.createElement('template');
+                                    html = html.trim(); // Never return a text node of whitespace as the result
+                                    template.innerHTML = html;
+                                    return template.content.firstChild;
+                                }
+
                                 async function fillAssignableUsers() {
 
                                     let assignableUsers = await getAssignableUsersPromise(); ## awaits Promise from GET Request Function
@@ -520,11 +528,12 @@ $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dyn
                                                         replacements.hasOwnProperty(placeholderWithoutDelimiters) ?
                                                                 replacements[placeholderWithoutDelimiters] : placeholderWithDelimiters
                                         );
-                                        document.getElementById('assignee-section').innerHTML += string;
+                                        const newElement = htmlToElement(string);
+
+                                        document.getElementById('assignee-section').appendChild(newElement);
+
                                         stringWithPlaceholders = 'assignee{id}';
-                                        replacements = {
-                                            id: 0
-                                        };
+
                                         string = stringWithPlaceholders.replace(
                                                 /{(\w+)}/g,
                                                 (placeholderWithDelimiters, placeholderWithoutDelimiters) =>
