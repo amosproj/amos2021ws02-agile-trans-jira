@@ -31,6 +31,29 @@ export default class DynamicTable extends React.Component {
 
   getIssuesPromise() {
     return new Promise(async resolve => {
+
+        let fieldsResponse = await fetch('http://localhost:2990/jira/rest/api/2/field',{
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json'
+            }
+        })
+        let fieldData= await fieldsResponse.json();
+        let startField;
+        let endField;
+
+        for (let data of fieldData) {
+            if (data.name == 'Start of Work' ) {
+                startField = data.id;
+            }
+            if (data.name == 'End of Work' ) {
+                endField = data.id;
+            }
+        };
+
+
+
       let newTaskArray = [];
       let response = await fetch('http://localhost:2990/jira/rest/api/2/search?jql=type%20%3D%20Request%20AND%20assignee%20%3D%20currentUser()%20AND%20status%20!%3D%20Done', {
         method: 'GET',
@@ -43,8 +66,8 @@ export default class DynamicTable extends React.Component {
       for (let obj in Array.from(data.issues)) {
         let key = data.issues[obj].key
         let name = data.issues[obj].fields.summary
-        let start = data.issues[obj].fields.customfield_10102
-        let end = data.issues[obj].fields.customfield_10103
+        let start = data.issues[obj].fields[startField]
+        let end = data.issues[obj].fields[endField]
         //let url = data.issues[obj].self
         //console.log(key, name, start, end, url)
 
