@@ -23,7 +23,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                 <div class="aui-page-header-image">
                 <span class="aui-avatar aui-avatar-project aui-avatar-large">
                     <span class="aui-avatar-inner">
-                        <img src="/images/pluginLogo.png" alt="" role="presentation"/>
+                        <img src="https://i.imgur.com/OFO5fw6.png" alt="" role="presentation"/>
                     </span>
                 </span>
 
@@ -103,15 +103,14 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                                 </li>
                             </ul>
                             <div class="tabs-pane active-pane" id="personal-calendar">
-                                <h2>This is tab 1</h2>
+                                <h2>Hello!</h2>
+                                <h3>This is your personal calendar.</h3>
                                 <div id="maincontainer">
                                     <div id="container"></div>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, blabla adipiscing elit.</p>
                             </div>
                             <div class="tabs-pane" id="teams-calendar">
-                                <h2>This is tab 2</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <h2>This is your team calendar.</h2>
                             </div>
 
                             <!--Content of the Request Overview tab-->

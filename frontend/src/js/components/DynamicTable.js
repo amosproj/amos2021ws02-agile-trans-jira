@@ -120,8 +120,6 @@ export default class DynamicTable extends React.Component {
   render() {
     return (
         <div className="App">
-          <h1>Hello!</h1>
-          <h2>This is your personal request calendar.</h2>
         <FrappeGantt
             tasks={this.state.tasks}
             viewMode={this.state.mode}
