@@ -80,9 +80,9 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                             </li>
                             <li>
                                 <a class="aui-nav-item"
-                                   href="/jira/issues/?jql=type%20%3D%20request%20AND%20(status%20%3D%20Open%20OR%20status%20%3D%20Done%20)%20AND%20assignee%20%3D%20currentUser()">
+                                   href="/jira/issues/?jql=issuetype%20%3D%20Request%20AND%20assignee%20%3D%20currentUser()%20AND%20statusCategory%20%3D%20Done">
                                     <span class="aui-icon aui-icon-small aui-iconfont-list"></span>
-                                    <span class="aui-nav-item-label">Request Overview</span>
+                                    <span class="aui-nav-item-label">My Closed Requests</span>
                                 </a>
                             </li>
                         </ul>
