@@ -14,7 +14,7 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 
-public class mainFuncTest {
+public class MainFuncTest {
 
     HttpClient httpClient;
     String baseUrl;
