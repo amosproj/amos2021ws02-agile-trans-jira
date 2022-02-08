@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { FrappeGantt, Task, ViewMode } from 'frappe-gantt-react';
 
 
-
 const startTask = [new Task(
     {
       id: "Task 2",
@@ -12,6 +11,7 @@ const startTask = [new Task(
       end: undefined,
       url: "",
       progress:100,
+        custom_class: "bar-orange"
     },
 )]
 
@@ -21,10 +21,9 @@ export default class DynamicTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: ViewMode.Month,
+      mode: ViewMode.Day,
       tasks: startTask,
     }
-    //this.handleClick = this.handleClick.bind(this);
   }
 
 
@@ -68,8 +67,6 @@ export default class DynamicTable extends React.Component {
         let name = data.issues[obj].fields.summary
         let start = data.issues[obj].fields[startField]
         let end = data.issues[obj].fields[endField]
-        //let url = data.issues[obj].self
-        //console.log(key, name, start, end, url)
 
         newTaskArray.push(new Task({
           id: key,
@@ -78,6 +75,7 @@ export default class DynamicTable extends React.Component {
           end: end,
           url: window.location.protocol+'//' + window.location.host+'/jira/browse/'+key,
           progress:100,
+            custom_class: "bar-orange"
         }))
       }
       resolve(newTaskArray);
@@ -111,17 +109,9 @@ export default class DynamicTable extends React.Component {
 
   }
 
-  //handleClick(task){
-  //  this.updateTasks()
-  //  console.log("clicked issue")
-  //  console.log(task.url)
-  //  window.location = task.url;
-  //}
   render() {
     return (
         <div className="App">
-          <h1>Hello!</h1>
-          <h2>This is your personal request calendar.</h2>
         <FrappeGantt
             tasks={this.state.tasks}
             viewMode={this.state.mode}
