@@ -11,11 +11,12 @@
   <!-- add our i18n resource -->  
   <resource type="i18n" name="i18n" location="agile-planning-platform"/>  
   <!-- add our web resources -->  
-  <web-resource key="agile-planning-platform-resources" name="agile-planning-platform Web Resources"> 
-    <dependency>com.atlassian.auiplugin:ajs</dependency>  
-    <resource type="download" name="agile-planning-platform.css" location="/css/agile-planning-platform.css"/>  
+  <web-resource key="agile-planning-platform-resources" name="agile-planning-platform Web Resources">
+<!--    <dependency>com.atlassian.auiplugin:ajs</dependency>  -->
+    <resource type="download" name="agile-planning-platform.css" location="/css/agile-planning-platform.css"/>
     <resource type="download" name="agile-planning-platform.js" location="/js/agile-planning-platform.js"/>  
-    <resource type="download" name="images/" location="/images"/>  
+    <resource type="download" name="images/" location="/images"/>
+    <resource type="download" name="jirassicLogo.jpeg" location="/images/jirassicLogo.jpeg"/>
     <context>agile-planning-platform</context> 
   </web-resource>
 

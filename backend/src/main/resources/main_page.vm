@@ -8,6 +8,7 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:message")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-experimental-iconfont")
 $webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:entrypoint-dynamictable")
 $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable")
+$webResourceManager.requireResource("de.tuberlin.amos.gr2.backend:agile-planning-platform-resources")
 
 <html>
 <head>
@@ -21,9 +22,8 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
         <div class="aui-page-header">
             <div class="aui-page-header-inner">
                 <div class="aui-page-header-image">
-                <span class="aui-avatar aui-avatar-project aui-avatar-large">
+                <span class="aui-avatar aui-avatar-project aui-avatar-xxlarge plugin-logo">
                     <span class="aui-avatar-inner">
-                        <img src="/images/pluginLogo.png" alt="" role="presentation"/>
                     </span>
                 </span>
 
@@ -68,18 +68,22 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
 
                         #if(!$currentProject.issueTypes.contains($request_id))
                             <div class="aui-message aui-message-warning">
-                                <p>Please enable Request issue type for project $currentProject.name.</p>
+                                <p>Please enable Request issue type for project $currentProject.name to create a request.</p>
                             </div>
                         #end
                         <ul class="aui-nav" title="Requests actions">
                             <li>
+                                #if(!$currentProject.issueTypes.contains($request_id))
+                                <a class="aui-nav-item" id="create_request">
+                                #else
                                 <a class="aui-nav-item" id="create_request" href=$create_request_href>
-                                    <span class="aui-icon aui-icon-small aui-iconfont-list-add"></span>
-                                    <span class="aui-nav-item-label">Create Request</span>
-                                </a>
+                                #end
+                                <span class="aui-icon aui-icon-small aui-iconfont-list-add"></span>
+                                <span class="aui-nav-item-label">Create Request</span>
+                            </a>
                             </li>
                             <li>
-                                <a class="aui-nav-item"
+                                <a class="aui-nav-item" target="_blank" rel="noopener noreferrer"
                                    href="/jira/issues/?jql=type%20%3D%20request%20AND%20(status%20%3D%20Open%20OR%20status%20%3D%20Done%20)%20AND%20assignee%20%3D%20currentUser()">
                                     <span class="aui-icon aui-icon-small aui-iconfont-list"></span>
                                     <span class="aui-nav-item-label">Request Overview</span>
@@ -123,18 +127,19 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
                                     <div class="aui-item">
                                         <div style="float: right" class="aui-buttons">
                                             <button class="aui-button aui-dropdown2-trigger"
-                                                    aria-controls="export-dropdown">Export Requests
+                                                    aria-controls="export-dropdown">
+                                                Export Requests
                                             </button>
-                                            <a href="/jira/issues/?jql=">
+                                            <a target="_blank" rel="noopener noreferrer" href="/jira/issues/?jql=">
                                                 <button class="aui-button">Go To Advanced Search</button>
                                             </a>
                                             <button class="aui-button">
-                                                <span class="aui-icon aui-icon-small aui-iconfont-list "></span>List
-                                                View
+                                                <span class="aui-icon aui-icon-small aui-iconfont-list "></span>
+                                                List View
                                             </button>
                                             <button class="aui-button">
-                                                <span class="aui-icon aui-icon-small aui-iconfont-detail-view"></span>Detail
-                                                View
+                                                <span class="aui-icon aui-icon-small aui-iconfont-detail-view"></span>
+                                                Detail View
                                             </button>
                                             <button aria-controls="compact-button-dropdown"
                                                     class="aui-button aui-button-compact aui-button-subtle aui-dropdown2-trigger-arrowless">
@@ -809,38 +814,28 @@ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-table-sortable"
 
                             ## dropdown popup activated when clicking export
                             <aui-dropdown-menu id="export-dropdown">
-                                <aui-section label="Search">
-                                    <form style="float: left" class="aui">
-                                        <input id="search-issues" placeholder="Find Criteria.."
-                                               aria-autocomplete="list"
-                                               aria-haspopup="true" aria-expanded="true" type="text"
-                                               class="text">
-                                    </form>
+                                <aui-section>
+                                    <aui-item-link>Printable</aui-item-link>
+                                    <aui-item-link>Full Content</aui-item-link>
                                 </aui-section>
                                 <aui-section>
-                                    <aui-item-link href="http://amazon.com">Printable</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">Full Content</aui-item-link>
+                                    <aui-item-link>RSS (Issues)</aui-item-link>
+                                    <aui-item-link>RSS (Comments)</aui-item-link>
                                 </aui-section>
                                 <aui-section>
-                                    <aui-item-link href="http://amazon.com">RSS (Issues)</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">RSS (Comments)</aui-item-link>
-                                </aui-section>
-                                <aui-section>
-                                    <aui-item-link href="http://amazon.com">CSV (All fields)</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">CSV (Current fields)</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">HTML (All fields)</aui-item-link>
-                                    <aui-item-link href="http://amazon.com">HTML (Current fields)
+                                    <aui-item-link>CSV (All fields)</aui-item-link>
+                                    <aui-item-link>CSV (Current fields)</aui-item-link>
+                                    <aui-item-link>HTML (All fields)</aui-item-link>
+                                    <aui-item-link>HTML (Current fields)
                                     </aui-item-link>
-                                    <aui-item-link href="http://amazon.com">XML</aui-item-link>
+                                    <aui-item-link >XML</aui-item-link>
                                 </aui-section>
                                 <aui-section>
-                                    <aui-item-link href="http://amazon.com">Word</aui-item-link>
+                                    <aui-item-link >Word</aui-item-link>
                                 </aui-section>
                                 <aui-section>
-                                    <aui-item-link href="http://amazon.com">Dashboard charts</aui-item-link>
+                                    <aui-item-link >Dashboard charts</aui-item-link>
                                 </aui-section>
-
-
                             </aui-dropdown-menu>
 
                             <script>

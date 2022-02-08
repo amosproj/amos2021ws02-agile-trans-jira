@@ -3,9 +3,9 @@
     <transformation extension="js">
       <transformer key="jsI18n"/>
     </transformation>
-    <resource type="download" name="bundled.dynamictable.js" location="frontend//bundled.dynamictable.js"/>
+    <resource type="download" name="bundled.dynamictable.js" location="frontend/bundled.dynamictable.js"/>
   </web-resource>
-  <web-resource key="assets-aedd1b7c-5a13-4ea9-b43b-4a38f1d36851">
-    <resource type="download" name="bundled.dynamictable.js.LICENSE.txt" location="frontend//bundled.dynamictable.js.LICENSE.txt"/>
+  <web-resource key="assets-ba4d13a6-896e-4c42-bf4e-cd9bc54ed23a">
+    <resource type="download" name="bundled.dynamictable.js.LICENSE.txt" location="frontend/bundled.dynamictable.js.LICENSE.txt"/>
   </web-resource>
 </bundles>
