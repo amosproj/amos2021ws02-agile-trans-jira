@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class mainTest {
+public class MainTest {
 
     HttpServletRequest mockRequest;
     HttpServletResponse mockResponse;
@@ -20,11 +20,6 @@ public class mainTest {
     public void setup() {
         mockRequest = mock(HttpServletRequest.class);
         mockResponse = mock(HttpServletResponse.class);
-    }
-
-    @After
-    public void tearDown() {
-
     }
 
     @Test

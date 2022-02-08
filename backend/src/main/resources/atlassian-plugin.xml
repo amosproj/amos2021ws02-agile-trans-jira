@@ -12,8 +12,7 @@
   <resource type="i18n" name="i18n" location="agile-planning-platform"/>  
   <!-- add our web resources -->  
   <web-resource key="agile-planning-platform-resources" name="agile-planning-platform Web Resources"> 
-    <dependency>com.atlassian.auiplugin:ajs</dependency>  
-    <resource type="download" name="agile-planning-platform.css" location="/css/agile-planning-platform.css"/>  
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
     <resource type="download" name="agile-planning-platform.js" location="/js/agile-planning-platform.js"/>  
     <resource type="download" name="images/" location="/images"/>  
     <context>agile-planning-platform</context> 
