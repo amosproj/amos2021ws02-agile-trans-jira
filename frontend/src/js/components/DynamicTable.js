@@ -11,7 +11,6 @@ const startTask = [new Task(
       end: undefined,
       url: "",
       progress:100,
-        custom_class: "bar-orange"
     },
 )]
 
@@ -75,7 +74,6 @@ export default class DynamicTable extends React.Component {
           end: end,
           url: window.location.protocol+'//' + window.location.host+'/jira/browse/'+key,
           progress:100,
-            custom_class: "bar-orange"
         }))
       }
       resolve(newTaskArray);
